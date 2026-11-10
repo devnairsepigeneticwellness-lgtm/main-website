@@ -1,0 +1,75 @@
+@import "tailwindcss";
+
+@theme {
+  --color-forest: #173D34;
+  --color-forest-dark: #102E27;
+  --color-forest-deep: #0B221C;
+  --color-ivory: #F7F5EF;
+  --color-ivory-light: #FCFAF6;
+  --color-sage: #E8EDE4;
+  --color-sage-dark: #9AAA8A;
+  --color-sage-soft: #D9E2D4;
+  --color-gold: #B58B50;
+  --color-gold-light: #DFBD83;
+  --color-gold-subtle: #F3ECE0;
+  --color-charcoal: #24352D;
+  --color-muted-text: #59675F;
+  --font-serif: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  --font-sans: var(--font-dm-sans), 'DM Sans', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+}
+
+:root {
+  --background: #F7F5EF;
+  --foreground: #24352D;
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 100px;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+body {
+  background-color: var(--background);
+  color: var(--foreground);
+  font-family: var(--font-sans);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  max-width: 100vw;
+  overflow-x: hidden;
+}
+
+/* Custom editorial styles */
+.font-serif {
+  font-family: var(--font-serif);
+}
+
+.font-sans {
+  font-family: var(--font-sans);
+}
+
+/* Subtle gold shimmer */
+@keyframes subtle-pulse {
+  0%, 100% { opacity: 0.3; transform: scale(1); }
+  50% { opacity: 0.6; transform: scale(1.03); }
+}
+
+.animate-subtle-pulse {
+  animation: subtle-pulse 8s ease-in-out infinite;
+}
+
+/* Custom scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+::-webkit-scrollbar-track {
+  background: #F7F5EF;
+}
+::-webkit-scrollbar-thumb {
+  background: #B58B50;
+  border-radius: 4px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #8F6C3A;
+}
