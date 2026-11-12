@@ -34,25 +34,25 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#E8EDE4]/40 border-t border-[#B58B50]/20 relative">
+    <section className="py-20 lg:py-28 bg-[#F3F7F1] border-t border-[#C8D6C6] relative">
       <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center mb-14">
           <div className="inline-flex items-center gap-3 mb-3 justify-center">
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
-            <span className="text-xs font-semibold tracking-[0.22em] text-[#B58B50] uppercase font-sans">
+            <span className="w-6 h-[1px] bg-[#9E783E]" />
+            <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
               Clarity &amp; Common Questions
             </span>
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
+            <span className="w-6 h-[1px] bg-[#9E783E]" />
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#173D34] leading-[1.18] tracking-tight">
             Frequently Asked{" "}
-            <span className="italic text-[#B58B50]">Questions.</span>
+            <span className="italic text-[#7D6335]">Questions.</span>
           </h2>
 
-          <p className="mt-4 font-sans text-sm sm:text-base text-[#59675F] leading-relaxed font-light">
+          <p className="mt-4 font-sans text-sm sm:text-base text-[#465A4F] leading-relaxed font-light">
             Clear, transparent guidance to help you feel informed and comfortable before your initial conversation.
           </p>
         </div>
@@ -64,7 +64,7 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
             return (
               <div
                 key={idx}
-                className="bg-white rounded-2xl border border-[#B58B50]/20 overflow-hidden transition-all duration-200"
+                className="bg-[#E6EEE3] rounded-2xl border border-[#C8D6C6] hover:border-[#9E783E]/50 overflow-hidden transition-all duration-200"
               >
                 <button
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
@@ -74,8 +74,8 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
                     {faq.q}
                   </span>
                   <div
-                    className={`w-8 h-8 rounded-full border border-[#B58B50]/30 flex items-center justify-center shrink-0 transition-transform duration-300 ${
-                      isOpen ? "rotate-180 bg-[#173D34] text-white" : "text-[#B58B50]"
+                    className={`w-8 h-8 rounded-full border border-[#B8C9B5] flex items-center justify-center shrink-0 transition-transform duration-300 ${
+                      isOpen ? "rotate-180 bg-[#1E3F35] text-[#DFBD83]" : "bg-[#DCE7DA] text-[#1E3F35]"
                     }`}
                   >
                     <ChevronDown className="w-4 h-4" />
@@ -83,7 +83,7 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-sm sm:text-base text-[#59675F] font-light leading-relaxed animate-in fade-in duration-200 border-t border-[#E8EDE4] pt-4">
+                  <div className="px-6 pb-6 sm:px-7 sm:pb-7 text-sm sm:text-base text-[#384D42] font-normal leading-relaxed animate-in fade-in duration-200 border-t border-[#C8D6C6] pt-4">
                     {faq.a}
                   </div>
                 )}
@@ -93,27 +93,27 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
         </div>
 
         {/* Still have questions */}
-        <div className="mt-12 text-center p-8 rounded-2xl bg-white border border-[#B58B50]/20 shadow-sm flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div className="mt-12 text-center p-8 rounded-2xl bg-[#DEE7DB] border border-[#C5D4C2] shadow-xs flex flex-col sm:flex-row items-center justify-between gap-6">
           <div className="text-left">
             <h4 className="font-serif text-xl font-medium text-[#173D34]">
               Have a specific question not covered here?
             </h4>
-            <p className="text-xs sm:text-sm text-[#59675F] mt-1 font-light">
+            <p className="text-xs sm:text-sm text-[#465A4F] mt-1 font-light">
               Reach out directly to speak with our admissions and consultation team.
             </p>
           </div>
           <div className="flex items-center gap-3">
             <button
               onClick={onOpenBooking}
-              className="px-5 py-2.5 rounded-full bg-[#173D34] text-white text-xs sm:text-sm font-medium hover:bg-[#102E27] transition-all"
+              className="px-5 py-2.5 rounded-full bg-[#1E3F35] text-[#F7F5EF] text-xs sm:text-sm font-medium hover:bg-[#285246] transition-all"
             >
               Ask a Question
             </button>
             <a
               href="tel:+919446477779"
-              className="px-4 py-2.5 rounded-full border border-[#B58B50] text-[#173D34] text-xs sm:text-sm font-medium hover:bg-[#B58B50]/10 flex items-center gap-1.5 transition-all"
+              className="px-4 py-2.5 rounded-full border border-[#1E3F35] bg-[#EAF0E7] text-[#1E3F35] text-xs sm:text-sm font-medium hover:bg-[#1E3F35] hover:text-[#DFBD83] flex items-center gap-1.5 transition-all"
             >
-              <PhoneCall className="w-3.5 h-3.5 text-[#B58B50]" />
+              <PhoneCall className="w-3.5 h-3.5 text-[#7D6335]" />
               <span>Call Team</span>
             </a>
           </div>

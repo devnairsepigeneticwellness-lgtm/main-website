@@ -41,22 +41,52 @@ export default function ServicesHero({
             <div className="inline-flex items-center gap-3">
               <span className="w-8 h-[1px] bg-[#DFBD83]" />
               <span className="text-xs sm:text-sm font-semibold tracking-[0.24em] text-[#DFBD83] uppercase font-sans">
-                OUR SERVICES
+                SERVICES WE OFFER
               </span>
             </div>
 
             {/* Main Editorial Headline */}
             <h1 className="font-serif text-4xl sm:text-5xl lg:text-[62px] font-normal leading-[1.12] tracking-tight text-[#F7F5EF]">
-              Thoughtful Care for Mind,{" "}
+              Support that meets you{" "}
               <span className="block mt-1 sm:mt-2 italic font-serif text-[#DFBD83] font-light">
-                Life &amp; Wellbeing.
+                where you are.
               </span>
             </h1>
 
-            {/* Supporting Description */}
-            <p className="font-sans text-base sm:text-lg lg:text-xl text-[#E8EDE4]/90 font-light leading-relaxed max-w-2xl">
-              At Nair&apos;s Epigenetic Wellness, we offer psychological, therapeutic and wellbeing services designed to support self-understanding, emotional wellbeing and meaningful personal growth.
-            </p>
+            {/* Supporting Description as given by user */}
+            <div className="space-y-3 font-sans text-base sm:text-lg text-[#E8EDE4]/90 font-light leading-relaxed max-w-2xl">
+              <p>
+                Every person comes with a different experience, different challenges, and different needs. At Nair’s Epigenetic Wellness, we offer a range of psychological, emotional, behavioural, and wellbeing services so that support can be tailored to the individual.
+              </p>
+              <p className="text-sm sm:text-base text-[#DFBD83]/90 font-normal">
+                Our aim is not simply to help you manage a problem for the moment. We work towards helping you understand yourself, develop useful skills, strengthen your emotional wellbeing, and create healthier ways of responding to life.
+              </p>
+            </div>
+
+            {/* Section Jump Links */}
+            <div className="pt-2 flex flex-wrap gap-2 text-xs">
+              <a href="#counselling" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Counselling
+              </a>
+              <a href="#psychotherapies" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Psychotherapies (10 Modalities)
+              </a>
+              <a href="#hypnotherapy" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Hypnotherapy
+              </a>
+              <a href="#rehabilitation" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Online Rehabilitation
+              </a>
+              <a href="#renewal" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Renewal
+              </a>
+              <a href="#spiritual-practices" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Spiritual Practices
+              </a>
+              <a href="#support-plans" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                Treatment &amp; Support Plans
+              </a>
+            </div>
 
             {/* CTAs */}
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-2">
@@ -85,7 +115,7 @@ export default function ServicesHero({
               </div>
               <div className="flex items-center gap-2">
                 <HeartHandshake className="w-4 h-4 text-[#DFBD83]" />
-                <span>Person-Centred &amp; Confidential</span>
+                <span>Person-Centered &amp; Confidential</span>
               </div>
             </div>
 

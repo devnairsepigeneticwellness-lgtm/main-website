@@ -59,16 +59,6 @@ export default function FeaturedFounder({
                   <div className="absolute inset-0 rounded-t-[190px] rounded-b-3xl border border-[#DFBD83]/20 pointer-events-none" />
                 </div>
 
-                {/* Top Badge: Centered in Arch Crown */}
-                <div className="relative z-10 flex justify-center pt-1">
-                  <div className="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-[#102E27]/90 text-[#DFBD83] border border-[#B58B50]/50 backdrop-blur-md shadow-md">
-                    <Award className="w-3.5 h-3.5 text-[#DFBD83] shrink-0" />
-                    <span className="text-[10px] font-sans tracking-[0.18em] uppercase font-semibold">
-                      Founder of N.E.W.
-                    </span>
-                  </div>
-                </div>
-
                 {/* Bottom Signature Card */}
                 <div className="relative z-10 bg-[#102E27]/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-[#B58B50]/40 text-left shadow-xl">
                   <div className="flex items-center justify-between mb-1">
@@ -79,8 +69,14 @@ export default function FeaturedFounder({
                       <ShieldCheck className="w-4 h-4 text-[#DFBD83]" />
                     </div>
                   </div>
-                  <span className="text-xs text-[#DFBD83] font-sans tracking-wide block mb-2 font-medium">
-                    Counselling Psychologist &bull; RCI Reg. &bull; Hypnotherapist
+                  <span className="text-xs text-[#DFBD83] font-sans tracking-wide block font-semibold uppercase">
+                    RCI REGISTERED REHABILITATION COUNSELLOR
+                  </span>
+                  <span className="text-[11px] text-[#E8EDE4]/90 font-sans tracking-wide block font-medium uppercase">
+                    COUNSELLING PSYCHOLOGIST &bull; CLINICAL HYPNOTHERAPIST
+                  </span>
+                  <span className="text-[10px] text-[#DFBD83]/90 font-sans tracking-wide block mb-2 font-medium uppercase">
+                    MENTAL HEALTH REHABILITATION &amp; TRAINING EXPERT
                   </span>
                   <p className="text-[11px] text-[#E8EDE4]/85 leading-relaxed font-light">
                     Former mariner turned clinical practitioner, blending worldwide life resilience with rigorous psychological mastery.
@@ -98,7 +94,7 @@ export default function FeaturedFounder({
             <div className="inline-flex items-center gap-3 mb-3">
               <span className="w-6 h-[1px] bg-[#B58B50]" />
               <span className="text-xs font-semibold tracking-[0.24em] text-[#B58B50] uppercase font-sans">
-                FOUNDER OF N.E.W.
+                KNOW THE FOUNDER
               </span>
             </div>
 
@@ -108,8 +104,14 @@ export default function FeaturedFounder({
             </h2>
 
             {/* Professional Titles */}
-            <p className="text-xs sm:text-sm font-sans tracking-wide text-[#B58B50] font-medium uppercase mb-6">
-              Counselling Psychologist | Rehabilitation Counselor (RCI) | Clinical Hypnotherapist
+            <p className="text-xs sm:text-sm font-sans tracking-wide text-[#9E783E] font-semibold uppercase mb-1">
+              RCI REGISTERED REHABILITATION COUNSELLOR
+            </p>
+            <p className="text-xs sm:text-sm font-sans tracking-wide text-[#173D34] font-medium uppercase mb-1">
+              COUNSELLING PSYCHOLOGIST &bull; CLINICAL HYPNOTHERAPIST
+            </p>
+            <p className="text-xs sm:text-sm font-sans tracking-wide text-[#7D6335] font-medium uppercase mb-6">
+              MENTAL HEALTH REHABILITATION &amp; TRAINING EXPERT
             </p>
 
             {/* Narrative / Suggested Introduction */}
@@ -121,7 +123,7 @@ export default function FeaturedFounder({
                 His work reflects an interest in psychological understanding, therapeutic approaches and practical skill development in supporting individuals and groups.
               </p>
               <p>
-                Ajit also brings a distinctive, grounded perspective from his earlier career as an ocean mariner, followed by his dedicated transition into psychology and mental health. This combination of vast global experience, cross-cultural awareness, and clinical depth informs his practical, empathetic, and human-centred approach to wellbeing.
+                Ajit also brings a distinctive, grounded perspective from his earlier career as a mariner, followed by his dedicated transition into psychology and mental health. This combination of vast global experience, cross-cultural awareness, and clinical depth informs his practical, empathetic, and human-centred approach to wellbeing.
               </p>
             </div>
 

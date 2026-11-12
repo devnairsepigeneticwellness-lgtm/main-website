@@ -36,34 +36,34 @@ export default function ApproachRoadmap({ onOpenBooking }: { onOpenBooking: () =
   ];
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F7F5EF] relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-[#F3F7F1] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="text-center max-w-3xl mx-auto mb-16">
           <div className="inline-flex items-center gap-3 mb-3 justify-center">
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
-            <span className="text-xs font-semibold tracking-[0.22em] text-[#B58B50] uppercase font-sans">
+            <span className="w-6 h-[1px] bg-[#9E783E]" />
+            <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
               The N.E.W. Approach
             </span>
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
+            <span className="w-6 h-[1px] bg-[#9E783E]" />
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#173D34] leading-[1.18] tracking-tight">
             More than theory.{" "}
-            <span className="italic text-[#B58B50]">Practical support for everyday life.</span>
+            <span className="italic text-[#2F5A48]">Practical support for everyday life.</span>
           </h2>
 
-          <p className="mt-4 font-sans text-base text-[#59675F] leading-relaxed font-light">
+          <p className="mt-4 font-sans text-base text-[#3F5448] leading-relaxed font-light">
             Psychological knowledge becomes transformative when it is understood, reflected upon,
             and translated into dependable everyday skills.
           </p>
         </div>
 
-        {/* 4 Steps Horizontal Connected Grid */}
+        {/* 4 Steps Horizontal Connected Grid — Sage Green Cards */}
         <div className="relative">
           {/* Subtle horizontal connecting line on desktop */}
-          <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-[#B58B50]/30 to-transparent -translate-y-12 z-0" />
+          <div className="hidden lg:block absolute top-1/2 left-8 right-8 h-[1px] bg-gradient-to-r from-transparent via-[#C8D6C6] to-transparent -translate-y-12 z-0" />
 
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 relative z-10">
             {steps.map((step) => {
@@ -71,33 +71,33 @@ export default function ApproachRoadmap({ onOpenBooking }: { onOpenBooking: () =
               return (
                 <div
                   key={step.num}
-                  className="bg-white rounded-2xl p-7 border border-[#B58B50]/20 hover:border-[#B58B50] shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
+                  className="bg-[#E6EEE3] rounded-2xl p-7 border border-[#C8D6C6] hover:border-[#9E783E] hover:bg-[#EBF2E8] shadow-xs hover:shadow-md transition-all duration-300 flex flex-col justify-between group hover:-translate-y-1.5"
                 >
                   <div>
                     {/* Top Step Pill & Icon */}
                     <div className="flex items-center justify-between mb-5">
-                      <span className="w-8 h-8 rounded-full bg-[#173D34] text-[#DFBD83] font-serif text-sm font-semibold flex items-center justify-center">
+                      <span className="w-8 h-8 rounded-full bg-[#1E3F35] text-[#DFBD83] font-serif text-sm font-semibold flex items-center justify-center">
                         {step.num}
                       </span>
-                      <div className="w-10 h-10 rounded-full bg-[#E8EDE4] text-[#173D34] flex items-center justify-center group-hover:bg-[#B58B50] group-hover:text-white transition-colors">
+                      <div className="w-10 h-10 rounded-full bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center group-hover:bg-[#1E3F35] group-hover:text-[#F7F5EF] transition-colors border border-[#C5D3C1]">
                         <Icon className="w-5 h-5" strokeWidth={1.5} />
                       </div>
                     </div>
 
-                    <h3 className="font-serif text-xl font-medium text-[#173D34] mb-1 group-hover:text-[#B58B50] transition-colors leading-snug">
+                    <h3 className="font-serif text-xl font-medium text-[#173D34] mb-1 group-hover:text-[#2A5244] transition-colors leading-snug">
                       {step.title}
                     </h3>
 
-                    <span className="block text-xs font-sans tracking-wide text-[#B58B50] mb-3 font-medium">
+                    <span className="block text-xs font-sans tracking-wide text-[#7D6335] mb-3 font-semibold">
                       {step.tagline}
                     </span>
 
-                    <p className="font-sans text-xs sm:text-sm text-[#59675F] leading-relaxed font-light">
+                    <p className="font-sans text-xs sm:text-sm text-[#45574D] leading-relaxed font-light">
                       {step.desc}
                     </p>
                   </div>
 
-                  <div className="mt-6 pt-4 border-t border-[#E8EDE4] flex items-center justify-between text-xs text-[#B58B50]">
+                  <div className="mt-6 pt-4 border-t border-[#C8D6C6] flex items-center justify-between text-xs text-[#1E3F35] font-semibold">
                     <span>Step {step.num} Phase</span>
                     <ArrowRight className="w-3.5 h-3.5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -111,7 +111,7 @@ export default function ApproachRoadmap({ onOpenBooking }: { onOpenBooking: () =
         <div className="mt-14 text-center">
           <button
             onClick={onOpenBooking}
-            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#173D34] text-[#F7F5EF] text-sm font-medium tracking-wide shadow-md hover:bg-[#102E27] hover:scale-[1.02] border border-[#B58B50]/30 transition-all"
+            className="inline-flex items-center gap-2.5 px-8 py-3.5 rounded-full bg-[#1E3F35] text-[#F7F5EF] text-sm font-semibold tracking-wide shadow-sm hover:bg-[#285246] hover:scale-[1.02] border border-[#1E3F35] transition-all cursor-pointer"
           >
             <span>Begin Your Personal Journey with N.E.W.</span>
             <ArrowRight className="w-4 h-4 text-[#DFBD83]" />

@@ -17,15 +17,15 @@ export default function HeroSection({
   return (
     <section
       id="home"
-      className="relative flex flex-col justify-center min-h-[calc(100dvh-76px)] sm:min-h-[calc(100dvh-80px)] overflow-x-hidden overflow-y-visible bg-gradient-to-br from-[#102E27] via-[#173D34] to-[#214B40] text-[#F7F5EF] py-8 sm:py-10 lg:py-8 xl:py-12"
+      className="relative flex flex-col justify-center min-h-[calc(100dvh-76px)] sm:min-h-[calc(100dvh-80px)] overflow-x-hidden overflow-y-visible bg-gradient-to-br from-[#EEF4EC] via-[#E4EDE1] to-[#D7E4D3] text-[#24352D] py-8 sm:py-10 lg:py-8 xl:py-12 border-b border-[#C8D6C6]"
     >
       {/* Background Lighting & Global Decorative Accents */}
       <div className="absolute inset-0 pointer-events-none overflow-hidden">
         {/* Soft Warm Radial Lighting behind Portrait area */}
-        <div className="absolute top-[5%] right-[5%] w-[600px] h-[600px] lg:w-[780px] lg:h-[780px] rounded-full bg-[radial-gradient(circle,rgba(223,189,131,0.20)_0%,rgba(33,75,64,0.38)_45%,transparent_70%)] blur-2xl pointer-events-none" />
+        <div className="absolute top-[5%] right-[5%] w-[600px] h-[600px] lg:w-[780px] lg:h-[780px] rounded-full bg-[radial-gradient(circle,rgba(223,189,131,0.22)_0%,rgba(180,202,176,0.30)_45%,transparent_70%)] blur-2xl pointer-events-none" />
         
-        {/* Deep ambient forest tone at bottom-left */}
-        <div className="absolute bottom-[-10%] left-[-5%] w-[450px] h-[450px] rounded-full bg-[#102E27]/50 blur-3xl pointer-events-none" />
+        {/* Ambient botanical tone at bottom-left */}
+        <div className="absolute bottom-[-10%] left-[-5%] w-[450px] h-[450px] rounded-full bg-[#C8D8C3]/50 blur-3xl pointer-events-none" />
 
         {/* Global Sweeping Gold Arcs & Sparkles across the hero canvas */}
         <svg
@@ -127,22 +127,22 @@ export default function HeroSection({
             
             {/* Eyebrow Label */}
             <div className="inline-flex items-center gap-3">
-              <span className="w-8 h-[1px] bg-[#DFBD83]" />
-              <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#DFBD83] uppercase font-sans">
+              <span className="w-8 h-[1px] bg-[#9E783E]" />
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.25em] text-[#7D6335] uppercase font-sans">
                 Nair&apos;s Epigenetic Wellness
               </span>
             </div>
 
             {/* Main Headline */}
-            <h1 className="font-serif text-[30px] xs:text-[32px] sm:text-5xl md:text-6xl lg:text-[52px] xl:text-[60px] 2xl:text-[66px] font-normal leading-[1.08] tracking-tight text-[#F7F5EF]">
+            <h1 className="font-serif text-[30px] xs:text-[32px] sm:text-5xl md:text-6xl lg:text-[52px] xl:text-[60px] 2xl:text-[66px] font-normal leading-[1.08] tracking-tight text-[#173D34]">
               <span>Understand Yourself.</span>
-              <span className="block mt-1 sm:mt-2 italic font-serif text-[#DFBD83] font-light xl:whitespace-nowrap">
+              <span className="block mt-1 sm:mt-2 italic font-serif text-[#2F5A48] font-light xl:whitespace-nowrap">
                 Transform Your Wellbeing.
               </span>
             </h1>
 
             {/* Supporting Copy */}
-            <p className="font-sans text-base sm:text-lg lg:text-[16.5px] xl:text-[17.5px] text-[#E8EDE4]/90 font-light leading-relaxed max-w-xl lg:max-w-2xl">
+            <p className="font-sans text-base sm:text-lg lg:text-[16.5px] xl:text-[17.5px] text-[#3F5448] font-light leading-relaxed max-w-xl lg:max-w-2xl">
               Discover a thoughtful approach to emotional wellbeing, self-awareness and personal growth.
               We bring together psychological knowledge, therapeutic practices and practical guidance to support meaningful change.
             </p>
@@ -151,48 +151,48 @@ export default function HeroSection({
             <div className="flex flex-col sm:flex-row items-stretch sm:items-center gap-4 pt-1 sm:pt-2">
               <button
                 onClick={onOpenBooking}
-                className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 rounded-full bg-[#DFBD83] hover:bg-[#E5B86F] text-[#102E27] text-base font-semibold tracking-wide shadow-lg shadow-black/30 hover:shadow-xl hover:scale-[1.02] border border-[#DFBD83] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBD83]"
+                className="group inline-flex items-center justify-center gap-2.5 px-8 py-3.5 sm:py-4 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-base font-semibold tracking-wide shadow-md hover:shadow-lg hover:scale-[1.02] border border-[#1E3F35] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3F35] cursor-pointer"
               >
                 <span>Book a Consultation</span>
-                <ArrowUpRight className="w-4 h-4 text-[#102E27] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-4 h-4 text-[#DFBD83] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
 
               <Link
                 href="/services"
                 onClick={onExploreServices}
-                className="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:py-4 rounded-full bg-[#102E27]/40 hover:bg-[#DFBD83]/10 text-[#F7F5EF] text-base font-medium tracking-wide border border-[#DFBD83]/70 hover:border-[#DFBD83] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#DFBD83]"
+                className="group inline-flex items-center justify-center gap-2.5 px-7 py-3.5 sm:py-4 rounded-full bg-[#DCE7DA]/80 hover:bg-[#D1DDD0] text-[#173D34] text-base font-medium tracking-wide border border-[#B8C9B5] transition-all duration-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#1E3F35]"
               >
                 <span>Explore Our Services</span>
-                <ArrowUpRight className="w-4 h-4 text-[#DFBD83] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+                <ArrowUpRight className="w-4 h-4 text-[#1E3F35] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </Link>
             </div>
 
             {/* Services Statement below CTAs */}
-            <div className="pt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-[#E8EDE4]/85 font-sans tracking-wide">
+            <div className="pt-2 flex flex-wrap items-center gap-2 text-xs sm:text-sm text-[#495E52] font-sans tracking-wide">
               <span>Counselling</span>
-              <span className="text-[#DFBD83]">•</span>
+              <span className="text-[#9E783E]">•</span>
               <span>Psychotherapy</span>
-              <span className="text-[#DFBD83]">•</span>
+              <span className="text-[#9E783E]">•</span>
               <span>Mindfulness</span>
-              <span className="text-[#DFBD83]">•</span>
+              <span className="text-[#9E783E]">•</span>
               <span>Professional Training</span>
             </div>
 
             {/* Trust Badges Bar */}
-            <div className="pt-4 border-t border-[#DFBD83]/15 flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#E8EDE4]/75">
+            <div className="pt-4 border-t border-[#C6D6C4] flex flex-wrap items-center gap-4 sm:gap-6 text-xs text-[#3F5448]">
               <div className="flex items-center gap-2">
-                <ShieldCheck className="w-4 h-4 text-[#DFBD83] shrink-0" />
+                <ShieldCheck className="w-4 h-4 text-[#1E3F35] shrink-0" />
                 <span>RCI Registered Practice</span>
               </div>
-              <span className="text-[#DFBD83]/30 hidden sm:inline">|</span>
+              <span className="text-[#B58B50]/40 hidden sm:inline">|</span>
               <div className="flex items-center gap-2">
-                <BookOpen className="w-4 h-4 text-[#DFBD83] shrink-0" />
+                <BookOpen className="w-4 h-4 text-[#1E3F35] shrink-0" />
                 <span>Evidence-Informed Modalities</span>
               </div>
-              <span className="text-[#DFBD83]/30 hidden sm:inline">|</span>
+              <span className="text-[#B58B50]/40 hidden sm:inline">|</span>
               <div className="flex items-center gap-2">
-                <Users className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                <span>Confidential &amp; Person-Centred</span>
+                <Users className="w-4 h-4 text-[#1E3F35] shrink-0" />
+                <span>Confidential &amp; Person-Centered Approach</span>
               </div>
             </div>
 
@@ -205,34 +205,28 @@ export default function HeroSection({
               {/* Arch Container */}
               <div className="relative z-10">
                 
-                {/* Outer delicate gold contour outline — tighter, more compact */}
-                <div className="absolute -inset-[8px] rounded-t-[210px] lg:rounded-t-[220px] xl:rounded-t-[230px] rounded-b-[42px] border border-[#DFBD83]/20 pointer-events-none" />
+                {/* Outer delicate sage contour outline */}
+                <div className="absolute -inset-[8px] rounded-t-[210px] lg:rounded-t-[220px] xl:rounded-t-[230px] rounded-b-[42px] border border-[#B8C8B6]/70 pointer-events-none" />
                 {/* Second outer ring at distance */}
-                <div className="absolute -inset-[16px] rounded-t-[218px] lg:rounded-t-[228px] xl:rounded-t-[238px] rounded-b-[46px] border border-[#DFBD83]/10 pointer-events-none hidden sm:block" />
+                <div className="absolute -inset-[16px] rounded-t-[218px] lg:rounded-t-[228px] xl:rounded-t-[238px] rounded-b-[46px] border border-[#B8C8B6]/40 pointer-events-none hidden sm:block" />
 
                 {/* Main Arch Frame */}
-                <div className="relative h-[510px] sm:h-[555px] lg:h-[580px] xl:h-[600px] w-full rounded-t-[196px] lg:rounded-t-[206px] xl:rounded-t-[216px] rounded-b-[34px] overflow-hidden border-2 border-[#DFBD83]/75 shadow-2xl"
-                  style={{ background: 'radial-gradient(ellipse 85% 70% at 50% 38%, #2A5A48 0%, #183F36 35%, #12332B 65%, #0A1F1A 100%)' }}>
+                <div className="relative h-[510px] sm:h-[555px] lg:h-[580px] xl:h-[600px] w-full rounded-t-[196px] lg:rounded-t-[206px] xl:rounded-t-[216px] rounded-b-[34px] overflow-hidden border-2 border-[#A8BBA2] shadow-xl"
+                  style={{ background: 'radial-gradient(ellipse 85% 70% at 50% 38%, #527566 0%, #355648 40%, #234236 75%, #18332A 100%)' }}>
                   
-                  {/* Warm Radial Glow behind subject — enhanced for blazer separation */}
+                  {/* Warm Radial Glow behind subject */}
                   <div className="absolute top-6 left-1/2 -translate-x-1/2 w-72 h-72 sm:w-80 sm:h-80 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(circle, rgba(223,189,131,0.42) 0%, rgba(180,140,80,0.18) 35%, rgba(23,61,52,0.08) 65%, transparent 100%)', filter: 'blur(28px)' }} />
+                    style={{ background: 'radial-gradient(circle, rgba(223,189,131,0.35) 0%, rgba(180,202,176,0.25) 45%, transparent 75%)', filter: 'blur(28px)' }} />
 
-                  {/* Secondary amber warmth mid-height for blazer edge separation */}
+                  {/* Secondary amber warmth mid-height */}
                   <div className="absolute top-[28%] left-1/2 -translate-x-1/2 w-56 h-56 rounded-full pointer-events-none"
-                    style={{ background: 'radial-gradient(circle, rgba(180,130,60,0.22) 0%, rgba(140,100,40,0.10) 50%, transparent 100%)', filter: 'blur(22px)' }} />
+                    style={{ background: 'radial-gradient(circle, rgba(223,189,131,0.20) 0%, rgba(180,140,80,0.10) 50%, transparent 100%)', filter: 'blur(22px)' }} />
 
                   {/* Soft bottom vignette to anchor the figure */}
-                  <div className="absolute bottom-0 left-0 right-0 h-32 pointer-events-none z-10"
-                    style={{ background: 'linear-gradient(to top, rgba(10,31,26,0.55) 0%, rgba(10,31,26,0.20) 50%, transparent 100%)' }} />
+                  <div className="absolute bottom-0 left-0 right-0 h-28 pointer-events-none z-10"
+                    style={{ background: 'linear-gradient(to top, rgba(24,51,42,0.60) 0%, rgba(24,51,42,0.15) 50%, transparent 100%)' }} />
 
-                  {/* Soft edge vignette */}
-                  <div className="absolute inset-0 pointer-events-none z-10"
-                    style={{ background: 'radial-gradient(ellipse 100% 100% at 50% 50%, transparent 55%, rgba(10,31,26,0.55) 100%)' }} />
-
-                  {/* Authentic Photograph — scaled up ~18% to enlarge face/shoulders.
-                      Wrapper has pt so the arch's rounded top doesn't clip the head.
-                      The image is offset down via top padding in the wrapper. */}
+                  {/* Authentic Photograph */}
                   <div className="relative w-full h-full overflow-hidden">
                     <div className="absolute inset-0" style={{ top: '32px' }}>
                       <Image
@@ -241,29 +235,32 @@ export default function HeroSection({
                         fill
                         priority
                         sizes="(max-width: 640px) 340px, (max-width: 1024px) 380px, 410px"
-                        className="object-contain object-top select-none pointer-events-none drop-shadow-[0_8px_30px_rgba(0,0,0,0.70)]"
+                        className="object-contain object-top select-none pointer-events-none drop-shadow-[0_8px_24px_rgba(0,0,0,0.45)]"
                         style={{ transform: 'scale(1.18)', transformOrigin: 'center 22%' }}
                       />
                     </div>
                   </div>
                 </div>
 
-                {/* Elegant Overlapping Nameplate Plaque — wider, overlapping arch bottom */}
-                <div className="absolute -bottom-4 sm:-bottom-5 left-1/2 -translate-x-1/2 w-[96%] max-w-[380px] z-30 backdrop-blur-md border border-[#DFBD83]/65 rounded-[20px] py-3 px-5 sm:py-3.5 sm:px-6 text-center"
-                  style={{ background: 'rgba(13,38,32,0.97)', boxShadow: '0 12px 40px rgba(0,0,0,0.65), 0 0 0 1px rgba(223,189,131,0.12)' }}>
-                  <h3 className="font-serif text-[19px] sm:text-[21px] lg:text-[22px] font-semibold text-[#F7F5EF] tracking-tight leading-snug">
+                {/* Elegant Overlapping Sage Glass Nameplate Plaque */}
+                <div className="absolute -bottom-4 sm:-bottom-5 left-1/2 -translate-x-1/2 w-[96%] max-w-[380px] z-30 backdrop-blur-md rounded-[20px] py-3.5 px-5 sm:px-6 text-center border border-[#B8C8B6]"
+                  style={{ background: 'rgba(238, 244, 236, 0.96)', boxShadow: '0 12px 32px rgba(23, 61, 52, 0.12), 0 0 0 1px rgba(184, 200, 182, 0.6)' }}>
+                  <h3 className="font-serif text-[19px] sm:text-[21px] lg:text-[22px] font-semibold text-[#173D34] tracking-tight leading-snug">
                     Ajit Kumar Nair
                   </h3>
-                  <p className="font-sans text-[11px] sm:text-[12px] text-[#E8EDE4]/88 mt-1 leading-snug tracking-wide">
-                    Counselling Psychologist · Rehabilitation Counselor
+                  <p className="font-sans text-[11px] sm:text-[12px] text-[#9E783E] mt-1.5 leading-snug tracking-wider font-semibold uppercase">
+                    RCI REGISTERED REHABILITATION COUNSELLOR
                   </p>
-                  <p className="font-sans text-[10.5px] sm:text-[11.5px] text-[#DFBD83]/90 mt-0.5 leading-snug tracking-wide">
-                    (RCI Registered) · Clinical Hypnotherapist
+                  <p className="font-sans text-[10px] sm:text-[11px] text-[#3B5446] mt-0.5 leading-snug tracking-wider font-medium uppercase">
+                    COUNSELLING PSYCHOLOGIST &amp; CLINICAL HYPNOTHERAPIST
+                  </p>
+                  <p className="font-sans text-[9.5px] sm:text-[10px] text-[#7D6335] mt-0.5 leading-snug tracking-wider font-medium uppercase">
+                    MENTAL HEALTH REHABILITATION &amp; TRAINING EXPERT
                   </p>
                   {/* Decorative gold diamond */}
                   <div className="mt-2 flex justify-center">
                     <svg width="14" height="8" viewBox="0 0 14 8" fill="none">
-                      <path d="M7 1 L13 4 L7 7 L1 4 Z" fill="#DFBD83" fillOpacity="0.7" />
+                      <path d="M7 1 L13 4 L7 7 L1 4 Z" fill="#9E783E" fillOpacity="0.8" />
                     </svg>
                   </div>
                 </div>

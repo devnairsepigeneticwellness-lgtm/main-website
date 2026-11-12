@@ -21,7 +21,7 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
       tagline: "Clarity Over Automatic Reactions",
       desc: "Identifying habitual thinking traps, emotional triggers, unhelpful coping mechanisms, and relationship cycles that may be keeping you stuck.",
       detail:
-        "Through evidence-based models like Cognitive Behavioural Therapy and mindfulness, you discover how recurring loops develop and how to observe them with objectivity.",
+        "Through evidence based modalities , we help you explore how recurring loops develop and how to observe them with objectivity",
     },
     {
       num: "03",
@@ -42,32 +42,32 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
   ];
 
   return (
-    <section id="about" className="py-20 lg:py-28 bg-[#F7F5EF] relative overflow-hidden">
+    <section id="about" className="py-20 lg:py-28 bg-[#F4F7F2] relative overflow-hidden">
       {/* Decorative Gold & Botanical Lines */}
-      <div className="absolute top-0 right-0 w-80 h-80 bg-[#E8EDE4]/60 rounded-full blur-3xl pointer-events-none" />
-      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#B58B50]/5 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute top-0 right-0 w-80 h-80 bg-[#DFE8DC]/70 rounded-full blur-3xl pointer-events-none" />
+      <div className="absolute bottom-0 left-0 w-96 h-96 bg-[#9E783E]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
         <div className="max-w-3xl mb-16 lg:mb-20">
           <div className="inline-flex items-center gap-3 mb-3">
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
-            <span className="text-xs font-semibold tracking-[0.22em] text-[#B58B50] uppercase font-sans">
+            <span className="w-6 h-[1px] bg-[#9E783E]" />
+            <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
               About Nair&apos;s Epigenetic Wellness
             </span>
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#173D34] leading-[1.18] tracking-tight">
             Understanding you. Supporting change.{" "}
-            <span className="italic text-[#B58B50] block mt-1">Enabling lifelong wellbeing.</span>
+            <span className="italic text-[#2F5A48] block mt-1">Enabling lifelong wellbeing.</span>
           </h2>
 
-          <p className="mt-6 font-sans text-base sm:text-lg text-[#59675F] leading-relaxed font-light">
+          <p className="mt-6 font-sans text-base sm:text-lg text-[#3F5448] leading-relaxed font-light">
             At Nair&apos;s Epigenetic Wellness (N.E.W.), we believe wellbeing begins with understanding
             the experiences, patterns, and environments that shape how we think, feel, and relate.
             Our approach combines clinical psychology, cognitive behavioural therapies, clinical hypnotherapy,
-            and mindfulness into an integrative, person-centred pathway.
+            and mindfulness into an integrative, person-centered approach.
           </p>
         </div>
 
@@ -75,13 +75,13 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-16 items-center mb-20">
           
           {/* Left: What is Epigenetic Wellness? */}
-          <div className="lg:col-span-7 bg-[#E8EDE4]/50 border border-[#B58B50]/20 rounded-3xl p-8 sm:p-10 lg:p-12 relative shadow-sm">
+          <div className="lg:col-span-7 bg-[#E5ECE2] border border-[#C5D4C2] rounded-3xl p-8 sm:p-10 lg:p-12 relative shadow-xs">
             <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-[#173D34] text-[#DFBD83] flex items-center justify-center">
+              <div className="w-10 h-10 rounded-full bg-[#1E3F35] text-[#DFBD83] flex items-center justify-center">
                 <Dna className="w-5 h-5" />
               </div>
               <div>
-                <span className="text-xs font-semibold tracking-[0.16em] uppercase text-[#B58B50]">
+                <span className="text-xs font-semibold tracking-[0.16em] uppercase text-[#7D6335]">
                   The Science of Adaptability
                 </span>
                 <h3 className="font-serif text-2xl font-medium text-[#173D34]">
@@ -96,21 +96,21 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
               by our psychological environment: thoughts, emotional stress, lifestyle, relationships, and learned patterns of coping.
             </p>
 
-            <blockquote className="border-l-2 border-[#B58B50] pl-5 my-6 italic font-serif text-base sm:text-lg text-[#173D34] font-normal">
+            <blockquote className="border-l-2 border-[#9E783E] pl-5 my-6 italic font-serif text-base sm:text-lg text-[#173D34] font-normal">
               &ldquo;Understanding is where meaningful change begins. By transforming how we respond to life&apos;s
               challenges, we help rewrite our psychological and physiological patterns.&rdquo;
             </blockquote>
 
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#B58B50]/20">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 pt-4 border-t border-[#C5D4C2]">
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#B58B50] shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-[#1E3F35] shrink-0 mt-0.5" />
                 <div className="text-xs sm:text-sm text-[#24352D]">
                   <strong className="font-semibold block text-[#173D34]">Bio-Psycho-Social Model</strong>
                   Integrating biological, emotional, and relational dimensions.
                 </div>
               </div>
               <div className="flex items-start gap-3">
-                <CheckCircle2 className="w-5 h-5 text-[#B58B50] shrink-0 mt-0.5" />
+                <CheckCircle2 className="w-5 h-5 text-[#1E3F35] shrink-0 mt-0.5" />
                 <div className="text-xs sm:text-sm text-[#24352D]">
                   <strong className="font-semibold block text-[#173D34]">Neuroplastic Potential</strong>
                   Building healthier emotional circuits through conscious practice.
@@ -119,13 +119,13 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
             </div>
           </div>
 
-          {/* Right: Editorial Visual Composition Placeholder */}
+          {/* Right: Editorial Visual Composition */}
           <div className="lg:col-span-5 flex flex-col items-center justify-center">
-            <div className="relative w-full max-w-[380px] h-[420px] rounded-2xl border-2 border-[#B58B50]/30 bg-gradient-to-br from-[#173D34] to-[#102E27] p-8 text-[#F7F5EF] flex flex-col justify-between shadow-xl overflow-hidden">
+            <div className="relative w-full max-w-[380px] h-[420px] rounded-2xl border border-[#B8C9B5] bg-gradient-to-br from-[#2D5043] via-[#244337] to-[#1B362C] p-8 text-[#F7F5EF] flex flex-col justify-between shadow-lg overflow-hidden">
               
               {/* Background Art */}
-              <div className="absolute top-0 right-0 w-48 h-48 bg-[#DFBD83]/10 rounded-full blur-2xl pointer-events-none" />
-              <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-[#E8EDE4]/10 rounded-full blur-xl pointer-events-none" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#DFBD83]/15 rounded-full blur-2xl pointer-events-none" />
+              <div className="absolute -bottom-8 -left-8 w-40 h-40 bg-[#DFE8DC]/15 rounded-full blur-xl pointer-events-none" />
               
               {/* Top Card Header */}
               <div className="relative z-10 flex items-center justify-between">
@@ -135,14 +135,14 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
                     Holistic Philosophy
                   </span>
                 </div>
-                <span className="text-xs px-2.5 py-1 rounded-full bg-[#B58B50]/20 border border-[#B58B50]/40 text-[#DFBD83]">
+                <span className="text-xs px-2.5 py-1 rounded-full bg-[#DFBD83]/20 border border-[#DFBD83]/40 text-[#DFBD83]">
                   N.E.W.
                 </span>
               </div>
 
-              {/* Middle Feature Placeholder Graphic */}
+              {/* Middle Feature Graphic */}
               <div className="relative z-10 my-auto text-center py-6">
-                <div className="w-20 h-20 mx-auto rounded-full border border-[#DFBD83]/40 bg-[#102E27]/80 flex items-center justify-center mb-4 shadow-inner">
+                <div className="w-20 h-20 mx-auto rounded-full border border-[#DFBD83]/40 bg-[#162F27]/80 flex items-center justify-center mb-4 shadow-inner">
                   <Sparkles className="w-10 h-10 text-[#DFBD83]" strokeWidth={1.3} />
                 </div>
                 <h4 className="font-serif text-2xl font-light text-[#F7F5EF]">
@@ -154,7 +154,7 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
               </div>
 
               {/* Bottom Badge */}
-              <div className="relative z-10 pt-4 border-t border-[#B58B50]/30 flex items-center justify-between text-xs text-[#DFBD83]">
+              <div className="relative z-10 pt-4 border-t border-[#DFBD83]/30 flex items-center justify-between text-xs text-[#DFBD83]">
                 <div className="flex items-center gap-1.5">
                   <Shield className="w-4 h-4 text-[#DFBD83]" />
                   <span>Licensed Clinical Guidance</span>
@@ -171,7 +171,7 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
         <div>
           <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 mb-8">
             <div>
-              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#B58B50]">
+              <span className="text-xs font-semibold tracking-[0.2em] uppercase text-[#7D6335]">
                 Our 4 Pillars
               </span>
               <h3 className="font-serif text-2xl sm:text-3xl font-medium text-[#173D34] mt-1">
@@ -180,10 +180,10 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
             </div>
             <button
               onClick={onOpenBooking}
-              className="inline-flex items-center gap-2 text-sm font-medium text-[#173D34] hover:text-[#B58B50] group transition-colors"
+              className="inline-flex items-center gap-2 text-sm font-medium text-[#1E3F35] hover:text-[#9E783E] group transition-colors cursor-pointer"
             >
               <span>Schedule your initial discovery session</span>
-              <ArrowUpRight className="w-4 h-4 text-[#B58B50] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              <ArrowUpRight className="w-4 h-4 text-[#9E783E] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
             </button>
           </div>
 
@@ -196,15 +196,15 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
                   onClick={() => setActiveTab(i)}
                   className={`cursor-pointer rounded-2xl p-6 sm:p-7 transition-all duration-300 flex flex-col justify-between border ${
                     isSelected
-                      ? "bg-[#173D34] text-[#F7F5EF] border-[#B58B50] shadow-xl scale-[1.02]"
-                      : "bg-white text-[#24352D] border-[#B58B50]/20 hover:border-[#B58B50]/50 hover:shadow-md"
+                      ? "bg-[#1E3F35] text-[#F7F5EF] border-[#DFBD83] shadow-md scale-[1.02]"
+                      : "bg-[#E6EEE3] text-[#24352D] border-[#C8D6C6] hover:border-[#9E783E] hover:bg-[#EBF2E8] hover:shadow-xs"
                   }`}
                 >
                   <div>
                     <div className="flex items-center justify-between mb-4">
                       <span
                         className={`font-serif text-3xl font-light ${
-                          isSelected ? "text-[#DFBD83]" : "text-[#B58B50]"
+                          isSelected ? "text-[#DFBD83]" : "text-[#9E783E]"
                         }`}
                       >
                         {pillar.num}
@@ -212,8 +212,8 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
                       <span
                         className={`text-[10px] font-sans tracking-widest uppercase px-2 py-0.5 rounded-full ${
                           isSelected
-                            ? "bg-[#102E27] text-[#DFBD83]"
-                            : "bg-[#E8EDE4] text-[#173D34]"
+                            ? "bg-[#132A23] text-[#DFBD83]"
+                            : "bg-[#D6E2D2] text-[#1E3F35]"
                         }`}
                       >
                         Pillar
@@ -230,7 +230,7 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
 
                     <span
                       className={`block text-xs font-sans tracking-wide mb-3 ${
-                        isSelected ? "text-[#DFBD83]" : "text-[#B58B50]"
+                        isSelected ? "text-[#DFBD83]" : "text-[#7D6335]"
                       }`}
                     >
                       {pillar.tagline}
@@ -238,7 +238,7 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
 
                     <p
                       className={`text-xs sm:text-sm leading-relaxed font-light ${
-                        isSelected ? "text-[#E8EDE4]/90" : "text-[#59675F]"
+                        isSelected ? "text-[#E8EDE4]/90" : "text-[#495E52]"
                       }`}
                     >
                       {pillar.desc}
@@ -246,10 +246,10 @@ export default function AboutSection({ onOpenBooking }: { onOpenBooking: () => v
                   </div>
 
                   <div
-                    className={`mt-6 pt-4 border-t text-xs font-light leading-normal ${
+                    className={`mt-6 pt-4 border-t text-xs font-medium leading-normal ${
                       isSelected
-                        ? "border-[#102E27] text-[#DFBD83]"
-                        : "border-[#E8EDE4] text-[#59675F]"
+                        ? "border-[#2A5245] text-[#DFBD83]"
+                        : "border-[#C8D6C6] text-[#9E783E]"
                     }`}
                   >
                     {pillar.detail}

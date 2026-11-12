@@ -208,13 +208,13 @@ export default function ProfessionalsHero({
                       </span>
                     </div>
 
-                    {/* Zainab Arsiwala */}
+                    {/* Zainab Aarsiwala */}
                     <div className="p-2 rounded-xl bg-[#173D34]/80 border border-[#DFBD83]/20 text-center">
                       <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
                         ZA
                       </div>
                       <span className="text-[10px] text-white font-medium block truncate">
-                        Zainab Arsiwala
+                        Zainab Aarsiwala
                       </span>
                       <span className="text-[8px] text-[#DFBD83]/80 uppercase tracking-tight block">
                         Couple &bull; Marriage

@@ -42,13 +42,13 @@ export default function HomePage() {
     <div className="min-h-screen flex flex-col bg-[#F7F5EF] text-[#24352D] font-sans">
       {/* Sticky Main Navigation */}
       <Navbar
-        onOpenBooking={() => handleOpenBooking("General Consultation")}
+        onOpenBooking={() => handleOpenBooking("Counselling")}
       />
 
       <main className="flex-1">
         {/* Section 2 — Hero Section */}
         <HeroSection
-          onOpenBooking={() => handleOpenBooking("Hero Consultation")}
+          onOpenBooking={() => handleOpenBooking("Counselling")}
           onExploreServices={handleExploreServices}
         />
 
@@ -56,16 +56,16 @@ export default function HomePage() {
         <PhilosophyStrip />
 
         {/* Section 4 — About Epigenetic Wellness & Pillars */}
-        <AboutSection onOpenBooking={() => handleOpenBooking("About N.E.W. Discovery")} />
+        <AboutSection onOpenBooking={() => handleOpenBooking("Counselling")} />
 
         {/* Section 5 — Core Services Showcase */}
         <ServicesSection onOpenBooking={handleOpenBooking} />
 
         {/* Section 6 — The N.E.W. Method & Approach */}
-        <ApproachRoadmap onOpenBooking={() => handleOpenBooking("Method Pathway")} />
+        <ApproachRoadmap onOpenBooking={() => handleOpenBooking("Counselling")} />
 
         {/* Section 7 — Founder Spotlight: Ajit Kumar Nair */}
-        <FounderSection onOpenBooking={() => handleOpenBooking("Consultation with Ajit")} />
+        <FounderSection onOpenBooking={() => handleOpenBooking("Consultation — Ajit Kumar Nair")} />
 
         {/* Section 8 — Professional Programmes, Internships & Corporate */}
         <ProgrammesSection onOpenBooking={handleOpenBooking} />
@@ -74,14 +74,14 @@ export default function HomePage() {
         <TestimonialsSection />
 
         {/* Section 11 — FAQ Accordion */}
-        <FaqSection onOpenBooking={() => handleOpenBooking("Question Inquiry")} />
+        <FaqSection onOpenBooking={() => handleOpenBooking("Counselling")} />
 
         {/* Section 12 — Direct Contact & Booking Inquiries */}
         <ContactSection />
       </main>
 
       {/* Section 13 — Luxury Editorial Footer */}
-      <Footer onOpenBooking={() => handleOpenBooking("Footer Booking")} />
+      <Footer onOpenBooking={() => handleOpenBooking("Counselling")} />
 
       {/* Interactive Consultation Modal */}
       <ConsultationModal

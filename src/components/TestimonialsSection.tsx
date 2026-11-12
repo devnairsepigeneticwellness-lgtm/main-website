@@ -50,22 +50,22 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className="py-20 lg:py-28 bg-[#F7F5EF] relative overflow-hidden">
+    <section className="py-20 lg:py-28 bg-[#EAF0E7] border-t border-[#C8D6C6] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Header */}
         <div className="flex flex-col md:flex-row md:items-end justify-between gap-6 mb-16">
           <div className="max-w-2xl">
             <div className="inline-flex items-center gap-3 mb-3">
-              <span className="w-6 h-[1px] bg-[#B58B50]" />
-              <span className="text-xs font-semibold tracking-[0.22em] text-[#B58B50] uppercase font-sans">
+              <span className="w-6 h-[1px] bg-[#9E783E]" />
+              <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
                 Client Experiences &amp; Reflections
               </span>
             </div>
 
             <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#173D34] leading-[1.18] tracking-tight">
               Real voices.{" "}
-              <span className="italic text-[#B58B50]">Meaningful transformations.</span>
+              <span className="italic text-[#7D6335]">Meaningful transformations.</span>
             </h2>
           </div>
 
@@ -73,14 +73,14 @@ export default function TestimonialsSection() {
           <div className="flex items-center gap-3">
             <button
               onClick={prev}
-              className="w-12 h-12 rounded-full border border-[#B58B50]/30 hover:border-[#173D34] text-[#173D34] hover:bg-[#173D34] hover:text-white flex items-center justify-center transition-all"
+              className="w-12 h-12 rounded-full border border-[#B8C9B5] text-[#1E3F35] bg-[#DCE7DA] hover:bg-[#1E3F35] hover:text-[#DFBD83] flex items-center justify-center transition-all"
               aria-label="Previous testimonial"
             >
               <ChevronLeft className="w-5 h-5" />
             </button>
             <button
               onClick={next}
-              className="w-12 h-12 rounded-full border border-[#B58B50]/30 hover:border-[#173D34] text-[#173D34] hover:bg-[#173D34] hover:text-white flex items-center justify-center transition-all"
+              className="w-12 h-12 rounded-full border border-[#B8C9B5] text-[#1E3F35] bg-[#DCE7DA] hover:bg-[#1E3F35] hover:text-[#DFBD83] flex items-center justify-center transition-all"
               aria-label="Next testimonial"
             >
               <ChevronRight className="w-5 h-5" />
@@ -96,16 +96,16 @@ export default function TestimonialsSection() {
           ].map((item, idx) => (
             <div
               key={idx}
-              className="bg-white rounded-3xl p-8 sm:p-10 border border-[#B58B50]/20 shadow-sm hover:shadow-md transition-shadow flex flex-col justify-between relative"
+              className="bg-[#F2F6F0] rounded-3xl p-8 sm:p-10 border border-[#C8D6C6] shadow-xs hover:shadow-md transition-shadow flex flex-col justify-between relative"
             >
-              <Quote className="w-10 h-10 text-[#DFBD83]/40 absolute top-8 right-8 pointer-events-none" />
+              <Quote className="w-10 h-10 text-[#7D6335]/25 absolute top-8 right-8 pointer-events-none" />
 
               <div>
                 <div className="flex items-center gap-1 mb-6">
                   {[...Array(5)].map((_, i) => (
-                    <Star key={i} className="w-4 h-4 fill-[#B58B50] text-[#B58B50]" />
+                    <Star key={i} className="w-4 h-4 fill-[#7D6335] text-[#7D6335]" />
                   ))}
-                  <span className="text-xs text-[#59675F] ml-2 font-medium">
+                  <span className="text-xs text-[#556A5E] ml-2 font-medium">
                     Verified Reflection
                   </span>
                 </div>
@@ -115,16 +115,16 @@ export default function TestimonialsSection() {
                 </p>
               </div>
 
-              <div className="pt-6 border-t border-[#E8EDE4] flex items-center justify-between">
+              <div className="pt-6 border-t border-[#C8D6C6] flex items-center justify-between">
                 <div>
                   <h4 className="font-sans font-semibold text-sm sm:text-base text-[#173D34]">
                     {item.author}
                   </h4>
-                  <span className="block text-xs text-[#59675F]">
+                  <span className="block text-xs text-[#556A5E]">
                     {item.role} &bull; {item.location}
                   </span>
                 </div>
-                <span className="text-[11px] font-sans font-medium px-3 py-1 rounded-full bg-[#E8EDE4] text-[#173D34]">
+                <span className="text-[11px] font-sans font-medium px-3 py-1 rounded-full bg-[#DCE7DA] text-[#1E3F35] border border-[#B8C9B5]">
                   {item.context}
                 </span>
               </div>
@@ -133,7 +133,7 @@ export default function TestimonialsSection() {
         </div>
 
         {/* Ethical Confidentiality Notice */}
-        <p className="text-center text-xs text-[#59675F] font-light mt-10">
+        <p className="text-center text-xs text-[#556A5E] font-light mt-10">
           *Client names and identifying specifics are respectfully modified to preserve strict clinical confidentiality in compliance with psychological ethics codes.
         </p>
 

@@ -3,22 +3,23 @@
 import React from "react";
 import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowUpRight, ShieldCheck, Heart, MessageCircle } from "lucide-react";
+import { InstagramIcon, LinkedInIcon, SOCIAL_LINKS } from "@/components/SocialIcons";
 
 export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void } = {}) {
   return (
-    <footer className="bg-[#0B221C] text-[#E8EDE4] border-t border-[#B58B50]/30 pt-16 pb-12 relative overflow-hidden">
+    <footer className="bg-[#1B362D] text-[#E8EDE4] border-t border-[#C8D6C6]/30 pt-16 pb-12 relative overflow-hidden">
       {/* Decorative Gold Subtle Glow */}
       <div className="absolute bottom-0 right-0 w-96 h-96 bg-[#B58B50]/5 rounded-full blur-3xl pointer-events-none" />
 
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Top Grid */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-[#173D34]">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10 lg:gap-12 pb-14 border-b border-[#2C4E41]">
           
           {/* Brand Info (4 cols) */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#173D34] text-[#DFBD83] flex items-center justify-center font-serif text-sm font-semibold border border-[#B58B50]/40">
+              <div className="w-10 h-10 rounded-full bg-[#274B3E] text-[#DFBD83] flex items-center justify-center font-serif text-sm font-semibold border border-[#C8D6C6]/30">
                 N.E.W.
               </div>
               <div>
@@ -31,14 +32,14 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
               </div>
             </div>
 
-            <p className="font-sans text-xs sm:text-sm text-[#E8EDE4]/75 font-light leading-relaxed max-w-sm">
+            <p className="font-sans text-xs sm:text-sm text-[#E8EDE4]/80 font-light leading-relaxed max-w-sm">
               Founded by Ajit Kumar Nair, Counselling Psychologist, RCI Registered Rehabilitation Counselor, and Clinical Hypnotherapist. Integrating psychological science, therapeutic skills, and epigenetic awareness to foster meaningful, lasting human growth.
             </p>
 
             <div className="pt-2">
               <Link
                 href="/book-consultation"
-                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#173D34] hover:bg-[#B58B50] text-[#DFBD83] hover:text-white text-xs font-semibold tracking-wide border border-[#B58B50]/40 transition-all"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-[#274B3E] hover:bg-[#345F50] text-[#DFBD83] hover:text-white text-xs font-semibold tracking-wide border border-[#C8D6C6]/30 transition-all"
               >
                 <span>Book a Consultation</span>
                 <ArrowUpRight className="w-3.5 h-3.5" />
@@ -114,12 +115,41 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
                 <span>Indore, Madhya Pradesh, India (In-person &amp; Global Online Sessions)</span>
               </div>
             </div>
+
+            {/* Social & Professional Connect */}
+            <div className="pt-2">
+              <span className="text-[11px] font-semibold uppercase tracking-wider text-[#DFBD83] block mb-2">
+                Follow &amp; Connect
+              </span>
+              <div className="flex flex-wrap items-center gap-2">
+                <a
+                  href={SOCIAL_LINKS.instagram.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#274B3E] hover:bg-[#345F50] text-[#E8EDE4] hover:text-[#DFBD83] text-xs font-medium border border-[#C8D6C6]/20 transition-all group"
+                  aria-label="Instagram Profile"
+                >
+                  <InstagramIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
+                  <span>Instagram</span>
+                </a>
+                <a
+                  href={SOCIAL_LINKS.linkedin.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#274B3E] hover:bg-[#345F50] text-[#E8EDE4] hover:text-[#DFBD83] text-xs font-medium border border-[#C8D6C6]/20 transition-all group"
+                  aria-label="LinkedIn Profile"
+                >
+                  <LinkedInIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
+                  <span>LinkedIn</span>
+                </a>
+              </div>
+            </div>
           </div>
 
         </div>
 
         {/* Crisis Notice */}
-        <div className="py-6 border-b border-[#173D34] text-[11px] text-[#E8EDE4]/65 font-light leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+        <div className="py-6 border-b border-[#2C4E41] text-[11px] text-[#E8EDE4]/70 font-light leading-relaxed flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
           <div className="flex items-center gap-2 text-[#DFBD83] font-medium shrink-0">
             <ShieldCheck className="w-4 h-4" />
             <span>Crisis &amp; Emergency Disclaimer:</span>
@@ -134,7 +164,26 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
           <p>
             &copy; 2026 Nair&apos;s Epigenetic Wellness (N.E.W.). All rights reserved.
           </p>
-          <div className="flex items-center gap-6">
+          <div className="flex flex-wrap items-center gap-5 sm:gap-6">
+            <a
+              href={SOCIAL_LINKS.instagram.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#DFBD83] transition-colors flex items-center gap-1.5"
+            >
+              <InstagramIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
+              <span>Instagram</span>
+            </a>
+            <a
+              href={SOCIAL_LINKS.linkedin.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#DFBD83] transition-colors flex items-center gap-1.5"
+            >
+              <LinkedInIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
+              <span>LinkedIn</span>
+            </a>
+            <span className="text-[#C8D6C6]/30 hidden sm:inline">&bull;</span>
             <Link href="/about" className="hover:text-[#DFBD83] transition-colors">Privacy &amp; Confidentiality</Link>
             <Link href="/about" className="hover:text-[#DFBD83] transition-colors">Clinical Ethics</Link>
             <Link href="/contact" className="hover:text-[#DFBD83] transition-colors">Contact</Link>

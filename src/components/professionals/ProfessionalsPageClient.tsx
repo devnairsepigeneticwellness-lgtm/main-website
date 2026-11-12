@@ -80,7 +80,7 @@ export default function ProfessionalsPageClient() {
           onOpenBooking={handleOpenBooking}
         />
 
-        {/* Section 5 — Our Professional Team (Dr. Deepa Jain, Zainab Arsiwala, Bhavya Singh) */}
+        {/* Section 5 — Our Professional Team (Dr. Deepa Jain, Zainab Aarsiwala, Bhavya Singh) */}
         <TeamGrid
           professionals={PROFESSIONALS}
           onOpenProfile={handleOpenProfile}

@@ -20,8 +20,7 @@ export const PROFESSIONALS: Professional[] = [
     id: "ajit-kumar-nair",
     name: "Ajit Kumar Nair",
     designation:
-      "Counselling Psychologist | Rehabilitation Counselor (RCI) | Clinical Hypnotherapist",
-    badge: "Founder of N.E.W.",
+      "RCI Registered Rehabilitation Counsellor | Counselling Psychologist | Clinical Hypnotherapist | Mental Health Rehabilitation & Training Expert",
     isFounder: true,
     image: "/founder.jpeg",
     initials: "AN",
@@ -32,13 +31,13 @@ export const PROFESSIONALS: Professional[] = [
       "His work reflects an interest in psychological understanding, therapeutic approaches and practical skill development in supporting individuals and groups.",
       "Ajit Kumar Nair brings extensive clinical experience across counselling psychology, psychotherapy, mental health rehabilitation, professional training, and wellbeing programmes. His formal education and advanced training span Clinical Psychology, Applied Psychology, Guidance and Counselling, Rehabilitation Psychology, and Clinical Hypnotherapy.",
       "His areas of professional training include Cognitive Behaviour Therapy (CBT), Rational Emotive Behaviour Therapy (REBT), Dialectical Behaviour Therapy (DBT), Acceptance and Commitment Therapy (ACT), Interpersonal Therapy (IPT), Emotionally Focused Therapy, mindfulness, clinical hypnotherapy, and psychological skills training.",
-      "Ajit also brings a distinctive, grounded perspective from his earlier career as an ocean mariner, followed by his dedicated transition into psychology and mental health. This combination of vast global experience, cross-cultural awareness, and clinical depth informs his practical, adaptable, and human-centred approach to wellbeing."
+      "Ajit also brings a distinctive, grounded perspective from his earlier career as a mariner, followed by his dedicated transition into psychology and mental health. This combination of vast global experience, cross-cultural awareness, and clinical depth informs his practical, adaptable, and human-centred approach to wellbeing."
     ],
     qualifications: [
+      "RCI Registered Rehabilitation Counsellor (Statutory Council of India)",
       "Counselling Psychologist (Applied Psychology & Clinical Foundations)",
-      "Rehabilitation Counselor (RCI Registered — Statutory Council of India)",
       "Clinical Hypnotherapist (Specialist Certification in Focused Relaxation & Trance)",
-      "Guidance & Counselling Professional",
+      "Mental Health Rehabilitation & Training Expert",
       "Specialised Training in CBT, REBT, DBT, ACT, IPT & Mindfulness"
     ],
     expertise: [
@@ -53,14 +52,14 @@ export const PROFESSIONALS: Professional[] = [
       "Training & Mentorship"
     ],
     modalities: [
-      "CBT (Cognitive Behavioural)",
-      "REBT (Rational Emotive)",
-      "DBT (Dialectical Skills)",
-      "ACT (Acceptance & Commitment)",
-      "IPT (Interpersonal)",
-      "Emotionally Focused Therapy",
+      "Cognitive Behaviour Therapy (CBT)",
+      "Rational Emotive Behaviour Therapy (REBT)",
+      "Dialectical Behaviour Therapy (DBT)",
+      "Acceptance and Commitment Therapy (ACT)",
+      "Interpersonal Therapy (IPT)",
+      "Emotionally Focused Therapy (EFT)",
       "Clinical Hypnotherapy",
-      "Mindfulness-Based Stress Reduction"
+      "Mindfulness-Based Cognitive Therapy (MBCT)"
     ],
     approach:
       "Integrative, person-centred approach recognising each individual's unique psychological, emotional, physical, social, family, and environmental context. Focuses on understanding root patterns, cultivating practical self-regulation skills, and fostering sustainable, enduring personal change.",
@@ -112,17 +111,17 @@ export const PROFESSIONALS: Professional[] = [
       "Promoting emotional wellbeing, resilience, and personal growth through evidence-based psychological insight and creative therapeutic expression."
   },
   {
-    id: "zainab-arsiwala",
-    name: "Zainab Arsiwala",
+    id: "zainab-aarsiwala",
+    name: "Zainab Aarsiwala",
     designation:
       "Couple & Marriage Counsellor | Counselling Psychologist | Psychological Assessor",
     badge: "Couple & Relationship Specialist",
     isFounder: false,
     initials: "ZA",
     shortBio:
-      "Zainab Arsiwala brings extensive experience across pre-marital counselling, conflict resolution, couple and marriage counselling, psychological assessment, and structured group sessions.",
+      "Zainab Aarsiwala brings extensive experience across pre-marital counselling, conflict resolution, couple and marriage counselling, psychological assessment, and structured group sessions.",
     fullBio: [
-      "Zainab Arsiwala brings extensive experience across pre-marital counselling, conflict resolution, couple and marriage counselling, psychological assessment, and structured group sessions.",
+      "Zainab Aarsiwala brings extensive experience across pre-marital counselling, conflict resolution, couple and marriage counselling, psychological assessment, and structured group sessions.",
       "Her areas of professional training and therapeutic modalities include Cognitive Behavioral Therapy (CBT), Dialectical Behavior Therapy (DBT) skills training, and psychological skill-building approaches.",
       "She works with individuals, couples, and groups around pre-marital counselling, conflict resolution, couple dynamics, marriage counselling, emotional wellbeing, psychological assessment, relationship growth, and behavioral health."
     ],

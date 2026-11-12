@@ -103,7 +103,7 @@ export default function ConsultationBookingEngine({
   const servicesList = [
     {
       id: "Counselling",
-      title: "Individual Counselling",
+      title: "Counselling",
       desc: "Confidential dialogue for emotional clarity, coping and self-understanding.",
       icon: Heart,
     },
@@ -114,14 +114,14 @@ export default function ConsultationBookingEngine({
       icon: Brain,
     },
     {
-      id: "Clinical Hypnotherapy",
-      title: "Clinical Hypnotherapy",
+      id: "Therapy",
+      title: "Therapy",
       desc: "Subconscious alignment, somatic ease & nervous system reset.",
       icon: Sparkles,
     },
     {
       id: "Online Rehabilitation",
-      title: "Online Rehabilitation (RCI)",
+      title: "Online Rehabilitation",
       desc: "Neurodevelopmental guidance, psychosocial & rehabilitation counselling.",
       icon: Shield,
     },
@@ -316,7 +316,7 @@ export default function ConsultationBookingEngine({
         {/* Confidentiality Reminder */}
         <div className="flex items-center justify-center gap-2 text-xs text-[#59675F]">
           <ShieldCheck className="w-4 h-4 text-[#B58B50]" />
-          <span>Strictly Confidential · RCI Statutory Ethical Standard</span>
+          <span>Strictly Confidential · Professional Clinical Standards</span>
         </div>
 
         <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">

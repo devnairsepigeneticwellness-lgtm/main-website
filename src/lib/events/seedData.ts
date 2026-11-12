@@ -17,7 +17,7 @@ export const SEED_PROFESSIONALS: Professional[] = [
   },
   {
     id: "33333333-3333-3333-3333-333333333333",
-    name: "Zainab Arsiwala",
+    name: "Zainab Aarsiwala",
     designation: "Couple & Marriage Counsellor, Psychological Assessor",
     is_active: true,
     created_at: "2026-01-01T00:00:00Z",
@@ -74,7 +74,7 @@ export const SEED_EVENTS: Event[] = [
     timezone: "Asia/Kolkata",
     mode: "In-Person",
     venue: "Sayaji Hotel Conference Centre, Indore",
-    speaker_name: "Zainab Arsiwala & Ajit Kumar Nair",
+    speaker_name: "Zainab Aarsiwala & Ajit Kumar Nair",
     poster_path:
       "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&w=1200&q=80",
     registration_url: "https://forms.gle/new-nvc-workshop",
