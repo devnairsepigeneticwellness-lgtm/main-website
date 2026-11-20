@@ -65,26 +65,26 @@ export default function ServicesHero({
 
             {/* Section Jump Links */}
             <div className="pt-2 flex flex-wrap gap-2 text-xs">
-              <a href="#counselling" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Counselling
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                1. Counselling (14 Streams)
               </a>
-              <a href="#psychotherapies" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Psychotherapies (10 Modalities)
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                2. Psychotherapies (10 Modalities)
               </a>
-              <a href="#hypnotherapy" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Hypnotherapy
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                3. Hypnotherapy
               </a>
-              <a href="#rehabilitation" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Online Rehabilitation
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                4. Online Rehabilitation
               </a>
-              <a href="#renewal" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Renewal
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                5. Renewal
               </a>
-              <a href="#spiritual-practices" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Spiritual Practices
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                6. Spiritual Practices
               </a>
-              <a href="#support-plans" className="px-3.5 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                Treatment &amp; Support Plans
+              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                7. Treatment &amp; Support Plans
               </a>
             </div>
 

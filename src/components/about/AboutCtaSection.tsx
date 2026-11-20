@@ -2,13 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
-import { ArrowUpRight, ArrowDown, ShieldCheck, Phone } from "lucide-react";
+import { ArrowUpRight, Sparkles, ShieldCheck } from "lucide-react";
+import { aboutCopy } from "@/data/aboutData";
 
 interface AboutCtaSectionProps {
   onOpenBooking: () => void;
 }
 
 export default function AboutCtaSection({ onOpenBooking }: AboutCtaSectionProps) {
+  const { footerCta } = aboutCopy;
+
   return (
     <section className="py-20 lg:py-28 bg-[#173D34] text-[#F7F5EF] relative overflow-hidden">
       {/* Decorative Radiance */}
@@ -21,59 +24,58 @@ export default function AboutCtaSection({ onOpenBooking }: AboutCtaSectionProps)
         <div className="inline-flex items-center gap-3 mb-4 justify-center">
           <span className="w-8 h-[1px] bg-[#DFBD83]" />
           <span className="text-xs font-semibold tracking-[0.24em] text-[#DFBD83] uppercase font-sans">
-            BEGIN THE CONVERSATION
+            {footerCta.brand.toUpperCase()}
           </span>
           <span className="w-8 h-[1px] bg-[#DFBD83]" />
         </div>
 
-        {/* Heading */}
+        {/* Main Tagline (Exact PDF Copy) */}
         <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-white leading-[1.18] tracking-tight mb-6">
-          Take the Next Step Towards{" "}
-          <span className="italic text-[#DFBD83]">Greater Understanding.</span>
+          Because wellbeing begins with{" "}
+          <span className="italic text-[#DFBD83]">understanding yourself.</span>
         </h2>
 
-        {/* Supporting text */}
-        <p className="font-sans text-base sm:text-lg text-[#E8EDE4]/90 font-light leading-relaxed max-w-2xl mx-auto mb-10">
-          Connect with Nair&apos;s Epigenetic Wellness to explore our services, programmes and opportunities for support.
-        </p>
+        {/* Services Ribbon List (Exact PDF Copy) */}
+        <div className="flex flex-wrap items-center justify-center gap-2 sm:gap-3 text-xs sm:text-sm text-[#E8EDE4]/90 mb-10 max-w-2xl mx-auto">
+          {footerCta.servicesList.map((srv, idx) => (
+            <React.Fragment key={idx}>
+              <span className="font-medium tracking-wide">{srv}</span>
+              {idx < footerCta.servicesList.length - 1 && (
+                <span className="text-[#DFBD83]/60 font-light">&bull;</span>
+              )}
+            </React.Fragment>
+          ))}
+        </div>
 
-        {/* CTA Buttons */}
+        {/* Three Exact CTAs from PDF Page 5 */}
         <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
           <button
+            type="button"
             onClick={onOpenBooking}
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-[#B58B50] hover:bg-[#A37B42] text-white text-sm sm:text-base font-semibold tracking-wide shadow-xl hover:scale-[1.02] border border-[#DFBD83]/40 transition-all flex items-center justify-center gap-2"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-8 py-4 rounded-full bg-[#B58B50] hover:bg-[#A37B42] text-white text-xs sm:text-sm font-semibold tracking-wider uppercase transition-all shadow-lg hover:shadow-xl hover:scale-[1.02] cursor-pointer"
           >
             <span>Book a Consultation</span>
-            <ArrowUpRight className="w-4 h-4 text-[#F7F5EF]" />
+            <ArrowUpRight className="w-4 h-4 text-white" />
           </button>
 
           <Link
-            href="/services"
-            className="w-full sm:w-auto px-8 py-4 rounded-full bg-transparent hover:bg-white/10 text-[#F7F5EF] text-sm sm:text-base font-medium tracking-wide border border-[#E8EDE4]/30 hover:border-[#DFBD83] transition-all flex items-center justify-center gap-2"
+            href="/screening"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-white/10 hover:bg-white/20 text-[#F7F5EF] text-xs sm:text-sm font-medium tracking-wider uppercase border border-white/20 transition-all"
           >
-            <span>Explore Our Services</span>
+            <span>Explore Our Assessment</span>
             <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
           </Link>
-        </div>
 
-        {/* Helpline note */}
-        <div className="mt-12 pt-8 border-t border-[#102E27] flex flex-col sm:flex-row items-center justify-center gap-6 text-xs text-[#E8EDE4]/70 font-light">
-          <div className="flex items-center gap-2">
-            <ShieldCheck className="w-4 h-4 text-[#DFBD83]" />
-            <span>Confidential &bull; RCI Registered Standards</span>
-          </div>
-          <span className="hidden sm:inline">&bull;</span>
-          <a
-            href="tel:+919446477779"
-            className="flex items-center gap-2 hover:text-[#DFBD83] transition-colors"
+          <Link
+            href="/events"
+            className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-4 rounded-full bg-transparent hover:bg-white/10 text-[#DFBD83] text-xs sm:text-sm font-medium tracking-wider uppercase border border-[#DFBD83]/40 transition-all"
           >
-            <Phone className="w-3.5 h-3.5 text-[#DFBD83]" />
-            <span>Direct Line: +91 94464 77779</span>
-          </a>
+            <span>View Upcoming Events</span>
+            <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
+          </Link>
         </div>
 
       </div>
     </section>
   );
 }
-

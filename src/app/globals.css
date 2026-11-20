@@ -77,3 +77,13 @@ body {
 ::-webkit-scrollbar-thumb:hover {
   background: #8F6C3A;
 }
+
+/* Native Dialog & Backdrop scroll containment per modern-web-guidance */
+dialog:modal {
+  overscroll-behavior: contain;
+}
+dialog::backdrop {
+  overflow: hidden;
+  overscroll-behavior: contain;
+}
+

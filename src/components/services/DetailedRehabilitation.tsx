@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
-import { Shield, CheckCircle2, Video, Clock, Home, ArrowUpRight, Compass, Users } from "lucide-react";
+import React, { useState } from "react";
+import { Shield, CheckCircle2, Video, Clock, Home, ArrowUpRight, Compass, Users, Sparkles } from "lucide-react";
+import ServiceDetailModal from "@/components/services/ServiceDetailModal";
 
 interface DetailedRehabilitationProps {
   onOpenBooking: (serviceName: string) => void;
 }
 
 export default function DetailedRehabilitation({ onOpenBooking }: DetailedRehabilitationProps) {
+  const [activeModal, setActiveModal] = useState<"advantages" | "offerings" | "pathway" | null>(null);
+
   const whyChooseOnline = [
     {
       title: "Comfort & Privacy",
@@ -93,15 +96,15 @@ export default function DetailedRehabilitation({ onOpenBooking }: DetailedRehabi
   ];
 
   return (
-    <section id="rehabilitation" className="py-20 lg:py-28 bg-[#EBF1E8] border-b border-[#C8D6C6] relative overflow-hidden">
+    <section id="rehabilitation" className="py-16 lg:py-24 bg-[#EBF1E8] border-b border-[#C8D6C6] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14">
+        <div className="max-w-3xl mb-12">
           <div className="inline-flex items-center gap-3 mb-3">
-            <span className="w-6 h-[1px] bg-[#9E783E]" />
+            <span className="w-8 h-[1px] bg-[#9E783E]" />
             <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
-              ONLINE REHABILITATION
+              04. ONLINE REHABILITATION
             </span>
           </div>
 
@@ -121,17 +124,17 @@ export default function DetailedRehabilitation({ onOpenBooking }: DetailedRehabi
         </div>
 
         {/* What is Online Rehabilitation? */}
-        <div className="mb-16 p-8 sm:p-10 rounded-3xl bg-[#F2F6F0] border border-[#C8D6C6]">
+        <div className="mb-10 p-6 sm:p-8 rounded-3xl bg-[#F2F6F0] border border-[#C8D6C6]">
           <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
             Accessibility &amp; Care
           </span>
-          <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34] mb-3">
+          <h3 className="font-serif text-2xl font-normal text-[#173D34] mb-2">
             What is Online Rehabilitation?
           </h3>
-          <p className="text-xs font-sans tracking-wide text-[#7D6335] font-semibold mb-4 uppercase">
+          <p className="text-xs font-sans tracking-wide text-[#7D6335] font-semibold mb-3 uppercase">
             Professional support that reaches you wherever you are.
           </p>
-          <div className="space-y-3 font-sans text-sm sm:text-base text-[#465A4F] leading-relaxed font-light">
+          <div className="space-y-3 font-sans text-xs sm:text-sm text-[#465A4F] leading-relaxed font-light">
             <p>
               You don’t always have to visit a clinic to receive quality care. Online Rehabilitation brings structured, professional psychological support directly to you through secure video calls.
             </p>
@@ -141,53 +144,178 @@ export default function DetailedRehabilitation({ onOpenBooking }: DetailedRehabi
           </div>
         </div>
 
-        {/* Why Choose Online Support? */}
-        <div className="mb-16">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Remote Advantages
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              Why Choose Online Support?
-            </h3>
+        {/* 3 Core Interactive Hub Cards */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+          {/* Card 1: Remote Advantages & Suitability */}
+          <div className="rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] hover:border-[#9E783E] p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 shadow-xs">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                <Home className="w-5 h-5" />
+              </div>
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                Remote Advantages &amp; Suitability
+              </span>
+              <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                Why Choose Online Support?
+              </h4>
+              <p className="text-xs sm:text-sm text-[#465A4F] leading-relaxed font-light mb-4">
+                Comfort, zero commute stress, consistent care during travel, and flexible scheduling designed for busy individuals.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActiveModal("advantages")}
+              className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+            >
+              <span>View Advantages &amp; Suitability</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+            </button>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {whyChooseOnline.map((item, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6] flex flex-col justify-between shadow-xs">
-                <div>
-                  <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
+          {/* Card 2: What We Offer */}
+          <div className="rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] hover:border-[#9E783E] p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 shadow-xs">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                <Shield className="w-5 h-5" />
+              </div>
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                Structured Guidance
+              </span>
+              <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                What We Offer Online
+              </h4>
+              <p className="text-xs sm:text-sm text-[#465A4F] leading-relaxed font-light mb-4">
+                6 structured pathways: 1-on-1 Counselling, Guided Sessions, Mindfulness, Skill-Building, Tracking, and Family Guidance.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActiveModal("offerings")}
+              className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+            >
+              <span>View All 6 Online Offerings</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+            </button>
+          </div>
+
+          {/* Card 3: The 4-Step Pathway */}
+          <div className="rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] hover:border-[#9E783E] p-6 sm:p-7 flex flex-col justify-between transition-all duration-300 shadow-xs">
+            <div>
+              <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                <Compass className="w-5 h-5" />
+              </div>
+              <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                The Pathway
+              </span>
+              <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                How It Works
+              </h4>
+              <p className="text-xs sm:text-sm text-[#465A4F] leading-relaxed font-light mb-4">
+                A structured four-step journey from initial assessment and roadmap co-creation through virtual care and long-term autonomy.
+              </p>
+            </div>
+            <button
+              type="button"
+              onClick={() => setActiveModal("pathway")}
+              className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+            >
+              <span>View Complete 4-Step Pathway</span>
+              <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+            </button>
+          </div>
+        </div>
+
+        {/* Bottom Banner with Action */}
+        <div className="p-6 sm:p-8 rounded-3xl bg-[#F2F6F0] border border-[#C8D6C6] flex flex-col sm:flex-row items-center justify-between gap-4">
+          <span className="text-xs sm:text-sm text-[#556A5E] font-light">
+            Continuous progress reviews and individualized care plans tailored to your recovery goals
+          </span>
+          <button
+            onClick={() => onOpenBooking("Online Rehabilitation")}
+            className="px-6 py-2.5 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-xs font-semibold tracking-wide transition-colors cursor-pointer shrink-0"
+          >
+            Enquire About Rehabilitation &rarr;
+          </button>
+        </div>
+
+      </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 1: ADVANTAGES & SUITABILITY (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "advantages"}
+        onClose={() => setActiveModal(null)}
+        title="Why Choose Online Support & Suitability"
+        badge="Remote Advantages"
+        tagline="Online rehabilitation is thoughtfully planned according to your individual needs."
+        onBook={() => onOpenBooking("Online Rehabilitation: Suitability")}
+        bookLabel="Enquire About Rehabilitation"
+      >
+        <div className="space-y-6">
+          <div>
+            <h4 className="font-serif text-xl font-medium text-[#173D34] mb-4">
+              Why Choose Online Support?
+            </h4>
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              {whyChooseOnline.map((item, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+                  <h5 className="font-serif text-base font-medium text-[#173D34] mb-1">
                     {item.title}
-                  </h4>
+                  </h5>
                   <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
                     {item.desc}
                   </p>
                 </div>
-              </div>
-            ))}
+              ))}
+            </div>
+          </div>
+
+          <div className="pt-4 border-t border-[#C8D6C6]">
+            <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+              Is Online Support Right for You?
+            </h4>
+            <p className="text-xs sm:text-sm text-[#465A4F] mb-4 font-light">
+              Online rehabilitation is thoughtfully planned according to your individual needs and suitability for remote care. It is ideal for:
+            </p>
+            <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              {whoIsItFor.map((item, idx) => (
+                <div key={idx} className="p-4 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+                  <h5 className="font-serif text-base font-medium text-[#173D34] mb-1">
+                    {item.title}
+                  </h5>
+                  <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
+                    {item.desc}
+                  </p>
+                </div>
+              ))}
+            </div>
           </div>
         </div>
+      </ServiceDetailModal>
 
-        {/* What We Offer Online */}
-        <div className="mb-16 p-8 sm:p-10 rounded-3xl bg-[#F2F6F0] border border-[#C8D6C6]">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Structured Guidance
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              What We Offer Online
-            </h3>
-            <p className="text-xs sm:text-sm text-[#465A4F] mt-2 font-light leading-relaxed">
-              Our remote services provide structured, comprehensive guidance tailored to your needs:
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 2: 6 OFFERINGS (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "offerings"}
+        onClose={() => setActiveModal(null)}
+        title="What We Offer Online"
+        badge="Structured Guidance"
+        tagline="Our remote services provide structured, comprehensive guidance tailored to your needs."
+        onBook={() => onOpenBooking("Online Rehabilitation: Offerings")}
+        bookLabel="Consult on Rehabilitation"
+      >
+        <div className="space-y-4">
+          <p className="text-[#3F5448] font-light leading-relaxed text-sm sm:text-base">
+            Our remote services provide structured, comprehensive guidance tailored to your needs:
+          </p>
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             {whatWeOffer.map((offer, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
-                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
+              <div key={idx} className="p-5 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+                <h5 className="font-serif text-lg font-medium text-[#173D34] mb-2">
                   {offer.title}
-                </h4>
+                </h5>
                 <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
                   {offer.desc}
                 </p>
@@ -195,78 +323,36 @@ export default function DetailedRehabilitation({ onOpenBooking }: DetailedRehabi
             ))}
           </div>
         </div>
+      </ServiceDetailModal>
 
-        {/* Is Online Support Right for You? */}
-        <div className="mb-16">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Suitability
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              Is Online Support Right for You?
-            </h3>
-            <p className="text-xs sm:text-sm text-[#465A4F] mt-2 font-light leading-relaxed">
-              Online rehabilitation is thoughtfully planned according to your individual needs and suitability for remote care. It is ideal for:
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {whoIsItFor.map((item, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
-                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
-                  {item.title}
-                </h4>
-                <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
-                  {item.desc}
-                </p>
-              </div>
-            ))}
-          </div>
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 3: 4-STEP PATHWAY (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "pathway"}
+        onClose={() => setActiveModal(null)}
+        title="How It Works"
+        badge="The Pathway"
+        tagline="A clear, collaborative, step-by-step roadmap to recovery."
+        onBook={() => onOpenBooking("Online Rehabilitation: Pathway")}
+        bookLabel="Start Online Rehabilitation"
+      >
+        <div className="space-y-4">
+          {howItWorks.map((step) => (
+            <div key={step.step} className="p-5 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+              <span className="font-serif text-2xl font-light text-[#9E783E] block mb-1">
+                {step.step}
+              </span>
+              <h5 className="font-serif text-lg font-medium text-[#173D34] mb-2">
+                {step.title}
+              </h5>
+              <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
+                {step.desc}
+              </p>
+            </div>
+          ))}
         </div>
-
-        {/* How It Works Table / Timeline */}
-        <div className="p-8 sm:p-10 rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6]">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              The Pathway
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              How It Works
-            </h3>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {howItWorks.map((step) => (
-              <div key={step.step} className="p-6 rounded-2xl bg-[#F2F6F0] border border-[#C8D6C6] flex flex-col justify-between">
-                <div>
-                  <span className="font-serif text-3xl font-light text-[#9E783E] block mb-2">
-                    {step.step}
-                  </span>
-                  <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
-                    {step.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
-                    {step.desc}
-                  </p>
-                </div>
-              </div>
-            ))}
-          </div>
-
-          <div className="mt-8 pt-6 border-t border-[#C8D6C6] flex flex-col sm:flex-row items-center justify-between gap-4">
-            <span className="text-xs text-[#556A5E]">
-              Continuous progress reviews and individualized care plans
-            </span>
-            <button
-              onClick={() => onOpenBooking("Online Rehabilitation")}
-              className="px-6 py-2.5 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-xs font-semibold tracking-wide transition-colors cursor-pointer"
-            >
-              Enquire About Rehabilitation &rarr;
-            </button>
-          </div>
-        </div>
-
-      </div>
+      </ServiceDetailModal>
     </section>
   );
 }

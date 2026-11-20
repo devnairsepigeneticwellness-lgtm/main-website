@@ -6,30 +6,28 @@ import Navbar from "@/components/Navbar";
 import Footer from "@/components/Footer";
 import ConsultationModal from "@/components/ConsultationModal";
 import ServicesHero from "@/components/services/ServicesHero";
-import DetailedCounselling from "@/components/services/DetailedCounselling";
-import DetailedHypnotherapy from "@/components/services/DetailedHypnotherapy";
-import DetailedRehabilitation from "@/components/services/DetailedRehabilitation";
-import DetailedRenewalSpiritual from "@/components/services/DetailedRenewalSpiritual";
-import DetailedSupportPlans from "@/components/services/DetailedSupportPlans";
+import ServicesStudio from "@/components/services/ServicesStudio";
+import PillarDetailModal, { PillarId } from "@/components/services/PillarDetailModal";
 import ServicesFaq from "@/components/services/ServicesFaq";
 
 export default function ServicesPageClient() {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isConsultationModalOpen, setIsConsultationModalOpen] = useState(false);
   const [selectedService, setSelectedService] = useState<string>("Counselling");
+  const [activePillarModal, setActivePillarModal] = useState<PillarId | null>(null);
 
   const handleOpenBooking = (serviceName?: string) => {
     if (serviceName) {
       setSelectedService(serviceName);
     }
-    setIsModalOpen(true);
+    setIsConsultationModalOpen(true);
   };
 
-  const handleCloseModal = () => {
-    setIsModalOpen(false);
+  const handleCloseConsultationModal = () => {
+    setIsConsultationModalOpen(false);
   };
 
   const handleExploreServices = () => {
-    const el = document.getElementById("counselling");
+    const el = document.getElementById("services-explorer") || document.getElementById("services-grid");
     if (el) {
       el.scrollIntoView({ behavior: "smooth" });
     }
@@ -53,32 +51,30 @@ export default function ServicesPageClient() {
           onExploreServices={handleExploreServices}
         />
 
-        {/* Section 2 — Counselling & Psychotherapies (All 10 Modalities) */}
-        <DetailedCounselling onOpenBooking={handleOpenBooking} />
+        {/* Section 2 — The Interactive 7-Pathways Studio (Clean, Zero Horizontal Scrollbars, Verbatim Copy) */}
+        <ServicesStudio
+          onOpenBooking={handleOpenBooking}
+          onOpenModal={(pillarId) => setActivePillarModal(pillarId)}
+        />
 
-        {/* Section 3 — Clinical Hypnotherapy */}
-        <DetailedHypnotherapy onOpenBooking={handleOpenBooking} />
-
-        {/* Section 4 — Online Rehabilitation */}
-        <DetailedRehabilitation onOpenBooking={handleOpenBooking} />
-
-        {/* Section 5 — Renewal & Spiritual Practices */}
-        <DetailedRenewalSpiritual onOpenBooking={handleOpenBooking} />
-
-        {/* Section 6 — Treatment & Support Plans + Crisis Intervention + Next Steps */}
-        <DetailedSupportPlans onOpenBooking={handleOpenBooking} />
-
-        {/* Section 7 — Frequently Asked Questions */}
+        {/* Section 3 — Frequently Asked Questions */}
         <ServicesFaq onOpenBooking={() => handleOpenBooking("FAQ Inquiry")} />
       </main>
 
       {/* Footer */}
       <Footer onOpenBooking={() => handleOpenBooking("Footer Booking")} />
 
-      {/* Interactive Consultation Modal */}
+      {/* Comprehensive 7-Pillar Detail Modal (Houses 100% of exact clinical content & modalities) */}
+      <PillarDetailModal
+        pillar={activePillarModal}
+        onClose={() => setActivePillarModal(null)}
+        onBook={handleOpenBooking}
+      />
+
+      {/* Interactive Consultation Booking Modal */}
       <ConsultationModal
-        isOpen={isModalOpen}
-        onClose={handleCloseModal}
+        isOpen={isConsultationModalOpen}
+        onClose={handleCloseConsultationModal}
         preselectedService={selectedService}
       />
     </div>

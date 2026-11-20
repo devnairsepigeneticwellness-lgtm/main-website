@@ -1,13 +1,16 @@
 "use client";
 
-import React from "react";
-import { Sparkles, Brain, CheckCircle2, ShieldCheck, Zap, ArrowUpRight, ShieldAlert, Activity, Heart, Clock } from "lucide-react";
+import React, { useState } from "react";
+import { Sparkles, Brain, CheckCircle2, ShieldCheck, Zap, ArrowUpRight, Clock, HelpCircle, Activity } from "lucide-react";
+import ServiceDetailModal from "@/components/services/ServiceDetailModal";
 
 interface DetailedHypnotherapyProps {
   onOpenBooking: (serviceName: string) => void;
 }
 
 export default function DetailedHypnotherapy({ onOpenBooking }: DetailedHypnotherapyProps) {
+  const [activeModal, setActiveModal] = useState<"brain" | "stages" | "suitability" | "transform" | null>(null);
+
   const threePillars = [
     {
       title: "A State of Deep Focus",
@@ -108,15 +111,15 @@ export default function DetailedHypnotherapy({ onOpenBooking }: DetailedHypnothe
   ];
 
   return (
-    <section id="hypnotherapy" className="py-20 lg:py-28 bg-[#F4F7F2] border-b border-[#C8D6C6] relative overflow-hidden">
+    <section id="hypnotherapy" className="py-16 lg:py-24 bg-[#F4F7F2] border-b border-[#C8D6C6] relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
         
         {/* Section Header */}
-        <div className="max-w-3xl mb-14">
+        <div className="max-w-3xl mb-12">
           <div className="inline-flex items-center gap-3 mb-3">
-            <span className="w-6 h-[1px] bg-[#9E783E]" />
+            <span className="w-8 h-[1px] bg-[#9E783E]" />
             <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
-              HYPNOTHERAPY
+              03. HYPNOTHERAPY
             </span>
           </div>
 
@@ -139,9 +142,9 @@ export default function DetailedHypnotherapy({ onOpenBooking }: DetailedHypnothe
         </div>
 
         {/* 3 Core Highlights */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-12">
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-10">
           {threePillars.map((p, idx) => (
-            <div key={idx} className="p-7 rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] shadow-xs">
+            <div key={idx} className="p-6 sm:p-7 rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] shadow-xs">
               <span className="text-xs font-sans uppercase tracking-widest text-[#7D6335] font-semibold block mb-2">
                 Pillar 0{idx + 1}
               </span>
@@ -156,132 +159,133 @@ export default function DetailedHypnotherapy({ onOpenBooking }: DetailedHypnothe
         </div>
 
         {/* What Hypnotherapy is NOT Banner */}
-        <div className="mb-14 p-6 rounded-2xl bg-[#1E3F35] text-[#F7F5EF] text-center border border-[#DFBD83]/30 shadow-sm">
+        <div className="mb-12 p-6 rounded-2xl bg-[#1E3F35] text-[#F7F5EF] text-center border border-[#DFBD83]/30 shadow-sm">
           <span className="text-xs uppercase tracking-widest text-[#DFBD83] font-semibold block mb-1">
             Clinical Transparency &amp; Safety
           </span>
-          <p className="font-serif text-lg sm:text-xl text-[#F7F5EF] font-medium tracking-wide">
+          <p className="font-serif text-base sm:text-lg lg:text-xl text-[#F7F5EF] font-medium tracking-wide">
             HYPNOTHERAPY IS NEITHER stage performance OR entertainment NOR mind control or loss of will.
           </p>
         </div>
 
-        {/* How It Works in the Brain */}
-        <div className="mb-16 p-8 sm:p-10 rounded-3xl bg-[#EAF0E7] border border-[#C8D6C6]">
-          <div className="max-w-2xl mb-8">
+        {/* Interactive Feature Hub — Replaces 4 Giant Vertical Sections with Modal Access */}
+        <div className="mb-12">
+          <div className="max-w-2xl mb-6">
             <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Neuroscience Basis
+              Explore The Practice
             </span>
             <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              How Hypnotherapy Works in the Brain
+              Deep Dive into Hypnotherapy
             </h3>
-            <p className="text-xs sm:text-sm text-[#465A4F] mt-2 font-light leading-relaxed">
-              During normal daily activity, your brain operates in fast, alert <strong>Beta waves</strong> focused on active thinking and stress. In a hypnotherapy session, you are guided into slower <strong>Alpha and Theta brainwave states</strong>, the same natural states experienced during deep relaxation, meditation, or light daydreaming.
+            <p className="text-xs sm:text-sm text-[#465A4F] mt-1 font-light">
+              Explore the neuroscience, step-by-step session walkthrough, self-assessment checklist, and transformational areas.
             </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-            {brainChanges.map((bc, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#F2F6F0] border border-[#C8D6C6]">
-                <span className="text-xs font-mono font-bold text-[#7D6335] block mb-2">
-                  Shift 0{idx + 1}
-                </span>
-                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
-                  {bc.title}
-                </h4>
-                <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
-                  {bc.desc}
-                </p>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* What Actually Happens During a Session */}
-        <div className="mb-16">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Session Walkthrough
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              What Actually Happens During a Session
-            </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            {sessionStages.map((stage) => (
-              <div key={stage.num} className="p-6 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6] flex flex-col justify-between">
-                <div>
-                  <span className="font-serif text-3xl font-light text-[#9E783E] block mb-2">
-                    {stage.num}
-                  </span>
-                  <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
-                    {stage.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
-                    {stage.desc}
-                  </p>
+            {/* Card 1: Neuroscience */}
+            <div className="rounded-3xl bg-[#EAF0E7] border border-[#C8D6C6] hover:border-[#9E783E] p-6 flex flex-col justify-between transition-all duration-300 shadow-xs">
+              <div>
+                <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                  <Brain className="w-5 h-5" />
                 </div>
-              </div>
-            ))}
-          </div>
-        </div>
-
-        {/* Is Hypnotherapy Right for You? Checklist */}
-        <div className="mb-16 p-8 sm:p-10 rounded-3xl bg-[#EAF0E7] border border-[#C8D6C6]">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Self-Assessment
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              Is Hypnotherapy Right for You?
-            </h3>
-            <p className="text-xs sm:text-sm text-[#465A4F] mt-2 font-light leading-relaxed">
-              Many people ask themselves: <em>&ldquo;Is my issue suitable for hypnotherapy, or is it not big enough?&rdquo;</em> If you are experiencing any of the following challenges, hypnotherapy offers a fast, gentle, and evidence-based pathway toward lasting relief.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-            {suitabilityList.map((item, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#F2F6F0] border border-[#C8D6C6]">
-                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2 flex items-start gap-2">
-                  <CheckCircle2 className="w-5 h-5 text-[#7D6335] shrink-0 mt-0.5" />
-                  <span>{item.title}</span>
+                <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                  Neuroscience Basis
+                </span>
+                <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                  How Hypnotherapy Works in the Brain
                 </h4>
-                <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed pl-7">
-                  {item.desc}
+                <p className="text-xs text-[#465A4F] leading-relaxed font-light mb-4">
+                  Guided transitions from fast Beta waves into slower Alpha and Theta states, activating neuroplasticity and subconscious receptivity.
                 </p>
               </div>
-            ))}
-          </div>
-        </div>
+              <button
+                type="button"
+                onClick={() => setActiveModal("brain")}
+                className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+              >
+                <span>View 3 Brain Shifts</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+              </button>
+            </div>
 
-        {/* How Hypnotherapy Can Help You Transform */}
-        <div className="mb-16">
-          <div className="max-w-2xl mb-8">
-            <span className="text-xs uppercase tracking-widest text-[#7D6335] font-semibold block mb-1">
-              Key Application Areas
-            </span>
-            <h3 className="font-serif text-2xl sm:text-3xl font-normal text-[#173D34]">
-              How Hypnotherapy Can Help You Transform
-            </h3>
-            <p className="text-xs sm:text-sm text-[#465A4F] mt-2 font-light leading-relaxed">
-              By working directly with the subconscious mind where automatic patterns and emotional responses live, hypnotherapy creates meaningful, long-term shifts:
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {transformAreas.map((area, idx) => (
-              <div key={idx} className="p-6 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6] flex flex-col justify-between">
-                <div>
-                  <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
-                    {area.title}
-                  </h4>
-                  <p className="text-xs sm:text-sm text-[#465A4F] font-light leading-relaxed">
-                    {area.desc}
-                  </p>
+            {/* Card 2: Session Walkthrough */}
+            <div className="rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] hover:border-[#9E783E] p-6 flex flex-col justify-between transition-all duration-300 shadow-xs">
+              <div>
+                <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                  <Clock className="w-5 h-5" />
                 </div>
+                <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                  Session Walkthrough
+                </span>
+                <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                  What Actually Happens During a Session
+                </h4>
+                <p className="text-xs text-[#465A4F] leading-relaxed font-light mb-4">
+                  A four-stage clinical pathway: Goal Setting, Induction, The Main Work, and Emergence back to clear-headed alertness.
+                </p>
               </div>
-            ))}
+              <button
+                type="button"
+                onClick={() => setActiveModal("stages")}
+                className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+              >
+                <span>View 4-Stage Walkthrough</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+              </button>
+            </div>
+
+            {/* Card 3: Suitability Checklist */}
+            <div className="rounded-3xl bg-[#EAF0E7] border border-[#C8D6C6] hover:border-[#9E783E] p-6 flex flex-col justify-between transition-all duration-300 shadow-xs">
+              <div>
+                <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                  <CheckCircle2 className="w-5 h-5" />
+                </div>
+                <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                  Self-Assessment
+                </span>
+                <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                  Is Hypnotherapy Right for You?
+                </h4>
+                <p className="text-xs text-[#465A4F] leading-relaxed font-light mb-4">
+                  Key indicators from chronic overthinking to self-sabotage that suggest hypnotherapy is the ideal evidence-based tool.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveModal("suitability")}
+                className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+              >
+                <span>View Self-Assessment</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+              </button>
+            </div>
+
+            {/* Card 4: Transformation Areas */}
+            <div className="rounded-3xl bg-[#E6EEE3] border border-[#C8D6C6] hover:border-[#9E783E] p-6 flex flex-col justify-between transition-all duration-300 shadow-xs">
+              <div>
+                <div className="w-10 h-10 rounded-2xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center mb-4">
+                  <Sparkles className="w-5 h-5" />
+                </div>
+                <span className="text-xs uppercase tracking-wider font-semibold text-[#7D6335] block mb-1">
+                  Applications
+                </span>
+                <h4 className="font-serif text-xl font-medium text-[#173D34] mb-2">
+                  How Hypnotherapy Can Help You Transform
+                </h4>
+                <p className="text-xs text-[#465A4F] leading-relaxed font-light mb-4">
+                  6 areas of lasting change: Anxiety relief, phobias, unresolved trauma, habit rewiring, psychosomatic calm, and performance.
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setActiveModal("transform")}
+                className="inline-flex items-center justify-between w-full pt-3 border-t border-[#C8D6C6] text-xs font-semibold text-[#173D34] hover:text-[#7D6335] transition-colors cursor-pointer"
+              >
+                <span>View All 6 Transform Areas</span>
+                <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335]" />
+              </button>
+            </div>
           </div>
         </div>
 
@@ -315,6 +319,135 @@ export default function DetailedHypnotherapy({ onOpenBooking }: DetailedHypnothe
         </div>
 
       </div>
+
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 1: BRAIN SHIFTS (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "brain"}
+        onClose={() => setActiveModal(null)}
+        title="How Hypnotherapy Works in the Brain"
+        badge="Neuroscience Basis"
+        tagline="From Beta stress into slower Alpha and Theta brainwave states."
+        onBook={() => onOpenBooking("Clinical Hypnotherapy: Neuroscience")}
+        bookLabel="Consult About Hypnotherapy"
+      >
+        <div className="space-y-6">
+          <p className="text-[#3F5448] font-light leading-relaxed">
+            During normal daily activity, your brain operates in fast, alert <strong>Beta waves</strong> focused on active thinking and stress. In a hypnotherapy session, you are guided into slower <strong>Alpha and Theta brainwave states</strong>, the same natural states experienced during deep relaxation, meditation, or light daydreaming.
+          </p>
+
+          <div className="grid grid-cols-1 gap-4">
+            {brainChanges.map((bc, idx) => (
+              <div key={idx} className="p-5 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+                <span className="text-xs font-mono font-bold text-[#7D6335] block mb-1">
+                  Shift 0{idx + 1}
+                </span>
+                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
+                  {bc.title}
+                </h4>
+                <p className="text-sm text-[#465A4F] font-light leading-relaxed">
+                  {bc.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </ServiceDetailModal>
+
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 2: 4 SESSION STAGES (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "stages"}
+        onClose={() => setActiveModal(null)}
+        title="What Actually Happens During a Session"
+        badge="Session Walkthrough"
+        tagline="A comfortable, four-stage clinical pathway."
+        onBook={() => onOpenBooking("Clinical Hypnotherapy: Session Info")}
+        bookLabel="Book Consultation"
+      >
+        <div className="space-y-4">
+          {sessionStages.map((stage) => (
+            <div key={stage.num} className="p-5 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+              <span className="font-serif text-2xl font-light text-[#9E783E] block mb-1">
+                {stage.num}
+              </span>
+              <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
+                {stage.title}
+              </h4>
+              <p className="text-sm text-[#465A4F] font-light leading-relaxed">
+                {stage.desc}
+              </p>
+            </div>
+          ))}
+        </div>
+      </ServiceDetailModal>
+
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 3: SUITABILITY CHECKLIST (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "suitability"}
+        onClose={() => setActiveModal(null)}
+        title="Is Hypnotherapy Right for You?"
+        badge="Self-Assessment"
+        tagline="Evidence-based suitability indicators for lasting relief."
+        onBook={() => onOpenBooking("Clinical Hypnotherapy: Suitability")}
+        bookLabel="Discuss Your Situation"
+      >
+        <div className="space-y-6">
+          <p className="text-[#3F5448] font-light leading-relaxed">
+            Many people ask themselves: <em>&ldquo;Is my issue suitable for hypnotherapy, or is it not big enough?&rdquo;</em> If you are experiencing any of the following challenges, hypnotherapy offers a fast, gentle, and evidence-based pathway toward lasting relief.
+          </p>
+
+          <div className="grid grid-cols-1 gap-4">
+            {suitabilityList.map((item, idx) => (
+              <div key={idx} className="p-5 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2 flex items-start gap-2.5">
+                  <CheckCircle2 className="w-5 h-5 text-[#7D6335] shrink-0 mt-0.5" />
+                  <span>{item.title}</span>
+                </h4>
+                <p className="text-sm text-[#465A4F] font-light leading-relaxed pl-7">
+                  {item.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </ServiceDetailModal>
+
+      {/* ─────────────────────────────────────────────────────────────
+          MODAL 4: 6 TRANSFORMATION AREAS (EXACT CONTENT)
+      ───────────────────────────────────────────────────────────── */}
+      <ServiceDetailModal
+        isOpen={activeModal === "transform"}
+        onClose={() => setActiveModal(null)}
+        title="How Hypnotherapy Can Help You Transform"
+        badge="Key Application Areas"
+        tagline="Working directly with the subconscious mind where automatic patterns live."
+        onBook={() => onOpenBooking("Clinical Hypnotherapy: Applications")}
+        bookLabel="Consult on Hypnotherapy"
+      >
+        <div className="space-y-6">
+          <p className="text-[#3F5448] font-light leading-relaxed">
+            By working directly with the subconscious mind where automatic patterns and emotional responses live, hypnotherapy creates meaningful, long-term shifts:
+          </p>
+
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+            {transformAreas.map((area, idx) => (
+              <div key={idx} className="p-5 rounded-2xl bg-[#E6EEE3] border border-[#C8D6C6]">
+                <h4 className="font-serif text-lg font-medium text-[#173D34] mb-2">
+                  {area.title}
+                </h4>
+                <p className="text-sm text-[#465A4F] font-light leading-relaxed">
+                  {area.desc}
+                </p>
+              </div>
+            ))}
+          </div>
+        </div>
+      </ServiceDetailModal>
     </section>
   );
 }

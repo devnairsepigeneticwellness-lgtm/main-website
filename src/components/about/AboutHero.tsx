@@ -2,9 +2,16 @@
 
 import React from "react";
 import Link from "next/link";
-import { Sparkles, ChevronRight, Leaf } from "lucide-react";
+import { ChevronRight, ArrowUpRight, ShieldCheck, HeartHandshake } from "lucide-react";
+import { aboutCopy } from "@/data/aboutData";
 
-export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void }) {
+interface AboutHeroProps {
+  onOpenBooking: () => void;
+}
+
+export default function AboutHero({ onOpenBooking }: AboutHeroProps) {
+  const { hero } = aboutCopy;
+
   return (
     <section className="relative overflow-hidden bg-[#F7F5EF] text-[#24352D] pt-12 pb-16 lg:pt-20 lg:pb-24 border-b border-[#B58B50]/20">
       {/* Background Soft Organic Textures */}
@@ -29,40 +36,92 @@ export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void
             {/* Eyebrow Label */}
             <div className="inline-flex items-center gap-3">
               <span className="w-8 h-[1px] bg-[#B58B50]" />
-              <span className="text-xs sm:text-sm font-semibold tracking-[0.24em] text-[#B58B50] uppercase font-sans">
-                GET TO KNOW N.E.W.
+              <span className="text-xs sm:text-sm font-semibold tracking-[0.24em] text-[#9E783E] uppercase font-sans">
+                {hero.eyebrow}
               </span>
             </div>
 
-            {/* Editorial Main Heading */}
-            <h1 className="font-serif text-4xl sm:text-5xl lg:text-[62px] font-normal leading-[1.12] tracking-tight text-[#173D34]">
-              Wellbeing Begins With{" "}
-              <span className="block mt-1 sm:mt-2 italic font-serif text-[#B58B50] font-light">
-                Understanding.
+            {/* Editorial Main Heading (Exact PDF Copy) */}
+            <h1 className="font-serif text-3xl sm:text-4xl lg:text-[52px] font-normal leading-[1.15] tracking-tight text-[#173D34]">
+              Understanding You. <br className="hidden sm:inline" />
+              Supporting Change.{" "}
+              <span className="block mt-1 sm:mt-2 italic font-serif text-[#9E783E] font-light">
+                Enabling Wellbeing.
               </span>
             </h1>
 
             {/* Decorative Gold Accent Line */}
             <div className="w-24 h-[2px] bg-gradient-to-r from-[#B58B50] via-[#DFBD83] to-transparent my-1" />
 
-            {/* Supporting Copy */}
-            <p className="font-sans text-base sm:text-lg lg:text-xl text-[#59675F] font-light leading-relaxed max-w-2xl">
-              At Nair&apos;s Epigenetic Wellness, we believe meaningful change begins with understanding the whole person &mdash; their experiences, emotions, relationships and the circumstances that shape everyday life.
-            </p>
+            {/* Supporting Copy (Exact PDF Paragraphs 1 & 2) */}
+            <div className="space-y-4 font-sans text-base sm:text-lg text-[#465A4F] font-light leading-relaxed max-w-2xl">
+              <p>{hero.introP1}</p>
+              <p className="text-sm sm:text-base text-[#24352D] font-normal bg-[#EBF2E8] p-4 rounded-2xl border border-[#C8D6C6]">
+                {hero.introP2}
+              </p>
+            </div>
 
-            {/* Callout / Sub-CTA */}
+            {/* Quick Section Anchor Pills */}
+            <div className="pt-2 flex flex-wrap gap-2 text-xs">
+              <a
+                href="#our-approach"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] border border-[#C8D6C6] transition-colors shadow-2xs font-medium"
+              >
+                Our Approach
+              </a>
+              <a
+                href="#founder-about"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] border border-[#C8D6C6] transition-colors shadow-2xs font-medium"
+              >
+                Meet Ajit Kumar Nair
+              </a>
+              <a
+                href="#epigenetics-section"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] border border-[#C8D6C6] transition-colors shadow-2xs font-medium"
+              >
+                What Is Epigenetics?
+              </a>
+              <a
+                href="#philosophy-section"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] border border-[#C8D6C6] transition-colors shadow-2xs font-medium"
+              >
+                Our Philosophy
+              </a>
+              <a
+                href="#why-choose-new"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] border border-[#C8D6C6] transition-colors shadow-2xs font-medium"
+              >
+                Why Choose N.E.W.?
+              </a>
+              <a
+                href="#workshops-section"
+                className="px-3.5 py-1.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] border border-[#C8D6C6] transition-colors shadow-2xs font-medium"
+              >
+                Workshops &amp; Events
+              </a>
+            </div>
+
+            {/* CTAs */}
             <div className="pt-4 flex flex-col sm:flex-row sm:items-center gap-4">
               <button
+                type="button"
                 onClick={onOpenBooking}
-                className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#F7F5EF] text-sm font-medium tracking-wide shadow-md transition-all self-start"
+                className="inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#F7F5EF] text-sm font-semibold tracking-wide shadow-md transition-all self-start cursor-pointer group"
               >
-                <span>Connect With Our Team</span>
-                <span className="text-[#DFBD83]">&rarr;</span>
+                <span>Book a Consultation</span>
+                <ArrowUpRight className="w-4 h-4 text-[#DFBD83] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
               </button>
               
-              <div className="flex items-center gap-2 text-xs text-[#59675F] font-light">
-                <Leaf className="w-4 h-4 text-[#B58B50]" />
-                <span>Integrative &bull; Person-Centred &bull; Grounded in Clinical Science</span>
+              <div className="flex items-center gap-3 text-xs text-[#59675F] font-light">
+                <div className="flex items-center gap-1.5">
+                  <ShieldCheck className="w-4 h-4 text-[#9E783E]" />
+                  <span>RCI Registered Ethics</span>
+                </div>
+                <span>&bull;</span>
+                <div className="flex items-center gap-1.5">
+                  <HeartHandshake className="w-4 h-4 text-[#9E783E]" />
+                  <span>Person-Centred Whole Care</span>
+                </div>
               </div>
             </div>
 
@@ -83,7 +142,7 @@ export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void
                 className="w-full h-full text-[#173D34] relative z-10"
                 fill="none"
               >
-                {/* Central Meditative Lotus / Seed Shape */}
+                <circle cx="120" cy="120" r="85" stroke="#DFBD83" strokeWidth="1" strokeDasharray="3 3" />
                 <path
                   d="M120 40 C145 75 165 110 165 145 C165 175 145 195 120 195 C95 195 75 175 75 145 C75 110 95 75 120 40 Z"
                   fill="#173D34"
@@ -93,7 +152,6 @@ export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void
                   strokeLinejoin="round"
                 />
                 
-                {/* Lateral Petal Left */}
                 <path
                   d="M120 145 C80 130 55 105 55 75 C85 75 110 100 120 145 Z"
                   fill="#B58B50"
@@ -101,8 +159,6 @@ export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void
                   stroke="#B58B50"
                   strokeWidth="1.2"
                 />
-
-                {/* Lateral Petal Right */}
                 <path
                   d="M120 145 C160 130 185 105 185 75 C155 75 130 100 120 145 Z"
                   fill="#B58B50"
@@ -111,32 +167,17 @@ export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void
                   strokeWidth="1.2"
                 />
 
-                {/* Vertical Equilibrium Spine */}
-                <line
-                  x1="120"
-                  y1="30"
-                  x2="120"
-                  y2="210"
-                  stroke="#B58B50"
-                  strokeWidth="1"
-                  strokeDasharray="3 3"
-                />
-
-                {/* Radiant Core Node */}
-                <circle cx="120" cy="145" r="10" fill="#173D34" />
-                <circle cx="120" cy="145" r="5" fill="#DFBD83" />
-                <circle cx="120" cy="80" r="3" fill="#B58B50" />
-                <circle cx="120" cy="180" r="3" fill="#B58B50" />
+                <circle cx="120" cy="145" r="4" fill="#173D34" />
+                <circle cx="120" cy="40" r="3" fill="#DFBD83" />
               </svg>
 
-              {/* Bottom Subtle Badge */}
-              <div className="absolute bottom-5 inset-x-6 z-20 bg-white/90 backdrop-blur-md rounded-2xl py-2.5 px-4 border border-[#B58B50]/30 shadow-sm flex items-center justify-between text-xs text-[#173D34]">
-                <div className="flex items-center gap-2">
-                  <Sparkles className="w-3.5 h-3.5 text-[#B58B50]" />
-                  <span className="font-serif italic">Holistic Harmony</span>
-                </div>
-                <span className="text-[10px] tracking-wider uppercase text-[#B58B50] font-semibold">
-                  N.E.W. Philosophy
+              {/* Floating Philosophy Tag */}
+              <div className="absolute bottom-6 inset-x-6 bg-white/90 backdrop-blur-md rounded-2xl p-4 border border-[#B58B50]/30 shadow-md text-center">
+                <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-[#9E783E] font-semibold block mb-0.5">
+                  Holistic Philosophy
+                </span>
+                <span className="font-serif italic text-sm text-[#173D34]">
+                  &ldquo;Understand the whole person rather than focus only on a single concern.&rdquo;
                 </span>
               </div>
 
@@ -148,4 +189,3 @@ export default function AboutHero({ onOpenBooking }: { onOpenBooking: () => void
     </section>
   );
 }
-
