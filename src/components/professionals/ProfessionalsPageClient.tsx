@@ -71,7 +71,9 @@ export default function ProfessionalsPageClient() {
         />
 
         {/* Section 3 — Team Introduction */}
-        <TeamIntroduction />
+        <ConnectionSteps />
+
+        {/* <TeamIntroduction /> */}
 
         {/* Section 4 — Featured Founder Profile */}
         <FeaturedFounder
@@ -88,13 +90,13 @@ export default function ProfessionalsPageClient() {
         />
 
         {/* Section 7 — Areas of Professional Focus */}
-        <AreasOfFocus />
+        {/* <AreasOfFocus /> */}
 
         {/* Section 8 — Our Professional Philosophy */}
         <ProfessionalPhilosophy />
 
         {/* Section 9 — How to Connect With a Professional */}
-        <ConnectionSteps />
+     
 
         {/* Section 10 — Professional Enquiry CTA */}
         <ProfessionalEnquiryCTA onOpenBooking={handleOpenBooking} />
@@ -105,7 +107,7 @@ export default function ProfessionalsPageClient() {
         {/* Section 12 — Final CTA */}
         <ProfessionalFinalCTA onOpenBooking={handleOpenBooking} />
       </main>
-
+  
       {/* Section 13 — Footer */}
       <Footer onOpenBooking={() => handleOpenBooking("Footer Professional Booking")} />
 
