@@ -247,7 +247,7 @@ export default function ConsultationModal({
                       <option value="Psychotherapy">Cognitive Psychotherapy (CBT/REBT)</option>
                       <option value="Therapy">Therapy</option>
                       <option value="Online Rehabilitation">Online Rehabilitation</option>
-                      <option value="Renewal Programme">The Renewal Programme</option>
+                      <option value="Renewal Programme">Renewal Programme</option>
                       <option value="Mindfulness">Mindfulness</option>
                     </optgroup>
                     <optgroup label="Learning & Growth" className="bg-[#E6EEE3] text-[#173D34]">

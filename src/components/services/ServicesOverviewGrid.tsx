@@ -135,11 +135,8 @@ export default function ServicesOverviewGrid({ onOpenBooking }: ServicesOverview
                 className="bg-white rounded-[18px] p-7 sm:p-8 border border-[#B58B50]/20 hover:border-[#B58B50] transition-all duration-300 shadow-sm hover:shadow-xl flex flex-col justify-between group hover:-translate-y-1.5"
               >
                 <div>
-                  {/* Card Header: Category Number & Icon */}
-                  <div className="flex items-center justify-between mb-5">
-                    <span className="font-serif text-2xl font-light text-[#B58B50]">
-                      {svc.num}
-                    </span>
+                  {/* Card Header: Icon */}
+                  <div className="flex items-center justify-end mb-5">
                     <div className="w-12 h-12 rounded-2xl bg-[#E8EDE4] text-[#173D34] flex items-center justify-center group-hover:bg-[#173D34] group-hover:text-[#DFBD83] transition-colors">
                       <Icon className="w-5 h-5" strokeWidth={1.5} />
                     </div>

@@ -123,7 +123,7 @@ export default function ServicesSection({ onOpenBooking }: ServicesSectionProps)
       number: "08",
       category: "institutional",
       title: "Educational Ecosystem Empowerment",
-      subtitle: "School Mental Health & Educator-Student Flourishing",
+      subtitle: "Educator-Student Flourishing & Campus Mental Wellbeing",
       description:
         "Comprehensive student emotional regulation curricula, crisis management protocols, sensitization modules, and proactive campus mental wellness frameworks.",
       modalities: ["Sensitization Modules", "Student Coping Tools", "Institutional Frameworks"],

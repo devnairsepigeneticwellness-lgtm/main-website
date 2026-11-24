@@ -127,7 +127,7 @@ export default function ConsultationBookingEngine({
     },
     {
       id: "Renewal",
-      title: "The Renewal Programme",
+      title: "Renewal Programme",
       desc: "Holistic recovery pathway for deep burnout, grief & life transitions.",
       icon: Compass,
     },

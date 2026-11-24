@@ -17,11 +17,9 @@ export default function TeamIntroduction() {
         {/* Editorial Header */}
         <div className="max-w-3xl mx-auto text-center space-y-4 mb-16 sm:mb-20">
           <div className="inline-flex items-center gap-3">
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
             <span className="text-xs sm:text-sm font-semibold tracking-[0.24em] text-[#B58B50] uppercase font-sans">
               THE PEOPLE BEHIND N.E.W.
             </span>
-            <span className="w-6 h-[1px] bg-[#B58B50]" />
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-[46px] font-normal text-[#173D34] leading-[1.2] tracking-tight">

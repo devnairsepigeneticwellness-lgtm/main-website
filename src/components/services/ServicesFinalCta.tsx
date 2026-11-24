@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowUpRight, MessageSquare, Phone, ShieldCheck } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 interface ServicesFinalCtaProps {
   onOpenBooking: () => void;
@@ -64,11 +65,11 @@ export default function ServicesFinalCta({ onOpenBooking }: ServicesFinalCtaProp
           </div>
           <span className="hidden sm:inline">&bull;</span>
           <a
-            href="tel:+919446477779"
+            href={CONTACT_INFO.phoneHref}
             className="flex items-center gap-2 hover:text-[#DFBD83] transition-colors"
           >
             <Phone className="w-3.5 h-3.5 text-[#DFBD83]" />
-            <span>Helpline: +91 94464 77779</span>
+            <span>Helpline: {CONTACT_INFO.phoneDisplay}</span>
           </a>
         </div>
 

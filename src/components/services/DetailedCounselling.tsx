@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { ArrowUpRight, Users, User, UserCheck } from "lucide-react";
 import ServiceDetailModal from "@/components/services/ServiceDetailModal";
+import PractitionerLinks from "@/components/services/PractitionerLinks";
+import { servicesCopy } from "@/data/servicesData";
 
 interface DetailedCounsellingProps {
   onOpenBooking: (serviceName: string) => void;
@@ -174,6 +176,15 @@ export default function DetailedCounselling({ onOpenBooking }: DetailedCounselli
                       </p>
                     )}
                   </div>
+
+                  {(() => {
+                    const matched = servicesCopy.counselling.streams.find((s) => s.id === stream.id);
+                    return matched ? (
+                      <div className="mb-2">
+                        <PractitionerLinks professionalIds={matched.professionalIds} label="Available With" />
+                      </div>
+                    ) : null;
+                  })()}
                 </div>
 
                 <div className="mt-4 pt-4 border-t border-[#C8D6C6] flex flex-wrap items-center justify-between gap-3">

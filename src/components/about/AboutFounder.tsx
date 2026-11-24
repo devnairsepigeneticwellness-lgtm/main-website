@@ -38,8 +38,15 @@ export default function AboutFounder({ onOpenBooking }: AboutFounderProps) {
               <div className="absolute -inset-4 sm:-inset-6 rounded-t-[210px] rounded-b-3xl border border-[#B58B50]/30 pointer-events-none" />
               <div className="absolute -inset-8 rounded-t-[230px] rounded-b-[40px] border border-[#B58B50]/15 pointer-events-none hidden sm:block" />
 
+              {/* Top Apex Badge (placed outside overflow-hidden arch so it never clips) */}
+              <div className="absolute -top-3.5 left-1/2 -translate-x-1/2 z-20 whitespace-nowrap">
+                <span className="inline-flex items-center gap-1.5 px-4 py-1 rounded-full bg-[#102E27] border border-[#DFBD83]/60 text-[10px] font-mono tracking-widest text-[#DFBD83] uppercase font-semibold shadow-md">
+                  RCI REGISTERED
+                </span>
+              </div>
+
               {/* Architectural Rounded Portrait Frame */}
-              <div className="relative h-[520px] sm:h-[580px] w-full rounded-t-[190px] rounded-b-3xl overflow-hidden bg-[#102E27] border-2 border-[#B58B50]/50 shadow-2xl flex flex-col justify-between p-6 group">
+              <div className="relative h-[520px] sm:h-[580px] w-full rounded-t-[190px] rounded-b-3xl overflow-hidden bg-[#102E27] border-2 border-[#B58B50]/50 shadow-2xl flex flex-col justify-end p-6 group">
                 
                 {/* Real Founder Photo */}
                 <div className="absolute inset-0">
@@ -53,15 +60,7 @@ export default function AboutFounder({ onOpenBooking }: AboutFounderProps) {
                     className="object-cover object-top filter contrast-[1.03] brightness-[0.98] transition-transform duration-700 group-hover:scale-105"
                   />
                   <div className="absolute inset-0 bg-gradient-to-t from-[#102E27] via-[#102E27]/40 via-45% to-transparent" />
-                  <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-black/40 to-transparent" />
                   <div className="absolute inset-0 rounded-t-[190px] rounded-b-3xl border border-[#DFBD83]/20 pointer-events-none" />
-                </div>
-
-                {/* Top Badge */}
-                <div className="relative z-10 flex items-center justify-between">
-                  <span className="px-3 py-1 rounded-full bg-[#102E27]/90 backdrop-blur-sm border border-[#DFBD83]/40 text-[10px] font-mono tracking-widest text-[#DFBD83] uppercase font-semibold">
-                    RCI REGISTERED
-                  </span>
                 </div>
 
                 {/* Bottom Signature Card */}

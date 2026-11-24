@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, HelpCircle, PhoneCall } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => void }) {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -29,7 +30,7 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
     },
     {
       q: "How do I take the first step to book?",
-      a: "You can click 'Book a Consultation' on this page, send a message through the contact form, or connect directly via phone or WhatsApp at +91 94464 77779. Our team will guide you through scheduling a convenient time slot and answer any preliminary questions.",
+      a: `You can click 'Book a Consultation' on this page, send a message through the contact form, or connect directly via phone or WhatsApp at ${CONTACT_INFO.phoneDisplay}. Our team will guide you through scheduling a convenient time slot and answer any preliminary questions.`,
     },
   ];
 
@@ -110,7 +111,7 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
               Ask a Question
             </button>
             <a
-              href="tel:+919446477779"
+              href={CONTACT_INFO.phoneHref}
               className="px-4 py-2.5 rounded-full border border-[#1E3F35] bg-[#EAF0E7] text-[#1E3F35] text-xs sm:text-sm font-medium hover:bg-[#1E3F35] hover:text-[#DFBD83] flex items-center gap-1.5 transition-all"
             >
               <PhoneCall className="w-3.5 h-3.5 text-[#7D6335]" />

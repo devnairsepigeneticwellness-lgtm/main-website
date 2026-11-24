@@ -3,6 +3,8 @@
 import React, { useState } from "react";
 import { ArrowUpRight, Check } from "lucide-react";
 import ServiceDetailModal from "@/components/services/ServiceDetailModal";
+import PractitionerLinks from "@/components/services/PractitionerLinks";
+import { servicesCopy } from "@/data/servicesData";
 
 interface DetailedPsychotherapiesProps {
   onOpenBooking: (serviceName: string) => void;
@@ -163,6 +165,18 @@ export default function DetailedPsychotherapies({ onOpenBooking }: DetailedPsych
                     <span>{pt.usedFor}</span>
                   </div>
                 )}
+
+                {(() => {
+                  const matched = servicesCopy.psychotherapies.items.find((item) => item.code === pt.code);
+                  return matched ? (
+                    <div className="mt-3">
+                      <PractitionerLinks
+                        professionalIds={matched.professionalIds}
+                        label={`Practitioners Trained in ${pt.code}`}
+                      />
+                    </div>
+                  ) : null;
+                })()}
               </div>
 
               <div className="mt-5 pt-4 border-t border-[#C8D6C6] flex items-center justify-between gap-2">

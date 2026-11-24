@@ -3,6 +3,7 @@
 import React from "react";
 import { motion } from "framer-motion";
 import { ArrowUpRight, GraduationCap, CheckCircle2, BookOpen, Clock, Calendar, MapPin, Award, Layers } from "lucide-react";
+import { getWhatsAppUrl } from "@/components/SocialIcons";
 
 interface DetailedInternshipsProps {
   onOpenBooking: (programmeName: string) => void;
@@ -28,8 +29,10 @@ export default function DetailedInternships({ onOpenBooking }: DetailedInternshi
   ];
 
   const handleWhatsAppEnquiry = () => {
-    const text = encodeURIComponent("Hello, I would like to enquire about the Internship Programmes at Nair's Epigenetic Wellness.");
-    window.open(`https://wa.me/919446477779?text=${text}`, "_blank");
+    window.open(
+      getWhatsAppUrl("Hello, I would like to enquire about the Internship Programmes at Nair's Epigenetic Wellness."),
+      "_blank"
+    );
   };
 
   return (

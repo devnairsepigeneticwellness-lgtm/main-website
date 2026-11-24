@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown } from "lucide-react";
+import { getWhatsAppUrl } from "@/components/SocialIcons";
 
 export default function ContactFaq() {
   const [openIndex, setOpenIndex] = useState<number | null>(0);
@@ -120,7 +121,7 @@ export default function ContactFaq() {
         <div className="mt-10 sm:mt-12 text-center text-xs sm:text-sm text-[#59675F]">
           <span>Still have a question not covered here? </span>
           <a
-            href="https://wa.me/919446477779?text=Hello%2C%20I%20have%20a%20question%20about%20Nair's%20Epigenetic%20Wellness."
+            href={getWhatsAppUrl("Hello, I have a question about Nair's Epigenetic Wellness.")}
             target="_blank"
             rel="noopener noreferrer"
             className="text-[#173D34] font-medium underline hover:text-[#B58B50] transition-colors"

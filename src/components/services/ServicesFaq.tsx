@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, PhoneCall, HelpCircle } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 interface ServicesFaqProps {
   onOpenBooking: () => void;
@@ -112,7 +113,7 @@ export default function ServicesFaq({ onOpenBooking }: ServicesFaqProps) {
               Book Consultation
             </button>
             <a
-              href="tel:+919446477779"
+              href={CONTACT_INFO.phoneHref}
               className="px-4 py-2.5 rounded-full border border-[#B58B50] text-[#173D34] text-xs sm:text-sm font-medium hover:bg-[#B58B50]/10 flex items-center gap-1.5 transition-all"
             >
               <PhoneCall className="w-3.5 h-3.5 text-[#B58B50]" />

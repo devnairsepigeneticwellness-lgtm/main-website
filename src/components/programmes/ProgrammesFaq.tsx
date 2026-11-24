@@ -2,6 +2,7 @@
 
 import React, { useState } from "react";
 import { ChevronDown, MessageCircle, Mail } from "lucide-react";
+import { CONTACT_INFO, getWhatsAppUrl } from "@/components/SocialIcons";
 
 interface ProgrammesFaqProps {
   onOpenBooking: () => void;
@@ -25,7 +26,7 @@ export default function ProgrammesFaq({ onOpenBooking }: ProgrammesFaqProps) {
     },
     {
       q: "How do I apply or register for a programme?",
-      a: "You can initiate an enquiry through our website or contact our administrative team via WhatsApp (+91 94464 77779) or email (ajit.navy@gmail.com). We will share the current schedule, prerequisites, and registration details.",
+      a: `You can initiate an enquiry through our website or contact our administrative team via WhatsApp (${CONTACT_INFO.phoneDisplay}) or email (${CONTACT_INFO.email}). We will share the current schedule, prerequisites, and registration details.`,
     },
     {
       q: "Can programmes be customised for our organisation or college?",
@@ -110,7 +111,7 @@ export default function ProgrammesFaq({ onOpenBooking }: ProgrammesFaqProps) {
               Enquire Now
             </button>
             <a
-              href="https://wa.me/919446477779?text=Hello%20Nair's%20Epigenetic%20Wellness%20team,%20I%20have%20a%20question%20about%20your%20programmes."
+              href={getWhatsAppUrl("Hello Nair's Epigenetic Wellness team, I have a question about your programmes.")}
               target="_blank"
               rel="noopener noreferrer"
               className="p-3 rounded-full bg-white text-[#173D34] border border-[#B58B50]/30 hover:border-[#B58B50] transition-colors"

@@ -2,15 +2,21 @@
 
 import React from "react";
 import { Phone, Mail, MessageCircle, ArrowUpRight, Clock, ShieldCheck } from "lucide-react";
-import { InstagramIcon, LinkedInIcon, SOCIAL_LINKS } from "@/components/SocialIcons";
+import {
+  CONTACT_INFO,
+  InstagramIcon,
+  LinkedInIcon,
+  SOCIAL_LINKS,
+  getWhatsAppUrl,
+} from "@/components/SocialIcons";
 
 export default function ContactInfoCards() {
   const cards = [
     {
       title: "Call Us",
       label: "Direct Consultation Line",
-      value: "+91 94464 77779",
-      href: "tel:+919446477779",
+      value: CONTACT_INFO.phoneDisplay,
+      href: CONTACT_INFO.phoneHref,
       description: "Speak directly with our team regarding consultations, appointments, and general service enquiries.",
       buttonText: "Call Now",
       icon: Phone,
@@ -20,8 +26,8 @@ export default function ContactInfoCards() {
     {
       title: "Email Us",
       label: "Confidential Written Desk",
-      value: "ajit.navy@gmail.com",
-      href: "mailto:ajit.navy@gmail.com",
+      value: CONTACT_INFO.email,
+      href: `mailto:${CONTACT_INFO.email}`,
       description: "Send detailed requirements, institutional proposals, workshop briefs, or professional mentorship requests.",
       buttonText: "Send Email",
       icon: Mail,
@@ -31,8 +37,8 @@ export default function ContactInfoCards() {
     {
       title: "WhatsApp",
       label: "Instant Mobile Messaging",
-      value: "+91 94464 77779",
-      href: "https://wa.me/919446477779?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Nair%27s%20Epigenetic%20Wellness.",
+      value: CONTACT_INFO.phoneDisplay,
+      href: getWhatsAppUrl("Hello, I would like to know more about Nair's Epigenetic Wellness."),
       description: "Connect via WhatsApp for quick queries, scheduling questions, or preliminary assistance with prefilled message.",
       buttonText: "Chat on WhatsApp",
       icon: MessageCircle,

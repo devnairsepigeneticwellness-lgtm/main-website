@@ -36,7 +36,9 @@ export const PROFESSIONALS: Professional[] = [
     qualifications: [
       "RCI Registered Rehabilitation Counsellor (Statutory Council of India)",
       "Counselling Psychologist (Applied Psychology & Clinical Foundations)",
+      "Hypnotherapist",
       "Clinical Hypnotherapist (Specialist Certification in Focused Relaxation & Trance)",
+      "Trainer Certification in Hypnotherapy from California Hypnosis Institute",
       "Mental Health Rehabilitation & Training Expert",
       "Specialised Training in CBT, REBT, DBT, ACT, IPT & Mindfulness"
     ],
@@ -47,6 +49,7 @@ export const PROFESSIONALS: Professional[] = [
       "Rehabilitation Support",
       "Clinical Hypnotherapy",
       "Mindfulness",
+      "Mindfulness Trainer",
       "Resilience & Coping",
       "Relationships",
       "Training & Mentorship"
@@ -102,6 +105,7 @@ export const PROFESSIONALS: Professional[] = [
       "Clinical Hypnotherapy",
       "Art Therapy & Expressive Modalities",
       "Cognitive Behavioral Therapy (CBT)",
+      "Emotionally Focused Therapy (EFT)",
       "Experiential Therapy",
       "Mindfulness-Based Interventions"
     ],
@@ -144,6 +148,7 @@ export const PROFESSIONALS: Professional[] = [
     modalities: [
       "Cognitive Behavioral Therapy (CBT)",
       "Dialectical Behavior Therapy (DBT Skills)",
+      "Emotionally Focused Therapy (EFT)",
       "Interpersonal Conflict Resolution",
       "Psychometric & Psychological Assessment",
       "Systemic Couple & Relationship Frameworks"
@@ -344,3 +349,10 @@ export const PROFESSIONALS_FAQS = [
       "Yes. You can enquire about internships, mentorship and professional development programmes designed for psychology students and mental health practitioners."
   }
 ];
+
+/** Resolve ordered professional profiles from a list of practitioner IDs. */
+export function getProfessionalsByIds(ids: string[]): Professional[] {
+  return ids
+    .map((id) => PROFESSIONALS.find((p) => p.id === id))
+    .filter((p): p is Professional => Boolean(p));
+}

@@ -50,7 +50,7 @@ export default function ProgrammesOverview() {
     },
     {
       num: "04",
-      title: "Educational Training",
+      title: "Educational Ecosystem Empowerment",
       targetId: "educational",
       desc: "Learning programmes for educational communities, including students, educators, parents and professionals.",
       focusAreas: [
@@ -59,7 +59,7 @@ export default function ProgrammesOverview() {
         "Psychology education",
         "Communication and interpersonal development",
       ],
-      ctaText: "Explore Educational Training",
+      ctaText: "Explore Educational Ecosystem Empowerment",
       icon: School,
     },
   ];

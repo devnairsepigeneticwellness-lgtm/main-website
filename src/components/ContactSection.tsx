@@ -2,7 +2,13 @@
 
 import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send, MessageSquare, Clock, ShieldAlert, CheckCircle2, ArrowUpRight } from "lucide-react";
-import { InstagramIcon, LinkedInIcon, SOCIAL_LINKS } from "@/components/SocialIcons";
+import {
+  CONTACT_INFO,
+  InstagramIcon,
+  LinkedInIcon,
+  SOCIAL_LINKS,
+  getWhatsAppUrl,
+} from "@/components/SocialIcons";
 
 export default function ContactSection() {
   const [formState, setFormState] = useState({
@@ -62,7 +68,7 @@ export default function ContactSection() {
             {/* Quick Cards */}
             <div className="space-y-4">
               <a
-                href="tel:+919446477779"
+                href={CONTACT_INFO.phoneHref}
                 className="group p-6 rounded-2xl bg-[#F2F6F0] border border-[#C8D6C6] hover:border-[#9E783E] hover:bg-[#F6FAF4] flex items-start gap-4 transition-all block shadow-xs"
               >
                 <div className="w-12 h-12 rounded-xl bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center shrink-0 group-hover:scale-105 group-hover:bg-[#1E3F35] group-hover:text-[#DFBD83] transition-all">
@@ -73,7 +79,7 @@ export default function ContactSection() {
                     Direct Consultation Line
                   </span>
                   <span className="font-serif text-xl sm:text-2xl text-[#173D34] group-hover:text-[#7D6335] transition-colors block mt-0.5">
-                    +91 94464 77779
+                    {CONTACT_INFO.phoneDisplay}
                   </span>
                   <span className="text-xs text-[#556A5E] mt-1 block">
                     Available for consultations &amp; program inquiries
@@ -130,7 +136,7 @@ export default function ContactSection() {
                 </p>
               </div>
               <a
-                href="https://wa.me/919446477779?text=Hello%2C%20I%20would%20like%20to%20enquire%20about%20services%20at%20Nair's%20Epigenetic%20Wellness"
+                href={getWhatsAppUrl("Hello, I would like to enquire about services at Nair's Epigenetic Wellness")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="px-5 py-2.5 rounded-full bg-[#25D366] text-white text-xs font-semibold hover:bg-[#20ba59] transition-colors shadow-sm flex items-center gap-1.5 shrink-0"

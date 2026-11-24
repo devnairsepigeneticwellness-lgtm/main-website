@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ArrowUpRight, Compass, Target, Shield, Sparkles, BookOpen, Quote, MessageCircle } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 interface DetailedMentorshipProps {
   onOpenBooking: (programmeName: string) => void;
@@ -123,7 +124,7 @@ export default function DetailedMentorship({ onOpenBooking }: DetailedMentorship
               </button>
 
               <a
-                href={`https://wa.me/919446477779?text=${whatsappMessage}`}
+                href={`https://wa.me/${CONTACT_INFO.whatsappDigits}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#102E27]/80 text-[#F7F5EF] border border-[#B58B50]/40 text-sm font-medium hover:bg-[#102E27] transition-all"

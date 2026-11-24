@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ArrowDown, MessageCircle, Sparkles } from "lucide-react";
+import { getWhatsAppUrl } from "@/components/SocialIcons";
 
 interface ContactFinalCtaProps {
   onScrollToForm: () => void;
@@ -63,7 +64,7 @@ export default function ContactFinalCta({ onScrollToForm }: ContactFinalCtaProps
           </button>
 
           <a
-            href="https://wa.me/919446477779?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Nair%27s%20Epigenetic%20Wellness."
+            href={getWhatsAppUrl("Hello, I would like to know more about Nair's Epigenetic Wellness.")}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-4 rounded-full bg-transparent hover:bg-white/10 text-[#F7F5EF] text-sm sm:text-base font-medium tracking-wide border border-[#E8EDE4]/30 hover:border-[#DFBD83] transition-all duration-200"

@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowUpRight, ArrowDown, ChevronRight, Sparkles, HeartHandshake, ShieldCheck } from "lucide-react";
+import { servicesCopy } from "@/data/servicesData";
 
 interface ServicesHeroProps {
   onOpenBooking: () => void;
@@ -65,25 +66,25 @@ export default function ServicesHero({
 
             {/* Section Jump Links */}
             <div className="pt-2 flex flex-wrap gap-2 text-xs">
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                1. Counselling (14 Streams)
+              <a href="#counselling" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                1. Counselling ({servicesCopy.counselling.streams.length} Streams)
               </a>
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
-                2. Psychotherapies (10 Modalities)
+              <a href="#psychotherapies" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+                2. Psychotherapies ({servicesCopy.psychotherapies.items.length} Modalities)
               </a>
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+              <a href="#hypnotherapy" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
                 3. Hypnotherapy
               </a>
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+              <a href="#rehabilitation" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
                 4. Online Rehabilitation
               </a>
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+              <a href="#renewal" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
                 5. Renewal
               </a>
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+              <a href="#spiritual" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
                 6. Spiritual Practices
               </a>
-              <a href="#services-explorer" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
+              <a href="#support-plans" className="px-3 py-1.5 rounded-full bg-[#173D34] hover:bg-[#204E42] text-[#DFBD83] border border-[#B58B50]/30 transition-colors">
                 7. Treatment &amp; Support Plans
               </a>
             </div>

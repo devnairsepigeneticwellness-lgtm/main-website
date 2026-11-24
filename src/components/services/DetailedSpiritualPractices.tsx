@@ -64,7 +64,7 @@ export default function DetailedSpiritualPractices({ onOpenBooking }: DetailedSp
           <div className="inline-flex items-center gap-3 mb-3">
             <span className="w-8 h-[1px] bg-[#9E783E]" />
             <span className="text-xs font-semibold tracking-[0.22em] text-[#7D6335] uppercase font-sans">
-              06. SPIRITUAL PRACTICES
+              SPIRITUAL SERVICE
             </span>
           </div>
 
@@ -81,7 +81,7 @@ export default function DetailedSpiritualPractices({ onOpenBooking }: DetailedSp
               However, modern epigenetics demonstrates a powerful truth: Our biological and emotional health is deeply influenced by our core beliefs, perceptions, and internal narratives.
             </p>
             <p>
-              We recognize that true healing is not one-size-fits-all. We believe that true healing happens when therapy respects who you are and what you believe. For clients who find deep meaning in spiritual, transpersonal, or subconscious exploration, working within their own belief system creates a profound emotional relief, cellular calm and inner transformation.
+              We recognize that true healing is not one-size-fits-all. We believe that true healing happens when therapy respects who you are and what you believe. For clients who find deep meaning in spiritual, Transpersonal, or subconscious exploration, working within their own belief system creates a profound emotional relief, cellular calm and inner transformation.
             </p>
           </div>
         </div>

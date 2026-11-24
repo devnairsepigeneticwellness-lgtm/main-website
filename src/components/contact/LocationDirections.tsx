@@ -2,10 +2,10 @@
 
 import React from "react";
 import { MapPin, Phone, Mail, Navigation, Clock, ShieldCheck, ArrowUpRight } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 export default function LocationDirections() {
-  const directionsUrl =
-    "https://www.google.com/maps/search/?api=1&query=Indore%2C+Madhya+Pradesh%2C+India";
+  const directionsUrl = CONTACT_INFO.googleMapsUrl;
 
   return (
     <section className="py-16 sm:py-20 lg:py-28 bg-[#FCFAF6] border-t border-[#E8EDE4] relative overflow-hidden">
@@ -73,18 +73,18 @@ export default function LocationDirections() {
               {/* Direct Channels */}
               <div className="space-y-3 pt-1 border-t border-[#E8EDE4] text-xs sm:text-sm text-[#173D34]">
                 <a
-                  href="tel:+919446477779"
+                  href={CONTACT_INFO.phoneHref}
                   className="flex items-center gap-3 p-3 rounded-2xl hover:bg-white transition-colors"
                 >
                   <Phone className="w-4 h-4 text-[#B58B50] shrink-0" />
-                  <span className="font-medium">+91 94464 77779</span>
+                  <span className="font-medium">{CONTACT_INFO.phoneDisplay}</span>
                 </a>
                 <a
-                  href="mailto:ajit.navy@gmail.com"
+                  href={`mailto:${CONTACT_INFO.email}`}
                   className="flex items-center gap-3 p-3 rounded-2xl hover:bg-white transition-colors"
                 >
                   <Mail className="w-4 h-4 text-[#B58B50] shrink-0" />
-                  <span className="font-medium break-all">ajit.navy@gmail.com</span>
+                  <span className="font-medium break-all">{CONTACT_INFO.email}</span>
                 </a>
               </div>
 

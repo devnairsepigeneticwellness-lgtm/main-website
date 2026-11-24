@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ArrowUpRight, MessageCircle, School, BookOpen, Heart, Landmark, CheckCircle2 } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 interface DetailedEducationalProps {
   onOpenBooking: (programmeName: string) => void;
@@ -71,7 +72,7 @@ export default function DetailedEducational({ onOpenBooking }: DetailedEducation
         <div className="max-w-3xl mb-14 lg:mb-18">
           <div className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#E8EDE4] text-[#173D34] text-xs font-semibold tracking-[0.2em] uppercase mb-4">
             <span className="w-1.5 h-1.5 rounded-full bg-[#B58B50]" />
-            LEARNING FOR EDUCATIONAL COMMUNITIES
+            EDUCATIONAL ECOSYSTEM EMPOWERMENT
           </div>
 
           <h2 className="font-serif text-3xl sm:text-4xl lg:text-5xl font-normal text-[#173D34] leading-[1.2] tracking-tight">
@@ -145,15 +146,15 @@ export default function DetailedEducational({ onOpenBooking }: DetailedEducation
 
           <div className="flex flex-col sm:flex-row items-center gap-3 w-full sm:w-auto shrink-0">
             <button
-              onClick={() => onOpenBooking("Educational Training")}
+              onClick={() => onOpenBooking("Educational Ecosystem Empowerment")}
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#173D34] text-[#F7F5EF] text-sm font-semibold hover:bg-[#102E27] transition-all shadow-md"
             >
-              <span>Enquire About Educational Training</span>
+              <span>Enquire About Educational Ecosystem Empowerment</span>
               <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
             </button>
 
             <a
-              href={`https://wa.me/919446477779?text=${whatsappMessage}`}
+              href={`https://wa.me/${CONTACT_INFO.whatsappDigits}?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white text-[#173D34] border border-[#B58B50]/30 text-sm font-medium hover:border-[#B58B50] transition-all"

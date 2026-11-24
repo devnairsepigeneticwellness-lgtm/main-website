@@ -4,6 +4,7 @@ import React from "react";
 import Link from "next/link";
 import { motion } from "framer-motion";
 import { ChevronRight, ArrowDown, MessageCircle, Phone, Sparkles, Shield, HeartHandshake } from "lucide-react";
+import { CONTACT_INFO, getWhatsAppUrl } from "@/components/SocialIcons";
 
 interface ContactHeroProps {
   onScrollToForm: () => void;
@@ -71,7 +72,7 @@ export default function ContactHero({ onScrollToForm }: ContactHeroProps) {
               </button>
 
               <a
-                href="https://wa.me/919446477779?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Nair%27s%20Epigenetic%20Wellness."
+                href={getWhatsAppUrl("Hello, I would like to know more about Nair's Epigenetic Wellness.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="group inline-flex items-center justify-center gap-2.5 px-7 py-4 rounded-full bg-transparent hover:bg-white/10 text-[#F7F5EF] text-sm sm:text-base font-medium tracking-wide border border-[#E8EDE4]/30 hover:border-[#DFBD83] transition-all duration-200"
@@ -173,7 +174,7 @@ export default function ContactHero({ onScrollToForm }: ContactHeroProps) {
                   <span>Direct Desk</span>
                 </span>
                 <span className="font-serif text-white tracking-wide">
-                  +91 94464 77779
+                  {CONTACT_INFO.phoneDisplay}
                 </span>
               </div>
 

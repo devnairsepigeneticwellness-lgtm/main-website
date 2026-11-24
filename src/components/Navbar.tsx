@@ -8,7 +8,6 @@ import {
   ArrowRight,
   Menu,
   X,
-  Phone,
   Calendar,
   ChevronDown,
   Sparkles,
@@ -16,13 +15,19 @@ import {
   Brain,
   Compass,
   Shield,
-  Activity,
   Layers,
   GraduationCap,
   Users,
   Briefcase,
   School,
 } from "lucide-react";
+import {
+  SOCIAL_LINKS,
+  InstagramIcon,
+  LinkedInIcon,
+  FacebookIcon,
+  WhatsAppIcon,
+} from "@/components/SocialIcons";
 
 interface NavbarProps {
   onOpenBooking?: (serviceOrProgramme?: string) => void;
@@ -149,7 +154,7 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
     {
       title: "Cognitive Psychotherapy (CBT/REBT)",
       desc: "Structured rational reframing of distressful thought patterns.",
-      href: "/services#counselling",
+      href: "/services#psychotherapies",
       icon: Brain,
     },
     {
@@ -165,7 +170,7 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
       icon: Shield,
     },
     {
-      title: "The Renewal Programme",
+      title: "Renewal Programme",
       desc: "Holistic recovery pathway for burnout, grief & existential transitions.",
       href: "/services#renewal",
       icon: Compass,
@@ -198,7 +203,7 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
       icon: Briefcase,
     },
     {
-      title: "Educational & School Training",
+      title: "Educational Ecosystem Empowerment",
       desc: "Curricula for schools, educators, parents & emotional classroom regulation.",
       href: "/programmes#educational",
       icon: School,
@@ -510,12 +515,39 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
             })}
           </nav>
 
-          {/* Right Action Button (Desktop & Tablet) */}
-          <div className="hidden sm:flex items-center gap-2.5 xl:gap-3 shrink-0">
+          {/* Right Action Area: Social Icons & Consultation Button (Desktop & Tablet) */}
+          <div className="hidden sm:flex items-center gap-2 xl:gap-3 shrink-0">
+            <div
+              className="flex items-center gap-0.5 xl:gap-1 pr-1.5 xl:pr-2 border-r border-[#C8D6C6]"
+              aria-label="Social Media Handles"
+            >
+              {[
+                { name: "Instagram", url: SOCIAL_LINKS.instagram.url, icon: InstagramIcon },
+                { name: "LinkedIn", url: SOCIAL_LINKS.linkedin.url, icon: LinkedInIcon },
+                { name: "Facebook", url: SOCIAL_LINKS.facebook.url, icon: FacebookIcon },
+                { name: "WhatsApp", url: SOCIAL_LINKS.whatsapp.url, icon: WhatsAppIcon },
+              ].map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    title={social.name}
+                    className="w-7 h-7 xl:w-8 xl:h-8 rounded-full flex items-center justify-center text-[#1E3F35] hover:bg-[#1E3F35] hover:text-[#DFBD83] transition-colors border border-transparent hover:border-[#1E3F35]"
+                  >
+                    <Icon className="w-3.5 h-3.5 xl:w-4 xl:h-4" />
+                  </a>
+                );
+              })}
+            </div>
+
             {onOpenBooking ? (
               <button
                 onClick={() => onOpenBooking("General Consultation")}
-                className="group inline-flex items-center gap-1.5 xl:gap-2 px-5 py-2.5 xl:px-6 xl:py-2.5 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-xs xl:text-sm font-semibold tracking-wide shadow-sm hover:shadow-md hover:scale-[1.02] border border-[#1E3F35] transition-all duration-200 whitespace-nowrap cursor-pointer"
+                className="group inline-flex items-center gap-1.5 xl:gap-2 px-4 py-2 xl:px-6 xl:py-2.5 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-xs xl:text-sm font-semibold tracking-wide shadow-sm hover:shadow-md hover:scale-[1.02] border border-[#1E3F35] transition-all duration-200 whitespace-nowrap cursor-pointer"
               >
                 <span>Book a Consultation</span>
                 <ArrowRight className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#DFBD83] group-hover:translate-x-0.5 transition-transform shrink-0" />
@@ -523,7 +555,7 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
             ) : (
               <Link
                 href="/book-consultation"
-                className="group inline-flex items-center gap-1.5 xl:gap-2 px-5 py-2.5 xl:px-6 xl:py-2.5 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-xs xl:text-sm font-semibold tracking-wide shadow-sm hover:shadow-md hover:scale-[1.02] border border-[#1E3F35] transition-all duration-200 whitespace-nowrap"
+                className="group inline-flex items-center gap-1.5 xl:gap-2 px-4 py-2 xl:px-6 xl:py-2.5 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-xs xl:text-sm font-semibold tracking-wide shadow-sm hover:shadow-md hover:scale-[1.02] border border-[#1E3F35] transition-all duration-200 whitespace-nowrap"
               >
                 <span>Book a Consultation</span>
                 <ArrowRight className="w-3.5 h-3.5 xl:w-4 xl:h-4 text-[#DFBD83] group-hover:translate-x-0.5 transition-transform shrink-0" />
@@ -701,13 +733,32 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
               </Link>
             )}
 
-            <a
-              href="tel:+919446477779"
-              className="flex items-center justify-center gap-2 text-xs text-[#4F6457] py-2 hover:text-[#173D34]"
+            <div
+              className="flex items-center justify-center gap-3 pt-2"
+              aria-label="Social Media Handles"
             >
-              <Phone className="w-3.5 h-3.5 text-[#7D6335]" />
-              <span>Direct helpline: +91 94464 77779</span>
-            </a>
+              {[
+                { name: "Instagram", url: SOCIAL_LINKS.instagram.url, icon: InstagramIcon },
+                { name: "LinkedIn", url: SOCIAL_LINKS.linkedin.url, icon: LinkedInIcon },
+                { name: "Facebook", url: SOCIAL_LINKS.facebook.url, icon: FacebookIcon },
+                { name: "WhatsApp", url: SOCIAL_LINKS.whatsapp.url, icon: WhatsAppIcon },
+              ].map((social) => {
+                const Icon = social.icon;
+                return (
+                  <a
+                    key={social.name}
+                    href={social.url}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    aria-label={social.name}
+                    title={social.name}
+                    className="w-9 h-9 rounded-full bg-[#E8EFE5] hover:bg-[#1E3F35] text-[#173D34] hover:text-[#DFBD83] border border-[#C8D6C6] flex items-center justify-center transition-colors"
+                  >
+                    <Icon className="w-4 h-4" />
+                  </a>
+                );
+              })}
+            </div>
           </div>
         </div>
       )}

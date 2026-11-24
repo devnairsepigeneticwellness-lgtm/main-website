@@ -196,7 +196,10 @@ export default function ProfessionalsHero({
 
                   <div className="grid grid-cols-3 gap-2 pt-1">
                     {/* Dr. Deepa Jain */}
-                    <div className="p-2 rounded-xl bg-[#173D34]/80 border border-[#DFBD83]/20 text-center">
+                    <a
+                      href="#dr-deepa-jain"
+                      className="p-2 rounded-xl bg-[#173D34]/80 hover:bg-[#1E4D42] border border-[#DFBD83]/20 hover:border-[#DFBD83]/50 text-center transition-colors"
+                    >
                       <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
                         DJ
                       </div>
@@ -206,10 +209,13 @@ export default function ProfessionalsHero({
                       <span className="text-[8px] text-[#DFBD83]/80 uppercase tracking-tight block">
                         PhD &bull; Hypnotherapy
                       </span>
-                    </div>
+                    </a>
 
                     {/* Zainab Aarsiwala */}
-                    <div className="p-2 rounded-xl bg-[#173D34]/80 border border-[#DFBD83]/20 text-center">
+                    <a
+                      href="#zainab-aarsiwala"
+                      className="p-2 rounded-xl bg-[#173D34]/80 hover:bg-[#1E4D42] border border-[#DFBD83]/20 hover:border-[#DFBD83]/50 text-center transition-colors"
+                    >
                       <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
                         ZA
                       </div>
@@ -219,10 +225,13 @@ export default function ProfessionalsHero({
                       <span className="text-[8px] text-[#DFBD83]/80 uppercase tracking-tight block">
                         Couple &bull; Marriage
                       </span>
-                    </div>
+                    </a>
 
                     {/* Bhavya Singh */}
-                    <div className="p-2 rounded-xl bg-[#173D34]/80 border border-[#DFBD83]/20 text-center">
+                    <a
+                      href="#bhavya-singh"
+                      className="p-2 rounded-xl bg-[#173D34]/80 hover:bg-[#1E4D42] border border-[#DFBD83]/20 hover:border-[#DFBD83]/50 text-center transition-colors"
+                    >
                       <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
                         BS
                       </div>
@@ -232,7 +241,7 @@ export default function ProfessionalsHero({
                       <span className="text-[8px] text-[#DFBD83]/80 uppercase tracking-tight block">
                         Child &bull; Adolescent
                       </span>
-                    </div>
+                    </a>
                   </div>
                 </div>
 

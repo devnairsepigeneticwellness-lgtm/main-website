@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { 
   Heart, 
   Brain, 
@@ -14,15 +14,11 @@ import {
   CheckCircle2, 
   AlertTriangle, 
   PhoneCall, 
-  Clock, 
-  HelpCircle,
-  ClipboardList,
   Filter,
-  Info
 } from "lucide-react";
-import Link from "next/link";
-import { servicesCopy, CounsellingStream, PsychotherapyItem } from "@/data/servicesData";
+import { servicesCopy } from "@/data/servicesData";
 import { PillarId } from "@/components/services/PillarDetailModal";
+import PractitionerLinks from "@/components/services/PractitionerLinks";
 
 interface ServicesStudioProps {
   onOpenBooking: (serviceName?: string) => void;
@@ -44,9 +40,33 @@ export default function ServicesStudio({
   const [spiritualIndex, setSpiritualIndex] = useState<number>(0);
   const [planIndex, setPlanIndex] = useState<number>(0);
 
+  // Sync URL hash (e.g. #counselling, #psychotherapies) to the active pillar tab
+  useEffect(() => {
+    const hashToPillar: Record<string, number> = {
+      "#counselling": 0,
+      "#psychotherapies": 1,
+      "#hypnotherapy": 2,
+      "#rehabilitation": 3,
+      "#renewal": 4,
+      "#spiritual": 5,
+      "#support-plans": 6,
+    };
+    const syncFromHash = () => {
+      const idx = hashToPillar[window.location.hash];
+      if (idx !== undefined) {
+        setActivePillar(idx);
+        const explorer = document.getElementById("services-explorer");
+        explorer?.scrollIntoView({ behavior: "smooth" });
+      }
+    };
+    syncFromHash();
+    window.addEventListener("hashchange", syncFromHash);
+    return () => window.removeEventListener("hashchange", syncFromHash);
+  }, []);
+
   const pillarsNav = [
-    { id: 0, num: "01", label: "Counselling", badge: "14 Streams", icon: Heart },
-    { id: 1, num: "02", label: "Psychotherapies", badge: "10 Modalities", icon: Brain },
+    { id: 0, num: "01", label: "Counselling", badge: `${servicesCopy.counselling.streams.length} Streams`, icon: Heart },
+    { id: 1, num: "02", label: "Psychotherapies", badge: `${servicesCopy.psychotherapies.items.length} Modalities`, icon: Brain },
     { id: 2, num: "03", label: "Hypnotherapy", badge: "Subconscious", icon: Sparkles },
     { id: 3, num: "04", label: "Online Rehabilitation", badge: "Remote Care", icon: Shield },
     { id: 4, num: "05", label: "Renewal", badge: "3 Phases", icon: Compass },
@@ -135,7 +155,7 @@ export default function ServicesStudio({
         <div className="rounded-3xl bg-white border border-[#C8D6C6] p-6 sm:p-10 shadow-sm transition-all">
           
           {/* ─────────────────────────────────────────────────────────────
-              01. COUNSELLING STAGE (All 14 Streams)
+              01. COUNSELLING STAGE
           ───────────────────────────────────────────────────────────── */}
           {activePillar === 0 && (
             <div className="space-y-8 animate-in fade-in duration-300">
@@ -146,7 +166,9 @@ export default function ServicesStudio({
                     <span className="text-xs font-mono font-bold text-[#7D6335] uppercase tracking-wider bg-[#E6EEE3] px-2.5 py-0.5 rounded-full border border-[#C8D6C6]">
                       01. COUNSELLING
                     </span>
-                    <span className="text-xs text-[#556A5E] font-medium">14 Specialized Streams</span>
+                    <span className="text-xs text-[#556A5E] font-medium">
+                      {counsellingStreams.length} Specialized Streams
+                    </span>
                   </div>
                   <h3 className="font-serif text-2xl sm:text-3xl lg:text-4xl font-normal text-[#173D34]">
                     {servicesCopy.counselling.subtitle}
@@ -178,18 +200,19 @@ export default function ServicesStudio({
                 </div>
               </div>
 
-              {/* Category Filter for 14 Streams */}
+              {/* Category Filter for Counselling Streams */}
               <div className="flex flex-wrap items-center gap-2">
                 <span className="text-xs font-semibold text-[#173D34] flex items-center gap-1 mr-1">
                   <Filter className="w-3.5 h-3.5 text-[#7D6335]" />
                   <span>Category:</span>
                 </span>
                 {[
-                  { id: "all", label: "All 14 Streams" },
-                  { id: "personal", label: "Personal & Emotional" },
-                  { id: "relationships", label: "Relationships & Family" },
-                  { id: "trauma-health", label: "Trauma & Health Support" },
-                  { id: "life-stages", label: "Life Transitions & Stages" },
+                  { id: "all", label: `All ${counsellingStreams.length} Streams` },
+                  { id: "marital-relational", label: "Marital, Couple & Family" },
+                  { id: "specialized-health", label: "Specialized & Health" },
+                  { id: "trauma-transitions", label: "Trauma & Life Transitions" },
+                  { id: "identity-career", label: "Identity & Career" },
+                  { id: "personal", label: "Personal & Group" },
                 ].map((cat) => (
                   <button
                     key={cat.id}
@@ -247,6 +270,13 @@ export default function ServicesStudio({
                           {stream.closing}
                         </p>
                       )}
+
+                      <div className="mb-4">
+                        <PractitionerLinks
+                          professionalIds={stream.professionalIds}
+                          label="Available With"
+                        />
+                      </div>
                     </div>
 
                     <div className="pt-3 border-t border-[#C8D6C6] flex items-center justify-between">
@@ -396,6 +426,11 @@ export default function ServicesStudio({
                       </div>
                     )}
 
+                    <PractitionerLinks
+                      professionalIds={pt.professionalIds}
+                      label={`Practitioners Trained in ${pt.code}`}
+                    />
+
                     <div className="pt-2 flex justify-end">
                       <button
                         type="button"
@@ -459,18 +494,20 @@ export default function ServicesStudio({
 
               {/* Hypno Console Tabs */}
               <div className="flex flex-wrap gap-2">
-                {[
-                  { id: "pillars", label: "3 Core Pillars" },
-                  { id: "brain", label: "Brain Science (3 Changes)" },
-                  { id: "stages", label: "What Happens in a Session" },
-                  { id: "suitability", label: "Is Hypnotherapy Right for You?" },
-                  { id: "transform", label: "Transformation Areas" },
-                  { id: "psychologist", label: "Care with a Psychologist" },
-                ].map((t) => (
+                {(
+                  [
+                    { id: "pillars", label: "3 Core Pillars" },
+                    { id: "brain", label: "Brain Science (3 Changes)" },
+                    { id: "stages", label: "What Happens in a Session" },
+                    { id: "suitability", label: "Is Hypnotherapy Right for You?" },
+                    { id: "transform", label: "Transformation Areas" },
+                    { id: "psychologist", label: "Care with a Psychologist" },
+                  ] as const
+                ).map((t) => (
                   <button
                     key={t.id}
                     type="button"
-                    onClick={() => setHypnoTab(t.id as any)}
+                    onClick={() => setHypnoTab(t.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                       hypnoTab === t.id
                         ? "bg-[#1E3F35] text-[#DFBD83] font-bold shadow-xs scale-[1.02]"
@@ -657,16 +694,18 @@ export default function ServicesStudio({
 
               {/* Rehab Tabs */}
               <div className="flex flex-wrap gap-2">
-                {[
-                  { id: "advantages", label: "Why Choose Online Support?" },
-                  { id: "offerings", label: "What We Offer Online" },
-                  { id: "suitability", label: "Is Online Support Right for You?" },
-                  { id: "pathway", label: "How It Works (4 Steps)" },
-                ].map((t) => (
+                {(
+                  [
+                    { id: "advantages", label: "Why Choose Online Support?" },
+                    { id: "offerings", label: "What We Offer Online" },
+                    { id: "suitability", label: "Is Online Support Right for You?" },
+                    { id: "pathway", label: "How It Works (4 Steps)" },
+                  ] as const
+                ).map((t) => (
                   <button
                     key={t.id}
                     type="button"
-                    onClick={() => setRehabTab(t.id as any)}
+                    onClick={() => setRehabTab(t.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                       rehabTab === t.id
                         ? "bg-[#1E3F35] text-[#DFBD83] font-bold shadow-xs scale-[1.02]"
@@ -809,15 +848,17 @@ export default function ServicesStudio({
 
               {/* Renewal Tabs */}
               <div className="flex flex-wrap gap-2">
-                {[
-                  { id: "phases", label: "Our Approach (3 Phases)" },
-                  { id: "candidates", label: "Who Can Benefit?" },
-                  { id: "process", label: "Process Overview (4 Steps)" },
-                ].map((t) => (
+                {(
+                  [
+                    { id: "phases", label: "Our Approach (3 Phases)" },
+                    { id: "candidates", label: "Who Can Benefit?" },
+                    { id: "process", label: "Process Overview (4 Steps)" },
+                  ] as const
+                ).map((t) => (
                   <button
                     key={t.id}
                     type="button"
-                    onClick={() => setRenewalTab(t.id as any)}
+                    onClick={() => setRenewalTab(t.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                       renewalTab === t.id
                         ? "bg-[#1E3F35] text-[#DFBD83] font-bold shadow-xs scale-[1.02]"
@@ -1155,16 +1196,10 @@ export default function ServicesStudio({
                   {servicesCopy.supportPlans.decisionHelper.desc}
                 </p>
                 <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-                  <Link
-                    href="/assessment"
-                    className="w-full sm:w-auto px-6 py-3 rounded-full bg-[#DFBD83] hover:bg-[#c9a76d] text-[#102E27] text-xs font-semibold tracking-wider uppercase transition-colors"
-                  >
-                    TAKE THE SCREENING
-                  </Link>
                   <button
                     type="button"
                     onClick={() => onOpenBooking("Treatment Plans Consultation")}
-                    className="w-full sm:w-auto px-6 py-3 rounded-full bg-white/10 hover:bg-white/20 text-white text-xs font-semibold tracking-wider uppercase border border-white/20 transition-colors cursor-pointer"
+                    className="w-full sm:w-auto px-7 py-3 rounded-full bg-[#DFBD83] hover:bg-[#c9a76d] text-[#102E27] text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer"
                   >
                     BOOK A CONSULTATION
                   </button>

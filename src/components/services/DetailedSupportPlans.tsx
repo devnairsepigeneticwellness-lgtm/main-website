@@ -1,7 +1,6 @@
 "use client";
 
 import React, { useState } from "react";
-import Link from "next/link";
 import { 
   ArrowUpRight, 
   User, 
@@ -12,8 +11,7 @@ import {
   AlertTriangle, 
   PhoneCall, 
   CheckCircle2,
-  HelpCircle,
-  ClipboardList
+  HelpCircle
 } from "lucide-react";
 import ServiceDetailModal from "@/components/services/ServiceDetailModal";
 
@@ -305,24 +303,16 @@ export default function DetailedSupportPlans({ onOpenBooking }: DetailedSupportP
             </h3>
 
             <p className="font-sans text-sm sm:text-base text-[#E8EDE4]/90 font-light leading-relaxed max-w-xl mx-auto">
-              You don&apos;t need to figure everything out before reaching out. Start with our Mental Wellbeing Self-Assessment, or speak to one of our professionals about your concerns.
+              You don&apos;t need to figure everything out before reaching out. Speak with one of our professionals to discuss your concerns and explore an appropriate support plan.
             </p>
 
             <div className="pt-2 flex flex-col sm:flex-row items-center justify-center gap-3">
-              <Link
-                href="/assessment"
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#DFBD83] hover:bg-[#c9a76d] text-[#102E27] text-xs sm:text-sm font-semibold tracking-wide shadow-md transition-all hover:scale-[1.02]"
-              >
-                <ClipboardList className="w-4 h-4" />
-                <span>TAKE THE ASSESSMENT</span>
-              </Link>
-
               <button
                 onClick={() => onOpenBooking("Treatment & Support Plans Consultation")}
-                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-white/10 hover:bg-white/20 text-[#F7F5EF] text-xs sm:text-sm font-medium tracking-wide border border-[#DFBD83]/40 hover:border-[#DFBD83] transition-all cursor-pointer"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-full bg-[#DFBD83] hover:bg-[#c9a76d] text-[#102E27] text-xs sm:text-sm font-semibold tracking-wide shadow-md transition-all hover:scale-[1.02] cursor-pointer"
               >
                 <span>BOOK A CONSULTATION</span>
-                <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
+                <ArrowUpRight className="w-4 h-4 text-[#102E27]" />
               </button>
             </div>
           </div>

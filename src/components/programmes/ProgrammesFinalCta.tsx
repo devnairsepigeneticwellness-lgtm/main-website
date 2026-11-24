@@ -3,6 +3,7 @@
 import React from "react";
 import Link from "next/link";
 import { ArrowUpRight, MessageCircle, Phone, Mail } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 interface ProgrammesFinalCtaProps {
   onOpenBooking: (programmeName?: string) => void;
@@ -63,7 +64,7 @@ export default function ProgrammesFinalCta({ onOpenBooking }: ProgrammesFinalCta
           </Link>
 
           <a
-            href={`https://wa.me/919446477779?text=${whatsappMessage}`}
+            href={`https://wa.me/${CONTACT_INFO.whatsappDigits}?text=${whatsappMessage}`}
             target="_blank"
             rel="noopener noreferrer"
             className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-4 rounded-full bg-[#102E27] border border-[#B58B50]/40 text-[#DFBD83] hover:text-white text-sm sm:text-base font-medium transition-all"
@@ -77,12 +78,12 @@ export default function ProgrammesFinalCta({ onOpenBooking }: ProgrammesFinalCta
         <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-xs text-[#E8EDE4]/70 font-sans">
           <span className="flex items-center gap-2">
             <Phone className="w-3.5 h-3.5 text-[#DFBD83]" />
-            <span>+91 94464 77779</span>
+            <span>{CONTACT_INFO.phoneDisplay}</span>
           </span>
           <span className="text-white/20">•</span>
           <span className="flex items-center gap-2">
             <Mail className="w-3.5 h-3.5 text-[#DFBD83]" />
-            <span>ajit.navy@gmail.com</span>
+            <span>{CONTACT_INFO.email}</span>
           </span>
           <span className="text-white/20">•</span>
           <span>Panampilly Nagar, Kochi, Kerala</span>

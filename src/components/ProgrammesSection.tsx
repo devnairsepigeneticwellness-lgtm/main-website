@@ -53,9 +53,9 @@ export default function ProgrammesSection({ onOpenBooking }: { onOpenBooking: (p
     {
       id: "educational",
       tag: "04 / EDUCATE",
-      title: "School Mental Health & Educators",
+      title: "Educational Ecosystem Empowerment",
       audience: "Schools, Teachers, Counselors & Parents",
-      desc: "Comprehensive school mental health curricula cultivating emotional awareness, adolescent resilience, and healthy classroom dynamics.",
+      desc: "Comprehensive educational ecosystem empowerment curricula cultivating emotional awareness, adolescent resilience, and healthy classroom dynamics.",
       highlights: [
         "Screening, identification, referral, intervention",
         "Awareness campaigns and mental health events",

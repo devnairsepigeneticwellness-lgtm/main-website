@@ -1,6 +1,7 @@
 "use client";
 
 import React, { useState, useEffect, useRef } from "react";
+import { CONTACT_INFO, getWhatsAppUrl } from "@/components/SocialIcons";
 import {
   Send,
   CheckCircle2,
@@ -225,7 +226,7 @@ export default function EnquiryFormSection({
     } catch (err) {
       console.error("Submission failed:", err);
       setSubmitError(
-        "A network error prevented submission. Please verify your connection or contact us via WhatsApp (+91 94464 77779)."
+        `A network error prevented submission. Please verify your connection or contact us via WhatsApp (${CONTACT_INFO.phoneDisplay}).`
       );
       setIsSubmitting(false);
     }
@@ -315,18 +316,18 @@ export default function EnquiryFormSection({
               
               <div className="pt-2 space-y-2.5 text-xs sm:text-sm text-[#E8EDE4]">
                 <a
-                  href="tel:+919446477779"
+                  href={CONTACT_INFO.phoneHref}
                   className="flex items-center gap-3 p-3 rounded-2xl bg-[#102E27]/80 hover:bg-[#102E27] border border-[#B58B50]/30 transition-colors"
                 >
                   <Phone className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                  <span className="font-medium">+91 94464 77779</span>
+                  <span className="font-medium">{CONTACT_INFO.phoneDisplay}</span>
                 </a>
                 <a
-                  href="mailto:ajit.navy@gmail.com"
+                  href={`mailto:${CONTACT_INFO.email}`}
                   className="flex items-center gap-3 p-3 rounded-2xl bg-[#102E27]/80 hover:bg-[#102E27] border border-[#B58B50]/30 transition-colors"
                 >
                   <Mail className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                  <span className="font-medium break-all">ajit.navy@gmail.com</span>
+                  <span className="font-medium break-all">{CONTACT_INFO.email}</span>
                 </a>
               </div>
             </div>
@@ -404,7 +405,7 @@ export default function EnquiryFormSection({
 
                   <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-4">
                     <a
-                      href="https://wa.me/919446477779?text=Hello%2C%20I%20have%20submitted%20an%20enquiry%20on%20your%20website%20and%20would%20like%20to%20follow%20up."
+                      href={getWhatsAppUrl("Hello, I have submitted an enquiry on your website and would like to follow up.")}
                       target="_blank"
                       rel="noopener noreferrer"
                       className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3 rounded-full bg-[#173D34] hover:bg-[#102E27] text-white text-xs sm:text-sm font-medium transition-colors"

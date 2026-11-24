@@ -3,6 +3,7 @@
 import React, { useEffect, useRef } from "react";
 import { X, ArrowUpRight, Check, CheckCircle2, ShieldAlert, PhoneCall } from "lucide-react";
 import { servicesCopy } from "@/data/servicesData";
+import PractitionerLinks from "@/components/services/PractitionerLinks";
 
 export type PillarId =
   | "counselling"
@@ -92,8 +93,8 @@ export default function PillarDetailModal({
             </span>
 
             <h2 id={titleId} className="font-serif text-2xl sm:text-3xl font-light text-[#F7F5EF]">
-              {pillar === "counselling" && "Counselling: 14 Specialized Streams"}
-              {pillar === "psychotherapies" && "10 Evidence-Based Psychotherapy Modalities"}
+              {pillar === "counselling" && `Counselling: ${servicesCopy.counselling.streams.length} Specialized Streams`}
+              {pillar === "psychotherapies" && `${servicesCopy.psychotherapies.items.length} Evidence-Based Psychotherapy Modalities`}
               {pillar === "hypnotherapy" && "Clinical Hypnotherapy & Subconscious Alignment"}
               {pillar === "rehabilitation" && "Online Rehabilitation: Getting Life Back on Track"}
               {pillar === "renewal" && "Renewal: Reflect, Reconnect & Rebuild"}
@@ -151,7 +152,9 @@ export default function PillarDetailModal({
                       <span className="text-[11px] font-sans uppercase tracking-widest font-bold text-[#7D6335] bg-[#DEE7DB] px-3 py-1 rounded-full border border-[#B8C9B5]">
                         {stream.categoryLabel}
                       </span>
-                      <span className="text-xs text-[#556A5E]">Stream {counsellingTab + 1} of 14</span>
+                      <span className="text-xs text-[#556A5E]">
+                        Stream {counsellingTab + 1} of {servicesCopy.counselling.streams.length}
+                      </span>
                     </div>
 
                     <div>
@@ -183,6 +186,12 @@ export default function PillarDetailModal({
                         {stream.closing}
                       </p>
                     )}
+
+                    <PractitionerLinks
+                      professionalIds={stream.professionalIds}
+                      label="Available With"
+                      onNavigate={onClose}
+                    />
                   </div>
                 );
               })()}
@@ -281,6 +290,12 @@ export default function PillarDetailModal({
                         <span>{pt.usedFor}</span>
                       </div>
                     )}
+
+                    <PractitionerLinks
+                      professionalIds={pt.professionalIds}
+                      label={`Practitioners Trained in ${pt.code}`}
+                      onNavigate={onClose}
+                    />
                   </div>
                 );
               })()}
@@ -299,17 +314,19 @@ export default function PillarDetailModal({
 
               {/* Sub-Tabs Selector */}
               <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  { id: "pillars", label: "3 Pillars" },
-                  { id: "brain", label: "Brain Science (3 Changes)" },
-                  { id: "stages", label: "Session Walkthrough" },
-                  { id: "suitability", label: "Suitability Checklist" },
-                  { id: "transform", label: "Transformation Areas" },
-                  { id: "clinical", label: "Psychologist Care Rationale" },
-                ].map((t) => (
+                {(
+                  [
+                    { id: "pillars", label: "3 Pillars" },
+                    { id: "brain", label: "Brain Science (3 Changes)" },
+                    { id: "stages", label: "Session Walkthrough" },
+                    { id: "suitability", label: "Suitability Checklist" },
+                    { id: "transform", label: "Transformation Areas" },
+                    { id: "clinical", label: "Psychologist Care Rationale" },
+                  ] as const
+                ).map((t) => (
                   <button
                     key={t.id}
-                    onClick={() => setHypnoTab(t.id as any)}
+                    onClick={() => setHypnoTab(t.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                       hypnoTab === t.id
                         ? "bg-[#1E3F35] text-[#DFBD83] shadow-sm font-bold"
@@ -444,15 +461,17 @@ export default function PillarDetailModal({
 
               {/* Sub-Tabs */}
               <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  { id: "overview", label: "Remote Advantages" },
-                  { id: "offerings", label: "6 Online Offerings" },
-                  { id: "suitability", label: "Who Is It For?" },
-                  { id: "pathway", label: "4-Step Pathway" },
-                ].map((t) => (
+                {(
+                  [
+                    { id: "overview", label: "Remote Advantages" },
+                    { id: "offerings", label: "6 Online Offerings" },
+                    { id: "suitability", label: "Who Is It For?" },
+                    { id: "pathway", label: "4-Step Pathway" },
+                  ] as const
+                ).map((t) => (
                   <button
                     key={t.id}
-                    onClick={() => setRehabTab(t.id as any)}
+                    onClick={() => setRehabTab(t.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                       rehabTab === t.id
                         ? "bg-[#1E3F35] text-[#DFBD83] shadow-sm font-bold"
@@ -541,14 +560,16 @@ export default function PillarDetailModal({
 
               {/* Sub-Tabs */}
               <div className="flex flex-wrap gap-2 pt-1">
-                {[
-                  { id: "phases", label: "Our Approach (3 Phases)" },
-                  { id: "candidates", label: "Who Can Benefit?" },
-                  { id: "process", label: "Process Overview (4 Steps)" },
-                ].map((t) => (
+                {(
+                  [
+                    { id: "phases", label: "Our Approach (3 Phases)" },
+                    { id: "candidates", label: "Who Can Benefit?" },
+                    { id: "process", label: "Process Overview (4 Steps)" },
+                  ] as const
+                ).map((t) => (
                   <button
                     key={t.id}
-                    onClick={() => setRenewalTab(t.id as any)}
+                    onClick={() => setRenewalTab(t.id)}
                     className={`px-3.5 py-1.5 rounded-full text-xs font-semibold tracking-wide transition-all cursor-pointer ${
                       renewalTab === t.id
                         ? "bg-[#1E3F35] text-[#DFBD83] shadow-sm font-bold"

@@ -3,7 +3,14 @@
 import React from "react";
 import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowUpRight, ShieldCheck, Heart, MessageCircle } from "lucide-react";
-import { InstagramIcon, LinkedInIcon, SOCIAL_LINKS } from "@/components/SocialIcons";
+import {
+  CONTACT_INFO,
+  FacebookIcon,
+  InstagramIcon,
+  LinkedInIcon,
+  SOCIAL_LINKS,
+  getWhatsAppUrl,
+} from "@/components/SocialIcons";
 
 export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void } = {}) {
   return (
@@ -27,7 +34,7 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
                   Nair&apos;s Epigenetic Wellness
                 </span>
                 <span className="text-[10px] uppercase tracking-[0.16em] text-[#DFBD83] block">
-                  Understanding · Supporting · Wellbeing
+                  Balance · Growth · Wellbeing
                 </span>
               </div>
             </div>
@@ -53,11 +60,11 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
               Therapeutic Pathways
             </span>
             <ul className="space-y-2 text-xs sm:text-sm font-light text-[#E8EDE4]/80">
-              <li><Link href="/services#counselling" className="hover:text-[#DFBD83] transition-colors">Individual Counselling</Link></li>
-              <li><Link href="/services#counselling" className="hover:text-[#DFBD83] transition-colors">Cognitive Psychotherapy (CBT/REBT)</Link></li>
-              <li><Link href="/services#hypnotherapy" className="hover:text-[#DFBD83] transition-colors">Clinical Hypnotherapy</Link></li>
+              <li><Link href="/services#counselling" className="hover:text-[#DFBD83] transition-colors">Counselling</Link></li>
+              <li><Link href="/services#psychotherapies" className="hover:text-[#DFBD83] transition-colors">Psychotherapy</Link></li>
+              <li><Link href="/services#hypnotherapy" className="hover:text-[#DFBD83] transition-colors">Hypnotherapy</Link></li>
               <li><Link href="/services#rehabilitation" className="hover:text-[#DFBD83] transition-colors">Online Rehabilitation (RCI)</Link></li>
-              <li><Link href="/services#renewal" className="hover:text-[#DFBD83] transition-colors">The Renewal Programme</Link></li>
+              <li><Link href="/services#renewal" className="hover:text-[#DFBD83] transition-colors">Renewal Programme</Link></li>
               <li><Link href="/services#support-plans" className="hover:text-[#DFBD83] transition-colors">Mindfulness &amp; Somatic Calm</Link></li>
               <li><Link href="/assessment" className="hover:text-[#DFBD83] transition-colors font-medium text-[#DFBD83]">✦ Self-Assessment &amp; Check-In</Link></li>
             </ul>
@@ -82,7 +89,8 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
               <li><Link href="/programmes#internships" className="hover:text-[#DFBD83] transition-colors">Psychology Internships</Link></li>
               <li><Link href="/programmes#mentorship" className="hover:text-[#DFBD83] transition-colors">Practitioner Mentorship</Link></li>
               <li><Link href="/programmes#corporate" className="hover:text-[#DFBD83] transition-colors">Corporate Workshops</Link></li>
-              <li><Link href="/programmes#educational" className="hover:text-[#DFBD83] transition-colors">School Mental Health</Link></li>
+              <li><Link href="/programmes#corporate" className="hover:text-[#DFBD83] transition-colors">CSR (Corporate Social Responsibility)</Link></li>
+              <li><Link href="/programmes#educational" className="hover:text-[#DFBD83] transition-colors">Educational Ecosystem Empowerment</Link></li>
               <li><Link href="/events" className="hover:text-[#DFBD83] transition-colors">Workshops &amp; Events Gallery</Link></li>
             </ul>
           </div>
@@ -93,27 +101,38 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
               Contact &amp; Clinic
             </span>
             <div className="space-y-3 text-xs sm:text-sm text-[#E8EDE4]/80 font-light">
-              <a href="tel:+919446477779" className="flex items-center gap-2.5 hover:text-[#DFBD83] transition-colors">
+              <a href={CONTACT_INFO.phoneHref} className="flex items-center gap-2.5 hover:text-[#DFBD83] transition-colors">
                 <Phone className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                <span>+91 94464 77779</span>
+                <span>{CONTACT_INFO.phoneDisplay}</span>
               </a>
-              <a href="mailto:ajit.navy@gmail.com" className="flex items-center gap-2.5 hover:text-[#DFBD83] transition-colors">
+              <a href={`mailto:${CONTACT_INFO.email}`} className="flex items-center gap-2.5 hover:text-[#DFBD83] transition-colors">
                 <Mail className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                <span>ajit.navy@gmail.com</span>
+                <span>{CONTACT_INFO.email}</span>
               </a>
               <a
-                href="https://wa.me/919446477779?text=Hello%2C%20I%20would%20like%20to%20know%20more%20about%20Nair%27s%20Epigenetic%20Wellness."
+                href={getWhatsAppUrl("Hello, I would like to know more about Nair's Epigenetic Wellness.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex items-center gap-2.5 hover:text-[#DFBD83] transition-colors"
               >
                 <MessageCircle className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                <span>WhatsApp: +91 94464 77779</span>
+                <span>WhatsApp: {CONTACT_INFO.phoneDisplay}</span>
               </a>
-              <div className="flex items-start gap-2.5">
+              <a
+                href={CONTACT_INFO.googleMapsUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="flex items-start gap-2.5 hover:text-[#DFBD83] transition-colors group"
+              >
                 <MapPin className="w-4 h-4 text-[#DFBD83] shrink-0 mt-0.5" />
-                <span>Indore, Madhya Pradesh, India (In-person &amp; Global Online Sessions)</span>
-              </div>
+                <span>
+                  Indore, Madhya Pradesh, India (In-person &amp; Global Online Sessions)
+                  <span className="inline-flex items-center gap-0.5 text-[11px] text-[#DFBD83] ml-1.5 group-hover:underline">
+                    <span>View on Google Maps</span>
+                    <ArrowUpRight className="w-3 h-3" />
+                  </span>
+                </span>
+              </a>
             </div>
 
             {/* Social & Professional Connect */}
@@ -141,6 +160,16 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
                 >
                   <LinkedInIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
                   <span>LinkedIn</span>
+                </a>
+                <a
+                  href={SOCIAL_LINKS.facebook.url}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#274B3E] hover:bg-[#345F50] text-[#E8EDE4] hover:text-[#DFBD83] text-xs font-medium border border-[#C8D6C6]/20 transition-all group"
+                  aria-label="Facebook Profile"
+                >
+                  <FacebookIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
+                  <span>Facebook</span>
                 </a>
               </div>
             </div>
@@ -182,6 +211,15 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
             >
               <LinkedInIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
               <span>LinkedIn</span>
+            </a>
+            <a
+              href={SOCIAL_LINKS.facebook.url}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hover:text-[#DFBD83] transition-colors flex items-center gap-1.5"
+            >
+              <FacebookIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
+              <span>Facebook</span>
             </a>
             <span className="text-[#C8D6C6]/30 hidden sm:inline">&bull;</span>
             <Link href="/about" className="hover:text-[#DFBD83] transition-colors">Privacy &amp; Confidentiality</Link>

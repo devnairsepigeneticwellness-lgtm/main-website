@@ -2,6 +2,7 @@
 
 import React from "react";
 import { ArrowUpRight, MessageCircle, Building2, Users, ShieldAlert, Sparkles, MessageSquareHeart, HeartHandshake } from "lucide-react";
+import { CONTACT_INFO } from "@/components/SocialIcons";
 
 interface DetailedCorporateProps {
   onOpenBooking: (programmeName: string) => void;
@@ -90,7 +91,7 @@ export default function DetailedCorporate({ onOpenBooking }: DetailedCorporatePr
               </button>
 
               <a
-                href={`https://wa.me/919446477779?text=${whatsappMessage}`}
+                href={`https://wa.me/${CONTACT_INFO.whatsappDigits}?text=${whatsappMessage}`}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-full bg-[#102E27] border border-[#B58B50]/40 text-[#F7F5EF] text-sm font-medium hover:bg-[#102E27]/80 transition-all"
