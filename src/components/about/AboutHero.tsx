@@ -129,50 +129,53 @@ export default function AboutHero({ onOpenBooking }: AboutHeroProps) {
 
           {/* Right Column (5 cols): Botanical & Organic Wellness Illustration */}
           <div className="lg:col-span-5 flex justify-center">
-            <div className="relative w-full max-w-[420px] aspect-square rounded-3xl bg-gradient-to-br from-[#E8EDE4] via-[#F7F5EF] to-[#E2EADF] p-8 border border-[#B58B50]/30 shadow-lg flex items-center justify-center overflow-hidden">
+            <div className="relative w-full max-w-[420px] aspect-square rounded-3xl bg-gradient-to-br from-[#E8EDE4] via-[#F7F5EF] to-[#E2EADF] p-5 sm:p-7 border border-[#B58B50]/30 shadow-lg flex flex-col items-center justify-between gap-3 sm:gap-4 overflow-hidden">
               
-              {/* Concentric Organic Aura Rings */}
-              <div className="absolute w-[360px] h-[360px] rounded-full border border-[#B58B50]/20 pointer-events-none" />
-              <div className="absolute w-[280px] h-[280px] rounded-full border border-[#B58B50]/25 pointer-events-none" />
-              <div className="absolute w-[200px] h-[200px] rounded-full border border-[#B58B50]/30 pointer-events-none" />
+              {/* Concentric Aura + Botanical Illustration Area */}
+              <div className="relative flex-1 w-full min-h-0 flex items-center justify-center">
+                {/* Concentric Organic Aura Rings */}
+                <div className="absolute w-[340px] h-[340px] rounded-full border border-[#B58B50]/20 pointer-events-none" />
+                <div className="absolute w-[260px] h-[260px] rounded-full border border-[#B58B50]/25 pointer-events-none" />
+                <div className="absolute w-[180px] h-[180px] rounded-full border border-[#B58B50]/30 pointer-events-none" />
 
-              {/* Botanical Leaf & Geometric Flow Illustration */}
-              <svg
-                viewBox="0 0 240 240"
-                className="w-full h-full text-[#173D34] relative z-10"
-                fill="none"
-              >
-                <circle cx="120" cy="120" r="85" stroke="#DFBD83" strokeWidth="1" strokeDasharray="3 3" />
-                <path
-                  d="M120 40 C145 75 165 110 165 145 C165 175 145 195 120 195 C95 195 75 175 75 145 C75 110 95 75 120 40 Z"
-                  fill="#173D34"
-                  fillOpacity="0.08"
-                  stroke="#173D34"
-                  strokeWidth="1.5"
-                  strokeLinejoin="round"
-                />
-                
-                <path
-                  d="M120 145 C80 130 55 105 55 75 C85 75 110 100 120 145 Z"
-                  fill="#B58B50"
-                  fillOpacity="0.12"
-                  stroke="#B58B50"
-                  strokeWidth="1.2"
-                />
-                <path
-                  d="M120 145 C160 130 185 105 185 75 C155 75 130 100 120 145 Z"
-                  fill="#B58B50"
-                  fillOpacity="0.12"
-                  stroke="#B58B50"
-                  strokeWidth="1.2"
-                />
+                {/* Botanical Leaf & Geometric Flow Illustration */}
+                <svg
+                  viewBox="0 0 240 240"
+                  className="h-full max-h-[240px] w-auto text-[#173D34] relative z-10"
+                  fill="none"
+                >
+                  <circle cx="120" cy="120" r="85" stroke="#DFBD83" strokeWidth="1" strokeDasharray="3 3" />
+                  <path
+                    d="M120 40 C145 75 165 110 165 145 C165 175 145 195 120 195 C95 195 75 175 75 145 C75 110 95 75 120 40 Z"
+                    fill="#173D34"
+                    fillOpacity="0.08"
+                    stroke="#173D34"
+                    strokeWidth="1.5"
+                    strokeLinejoin="round"
+                  />
+                  
+                  <path
+                    d="M120 145 C80 130 55 105 55 75 C85 75 110 100 120 145 Z"
+                    fill="#B58B50"
+                    fillOpacity="0.12"
+                    stroke="#B58B50"
+                    strokeWidth="1.2"
+                  />
+                  <path
+                    d="M120 145 C160 130 185 105 185 75 C155 75 130 100 120 145 Z"
+                    fill="#B58B50"
+                    fillOpacity="0.12"
+                    stroke="#B58B50"
+                    strokeWidth="1.2"
+                  />
 
-                <circle cx="120" cy="145" r="4" fill="#173D34" />
-                <circle cx="120" cy="40" r="3" fill="#DFBD83" />
-              </svg>
+                  <circle cx="120" cy="145" r="4" fill="#173D34" />
+                  <circle cx="120" cy="40" r="3" fill="#DFBD83" />
+                </svg>
+              </div>
 
               {/* Floating Philosophy Tag */}
-              <div className="absolute bottom-6 inset-x-6 bg-white/90 backdrop-blur-md rounded-2xl p-4 border border-[#B58B50]/30 shadow-md text-center">
+              <div className="relative z-20 w-full bg-white/95 backdrop-blur-md rounded-2xl p-4 border border-[#B58B50]/30 shadow-md text-center shrink-0">
                 <span className="text-[11px] font-sans uppercase tracking-[0.2em] text-[#9E783E] font-semibold block mb-0.5">
                   Holistic Philosophy
                 </span>

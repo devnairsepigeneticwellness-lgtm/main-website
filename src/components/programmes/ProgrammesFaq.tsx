@@ -26,7 +26,7 @@ export default function ProgrammesFaq({ onOpenBooking }: ProgrammesFaqProps) {
     },
     {
       q: "How do I apply or register for a programme?",
-      a: `You can initiate an enquiry through our website or contact our administrative team via WhatsApp (${CONTACT_INFO.phoneDisplay}) or email (${CONTACT_INFO.email}). We will share the current schedule, prerequisites, and registration details.`,
+      a: `You can initiate an enquiry through our website or contact our administrative team via WhatsApp (${CONTACT_INFO.whatsappDisplay}) or email (${CONTACT_INFO.email}). We will share the current schedule, prerequisites, and registration details.`,
     },
     {
       q: "Can programmes be customised for our organisation or college?",

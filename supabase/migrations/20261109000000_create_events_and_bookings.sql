@@ -85,7 +85,8 @@ CREATE TABLE IF NOT EXISTS public.consultation_availability (
   end_time TIME NOT NULL,
   consultation_duration_minutes INT NOT NULL DEFAULT 50 CHECK (consultation_duration_minutes > 0),
   mode TEXT NOT NULL DEFAULT 'Both' CHECK (mode IN ('Online', 'In-Person', 'Both')),
-  is_active BOOLEAN NOT NULL DEFAULT true
+  is_active BOOLEAN NOT NULL DEFAULT true,
+  CONSTRAINT consultation_availability_prof_weekday_key UNIQUE (professional_id, weekday)
 );
 
 CREATE INDEX IF NOT EXISTS idx_availability_prof_weekday ON public.consultation_availability (professional_id, weekday);
@@ -173,23 +174,27 @@ ALTER TABLE public.availability_exceptions ENABLE ROW LEVEL SECURITY;
 ALTER TABLE public.consultation_bookings ENABLE ROW LEVEL SECURITY;
 
 -- Profiles: Authenticated users can view their own profile; admins can view all
+DROP POLICY IF EXISTS "Profiles viewable by authenticated users" ON public.profiles;
 CREATE POLICY "Profiles viewable by authenticated users"
 ON public.profiles FOR SELECT
 TO authenticated
 USING (true);
 
+DROP POLICY IF EXISTS "Users can update own profile" ON public.profiles;
 CREATE POLICY "Users can update own profile"
 ON public.profiles FOR UPDATE
 TO authenticated
 USING (auth.uid() = id);
 
 -- Events: Public can view published events
+DROP POLICY IF EXISTS "Public can view published events" ON public.events;
 CREATE POLICY "Public can view published events"
 ON public.events FOR SELECT
 TO anon, authenticated
 USING (is_published = true);
 
 -- Events: Admins have full access
+DROP POLICY IF EXISTS "Admins full access on events" ON public.events;
 CREATE POLICY "Admins full access on events"
 ON public.events FOR ALL
 TO authenticated
@@ -197,12 +202,14 @@ USING (true)
 WITH CHECK (true);
 
 -- Gallery Images: Public can view published images for published events
+DROP POLICY IF EXISTS "Public can view published gallery images" ON public.gallery_images;
 CREATE POLICY "Public can view published gallery images"
 ON public.gallery_images FOR SELECT
 TO anon, authenticated
 USING (is_published = true);
 
 -- Gallery Images: Admins full access
+DROP POLICY IF EXISTS "Admins full access on gallery images" ON public.gallery_images;
 CREATE POLICY "Admins full access on gallery images"
 ON public.gallery_images FOR ALL
 TO authenticated
@@ -210,12 +217,14 @@ USING (true)
 WITH CHECK (true);
 
 -- Professionals: Public can view active professionals
+DROP POLICY IF EXISTS "Public can view active professionals" ON public.professionals;
 CREATE POLICY "Public can view active professionals"
 ON public.professionals FOR SELECT
 TO anon, authenticated
 USING (is_active = true);
 
 -- Professionals: Admins full access
+DROP POLICY IF EXISTS "Admins full access on professionals" ON public.professionals;
 CREATE POLICY "Admins full access on professionals"
 ON public.professionals FOR ALL
 TO authenticated
@@ -223,12 +232,14 @@ USING (true)
 WITH CHECK (true);
 
 -- Consultation Availability: Public can view active weekly slots to generate booking grid
+DROP POLICY IF EXISTS "Public can view active availability" ON public.consultation_availability;
 CREATE POLICY "Public can view active availability"
 ON public.consultation_availability FOR SELECT
 TO anon, authenticated
 USING (is_active = true);
 
 -- Consultation Availability: Admins full access
+DROP POLICY IF EXISTS "Admins full access on consultation availability" ON public.consultation_availability;
 CREATE POLICY "Admins full access on consultation availability"
 ON public.consultation_availability FOR ALL
 TO authenticated
@@ -236,12 +247,14 @@ USING (true)
 WITH CHECK (true);
 
 -- Availability Exceptions: Public can view to filter blocked dates
+DROP POLICY IF EXISTS "Public can view availability exceptions" ON public.availability_exceptions;
 CREATE POLICY "Public can view availability exceptions"
 ON public.availability_exceptions FOR SELECT
 TO anon, authenticated
 USING (true);
 
 -- Availability Exceptions: Admins full access
+DROP POLICY IF EXISTS "Admins full access on availability exceptions" ON public.availability_exceptions;
 CREATE POLICY "Admins full access on availability exceptions"
 ON public.availability_exceptions FOR ALL
 TO authenticated
@@ -250,12 +263,14 @@ WITH CHECK (true);
 
 -- Consultation Bookings: PUBLIC CANNOT SELECT (Data Protection)
 -- Public can insert via server action or authenticated endpoint
+DROP POLICY IF EXISTS "Public anonymous booking creation" ON public.consultation_bookings;
 CREATE POLICY "Public anonymous booking creation"
 ON public.consultation_bookings FOR INSERT
 TO anon, authenticated
 WITH CHECK (true);
 
 -- Consultation Bookings: Admins can view and manage all bookings
+DROP POLICY IF EXISTS "Admins manage all consultation bookings" ON public.consultation_bookings;
 CREATE POLICY "Admins manage all consultation bookings"
 ON public.consultation_bookings FOR ALL
 TO authenticated
@@ -270,22 +285,26 @@ VALUES ('events', 'events', true)
 ON CONFLICT (id) DO UPDATE SET public = true;
 
 -- Storage policies: Public can read images in the events bucket
+DROP POLICY IF EXISTS "Public read events bucket" ON storage.objects;
 CREATE POLICY "Public read events bucket"
 ON storage.objects FOR SELECT
 TO anon, authenticated
 USING (bucket_id = 'events');
 
 -- Storage policies: Authenticated admins can upload, update, delete
+DROP POLICY IF EXISTS "Admins upload to events bucket" ON storage.objects;
 CREATE POLICY "Admins upload to events bucket"
 ON storage.objects FOR INSERT
 TO authenticated
 WITH CHECK (bucket_id = 'events');
 
+DROP POLICY IF EXISTS "Admins update events bucket" ON storage.objects;
 CREATE POLICY "Admins update events bucket"
 ON storage.objects FOR UPDATE
 TO authenticated
 USING (bucket_id = 'events');
 
+DROP POLICY IF EXISTS "Admins delete from events bucket" ON storage.objects;
 CREATE POLICY "Admins delete from events bucket"
 ON storage.objects FOR DELETE
 TO authenticated

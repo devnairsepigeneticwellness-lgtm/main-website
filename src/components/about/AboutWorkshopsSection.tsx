@@ -15,6 +15,7 @@ import {
   Layers
 } from "lucide-react";
 import { aboutCopy } from "@/data/aboutData";
+import { getWhatsAppUrl } from "@/components/SocialIcons";
 
 interface AboutWorkshopsSectionProps {
   onOpenBooking: () => void;
@@ -116,7 +117,7 @@ export default function AboutWorkshopsSection({ onOpenBooking }: AboutWorkshopsS
 
             <div className="pt-2 flex flex-col sm:flex-row gap-3">
               <a
-                href="https://wa.me/919926055562?text=Hi%2C%20I%20would%20like%20to%20register%20for%20the%20School%20Counselling%20Skills%20workshop."
+                href={getWhatsAppUrl("Hi, I would like to register for the School Counselling Skills workshop.")}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="flex-1 inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#B58B50] hover:bg-[#A37B42] text-white text-xs font-semibold tracking-wide transition-all shadow-md"

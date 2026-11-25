@@ -3,6 +3,23 @@ import { isSupabaseConfigured } from "../supabase/client";
 import { Event, GalleryImage } from "../supabase/types";
 import { SEED_EVENTS, SEED_GALLERY } from "./seedData";
 
+type EventWithGalleryIds = Event & { gallery_images?: { id: string }[] };
+type GalleryWithEventTitle = GalleryImage & { events?: { title?: string } | null };
+
+function mapEventsWithCounts(data: unknown[]): Event[] {
+  return (data as EventWithGalleryIds[]).map((item) => ({
+    ...item,
+    gallery_count: item.gallery_images?.length || 0,
+  }));
+}
+
+function mapGalleryWithTitles(data: unknown[]): GalleryImage[] {
+  return (data as GalleryWithEventTitle[]).map((item) => ({
+    ...item,
+    event_title: item.events?.title,
+  }));
+}
+
 export type EventStatusComputed = "Upcoming" | "Completed" | "Draft" | "Cancelled" | "Archived";
 
 export function computeEventStatus(event: Event): EventStatusComputed {
@@ -39,10 +56,7 @@ export async function getPublishedEvents(): Promise<Event[]> {
       return SEED_EVENTS.filter((e) => e.is_published && !e.is_archived);
     }
 
-    return data.map((item: any) => ({
-      ...item,
-      gallery_count: item.gallery_images?.length || 0,
-    })) as Event[];
+    return mapEventsWithCounts(data);
   } catch (err) {
     console.error("Error fetching published events:", err);
     return SEED_EVENTS.filter((e) => e.is_published && !e.is_archived);
@@ -141,12 +155,61 @@ export async function getPublishedGalleryImages(): Promise<GalleryImage[]> {
       return SEED_GALLERY.filter((g) => g.is_published);
     }
 
-    return data.map((item: any) => ({
-      ...item,
-      event_title: item.events?.title,
-    })) as GalleryImage[];
+    return mapGalleryWithTitles(data);
   } catch (err) {
     console.error("Error fetching published gallery images:", err);
     return SEED_GALLERY.filter((g) => g.is_published);
+  }
+}
+
+/**
+ * Fetch all events (including drafts, completed, and archived) for admin tools.
+ */
+export async function getAllAdminEvents(): Promise<Event[]> {
+  if (!isSupabaseConfigured()) {
+    return SEED_EVENTS;
+  }
+
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from("events")
+      .select("*, gallery_images(id)")
+      .order("start_at", { ascending: false });
+
+    if (error || !data) {
+      return [];
+    }
+
+    return mapEventsWithCounts(data);
+  } catch (err) {
+    console.error("Error fetching admin events:", err);
+    return [];
+  }
+}
+
+/**
+ * Fetch all gallery images (including hidden photos) for the admin gallery view.
+ */
+export async function getAllAdminGalleryImages(): Promise<GalleryImage[]> {
+  if (!isSupabaseConfigured()) {
+    return SEED_GALLERY;
+  }
+
+  try {
+    const supabase = createPublicClient();
+    const { data, error } = await supabase
+      .from("gallery_images")
+      .select("*, events(title)")
+      .order("created_at", { ascending: false });
+
+    if (error || !data) {
+      return [];
+    }
+
+    return mapGalleryWithTitles(data);
+  } catch (err) {
+    console.error("Error fetching admin gallery images:", err);
+    return [];
   }
 }

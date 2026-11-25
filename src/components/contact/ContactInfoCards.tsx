@@ -37,7 +37,7 @@ export default function ContactInfoCards() {
     {
       title: "WhatsApp",
       label: "Instant Mobile Messaging",
-      value: CONTACT_INFO.phoneDisplay,
+      value: CONTACT_INFO.whatsappDisplay,
       href: getWhatsAppUrl("Hello, I would like to know more about Nair's Epigenetic Wellness."),
       description: "Connect via WhatsApp for quick queries, scheduling questions, or preliminary assistance with prefilled message.",
       buttonText: "Chat on WhatsApp",

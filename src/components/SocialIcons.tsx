@@ -1,10 +1,11 @@
 import React from "react";
 
-// TODO(client-input): Confirm and update the official phone/WhatsApp number and Google Maps Place URL below (Tasks 4.2 & 5.1).
+// TODO(client-input): Confirm official voice phone number (Task 4.2) and Google Maps Place URL below (Task 5.1).
 export const CONTACT_INFO = {
   phoneDisplay: "+91 94464 77779",
   phoneHref: "tel:+919446477779",
-  whatsappDigits: "919446477779",
+  whatsappDisplay: "+91 94464 67779",
+  whatsappDigits: "919446467779",
   email: "ajit.navy@gmail.com",
   googleMapsUrl:
     "https://www.google.com/maps/search/?api=1&query=Indore%2C+Madhya+Pradesh%2C+India",
@@ -38,7 +39,7 @@ export const SOCIAL_LINKS = {
   },
   whatsapp: {
     url: getWhatsAppUrl(),
-    handle: CONTACT_INFO.phoneDisplay,
+    handle: CONTACT_INFO.whatsappDisplay,
     name: "WhatsApp",
     description: "Message us directly on WhatsApp",
   },

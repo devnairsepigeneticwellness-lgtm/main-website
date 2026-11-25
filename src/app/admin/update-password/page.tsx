@@ -1,15 +1,26 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
-import { Lock, AlertCircle, Loader2, CheckCircle2, ArrowRight } from "lucide-react";
+import {
+  Lock,
+  AlertCircle,
+  Loader2,
+  CheckCircle2,
+  ArrowRight,
+  Eye,
+  EyeOff,
+} from "lucide-react";
 import { createClient } from "@/lib/supabase/client";
+import { getFriendlyAuthError } from "@/lib/admin/helpers";
 
 export default function AdminUpdatePasswordPage() {
   const router = useRouter();
+  const baseId = useId();
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
   const [success, setSuccess] = useState(false);
@@ -24,7 +35,7 @@ export default function AdminUpdatePasswordPage() {
     }
 
     if (password !== confirmPassword) {
-      setErrorMessage("Passwords do not match.");
+      setErrorMessage("Both passwords must match. Please check and try again.");
       return;
     }
 
@@ -37,7 +48,7 @@ export default function AdminUpdatePasswordPage() {
       });
 
       if (error) {
-        setErrorMessage(error.message);
+        setErrorMessage(getFriendlyAuthError(error.message));
         setIsLoading(false);
         return;
       }
@@ -48,7 +59,11 @@ export default function AdminUpdatePasswordPage() {
         router.refresh();
       }, 1500);
     } catch (err: unknown) {
-      setErrorMessage(err instanceof Error ? err.message : "Failed to update password.");
+      setErrorMessage(
+        err instanceof Error
+          ? getFriendlyAuthError(err.message)
+          : "Could not save your new password. Please try again."
+      );
       setIsLoading(false);
     }
   };
@@ -66,60 +81,91 @@ export default function AdminUpdatePasswordPage() {
             </div>
           </Link>
           <h1 className="font-serif text-2xl sm:text-3xl font-medium text-white tracking-tight">
-            Update Admin Password
+            Set a New Password
           </h1>
-          <p className="text-xs text-[#E8EDE4]/70 font-light">
-            Set a new secure password for your administrator account
+          <p className="text-xs text-[#E8EDE4]/75 font-light">
+            Choose a memorable password of at least 8 characters
           </p>
         </div>
 
         <div className="bg-[#102E27] rounded-3xl p-7 sm:p-9 border border-[#B58B50]/30 shadow-2xl space-y-5">
           {errorMessage && (
-            <div className="p-3.5 rounded-xl bg-red-950/60 border border-red-500/40 text-xs text-red-200 flex items-start gap-2">
+            <div
+              role="alert"
+              className="p-3.5 rounded-xl bg-red-950/60 border border-red-500/40 text-xs text-red-100 flex items-start gap-2"
+            >
               <AlertCircle className="w-4 h-4 text-red-400 shrink-0 mt-0.5" />
               <span>{errorMessage}</span>
             </div>
           )}
 
           {success && (
-            <div className="p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-xs text-emerald-200 flex items-start gap-2">
+            <div
+              role="status"
+              className="p-3.5 rounded-xl bg-emerald-950/60 border border-emerald-500/40 text-xs text-emerald-100 flex items-start gap-2"
+            >
               <CheckCircle2 className="w-4 h-4 text-emerald-400 shrink-0 mt-0.5" />
-              <span>Password successfully updated! Redirecting to admin console...</span>
+              <span>Password updated! Opening your clinic dashboard...</span>
             </div>
           )}
 
           {!success && (
             <form onSubmit={handleUpdate} className="space-y-4">
               <div>
-                <label className="block text-xs font-semibold text-[#DFBD83] uppercase tracking-wider mb-1.5">
+                <label
+                  htmlFor={`${baseId}-new-pw`}
+                  className="block text-xs font-semibold text-[#DFBD83] uppercase tracking-wider mb-1.5"
+                >
                   New Password
                 </label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-[#B58B50] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
-                    type="password"
+                    id={`${baseId}-new-pw`}
+                    name="password"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    enterKeyHint="next"
+                    minLength={8}
                     required
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     placeholder="At least 8 characters"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#173D34] border border-[#B58B50]/30 text-xs text-white placeholder-white/30 focus:border-[#DFBD83] focus:outline-none"
+                    className="w-full pl-10 pr-11 py-2.5 rounded-xl bg-[#173D34] border border-[#B58B50]/30 text-sm text-white placeholder-white/35 focus:border-[#DFBD83] focus:outline-none"
                   />
+                  <button
+                    type="button"
+                    onClick={() => setShowPassword((prev) => !prev)}
+                    aria-pressed={showPassword}
+                    aria-label={showPassword ? "Hide password" : "Show password"}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 p-1.5 rounded-lg text-[#DFBD83]/80 hover:text-white hover:bg-white/10 transition-colors cursor-pointer"
+                  >
+                    {showPassword ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
+                  </button>
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#DFBD83] uppercase tracking-wider mb-1.5">
-                  Confirm Password
+                <label
+                  htmlFor={`${baseId}-confirm-pw`}
+                  className="block text-xs font-semibold text-[#DFBD83] uppercase tracking-wider mb-1.5"
+                >
+                  Re-enter New Password
                 </label>
                 <div className="relative">
                   <Lock className="w-4 h-4 text-[#B58B50] absolute left-3.5 top-1/2 -translate-y-1/2 pointer-events-none" />
                   <input
-                    type="password"
+                    id={`${baseId}-confirm-pw`}
+                    name="confirmPassword"
+                    type={showPassword ? "text" : "password"}
+                    autoComplete="new-password"
+                    enterKeyHint="done"
+                    minLength={8}
                     required
                     value={confirmPassword}
                     onChange={(e) => setConfirmPassword(e.target.value)}
-                    placeholder="Re-enter your new password"
-                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#173D34] border border-[#B58B50]/30 text-xs text-white placeholder-white/30 focus:border-[#DFBD83] focus:outline-none"
+                    placeholder="Type the same password again"
+                    className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#173D34] border border-[#B58B50]/30 text-sm text-white placeholder-white/35 focus:border-[#DFBD83] focus:outline-none"
                   />
                 </div>
               </div>
@@ -132,7 +178,7 @@ export default function AdminUpdatePasswordPage() {
                 {isLoading ? (
                   <>
                     <Loader2 className="w-4 h-4 animate-spin text-[#102E27]" />
-                    <span>Updating Password...</span>
+                    <span>Saving Password...</span>
                   </>
                 ) : (
                   <>
@@ -147,9 +193,9 @@ export default function AdminUpdatePasswordPage() {
           <div className="pt-2 text-center">
             <Link
               href="/admin/login"
-              className="text-xs text-[#E8EDE4]/60 hover:text-[#DFBD83] transition-colors"
+              className="text-xs text-[#E8EDE4]/65 hover:text-[#DFBD83] transition-colors"
             >
-              &larr; Back to Admin Sign In
+              &larr; Back to Sign In
             </Link>
           </div>
         </div>

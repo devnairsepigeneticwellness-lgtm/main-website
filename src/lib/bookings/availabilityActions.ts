@@ -21,8 +21,8 @@ export async function updateBookingStatus(bookingId: string, newStatus: BookingS
       revalidatePath("/admin/bookings");
       revalidatePath("/admin");
       return { success: true, booking: data };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to update booking status." };
     }
   }
 
@@ -55,8 +55,8 @@ export async function addAvailabilityException(input: {
 
       revalidatePath("/admin/availability");
       return { success: true, exception: data };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to add blocked date." };
     }
   }
 
@@ -72,8 +72,8 @@ export async function deleteAvailabilityException(id: string) {
 
       revalidatePath("/admin/availability");
       return { success: true };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to remove blocked date." };
     }
   }
 
@@ -94,26 +94,69 @@ export async function updateWeeklySchedule(
     try {
       const supabase = createAdminClient();
 
+      // Fetch existing rows first so saving works with or without a UNIQUE constraint on (professional_id, weekday)
+      const { data: existingRows, error: fetchError } = await supabase
+        .from("consultation_availability")
+        .select("id, weekday")
+        .eq("professional_id", professionalId);
+
+      if (fetchError) {
+        return { success: false, error: fetchError.message };
+      }
+
       for (const item of schedule) {
-        await supabase
-          .from("consultation_availability")
-          .upsert(
-            {
+        const matchingIds = (existingRows || [])
+          .filter((r) => r.weekday === item.weekday)
+          .map((r) => r.id as string);
+
+        if (matchingIds.length > 0) {
+          const { error: updateErr } = await supabase
+            .from("consultation_availability")
+            .update({
+              start_time: item.start_time,
+              end_time: item.end_time,
+              consultation_duration_minutes: item.consultation_duration_minutes,
+              is_active: item.is_active,
+            })
+            .eq("id", matchingIds[0]);
+
+          if (updateErr) {
+            return { success: false, error: updateErr.message };
+          }
+
+          // Clean up any duplicate rows created before the unique constraint was applied
+          if (matchingIds.length > 1) {
+            await supabase
+              .from("consultation_availability")
+              .delete()
+              .in("id", matchingIds.slice(1));
+          }
+        } else {
+          const { error: insertErr } = await supabase
+            .from("consultation_availability")
+            .insert({
               professional_id: professionalId,
               weekday: item.weekday,
               start_time: item.start_time,
               end_time: item.end_time,
               consultation_duration_minutes: item.consultation_duration_minutes,
+              mode: "Both",
               is_active: item.is_active,
-            },
-            { onConflict: "professional_id,weekday" }
-          );
+            });
+
+          if (insertErr) {
+            return { success: false, error: insertErr.message };
+          }
+        }
       }
 
       revalidatePath("/admin/availability");
       return { success: true };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return {
+        success: false,
+        error: err instanceof Error ? err.message : "Failed to update working hours.",
+      };
     }
   }
 

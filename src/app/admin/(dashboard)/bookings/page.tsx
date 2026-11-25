@@ -6,16 +6,22 @@ import { isSupabaseConfigured } from "@/lib/supabase/client";
 import { ConsultationBooking } from "@/lib/supabase/types";
 import { SEED_PROFESSIONALS } from "@/lib/events/seedData";
 
-export default async function AdminBookingsPage() {
+interface AdminBookingsPageProps {
+  searchParams: Promise<{ status?: string }>;
+}
+
+export default async function AdminBookingsPage({ searchParams }: AdminBookingsPageProps) {
   await connection();
+  const resolvedParams = await searchParams;
+  const isConnected = isSupabaseConfigured();
+
   let bookings: ConsultationBooking[] = [];
   let professionalsList = SEED_PROFESSIONALS.map((p) => ({ id: p.id, name: p.name }));
 
-  if (isSupabaseConfigured()) {
+  if (isConnected) {
     try {
       const supabase = await createServerSupabaseClient();
-      
-      // Fetch professionals
+
       const { data: profs } = await supabase
         .from("professionals")
         .select("id, name")
@@ -24,25 +30,25 @@ export default async function AdminBookingsPage() {
         professionalsList = profs;
       }
 
-      // Fetch bookings
       const { data: bData, error } = await supabase
         .from("consultation_bookings")
         .select("*, professionals(name)")
         .order("start_at", { ascending: false });
 
       if (!error && bData) {
-        bookings = bData.map((item: any) => ({
+        type BookingRowWithProf = ConsultationBooking & {
+          professionals?: { name?: string } | null;
+        };
+        bookings = (bData as BookingRowWithProf[]).map((item) => ({
           ...item,
           professional_name: item.professionals?.name,
-        })) as ConsultationBooking[];
+        }));
       }
     } catch (err) {
       console.error("Error loading admin bookings from Supabase:", err);
     }
-  }
-
-  // Fallback sample bookings if none exist yet
-  if (bookings.length === 0) {
+  } else {
+    // Only display sample bookings in Demo Preview Mode (when database is not configured)
     bookings = [
       {
         id: "b-sample-1",
@@ -51,7 +57,7 @@ export default async function AdminBookingsPage() {
         email: "aarav.mehra@example.com",
         phone: "+91 98260 12345",
         professional_id: professionalsList[0]?.id || null,
-        service: "Individual Counselling",
+        service: "Counselling",
         mode: "Online Video Consultation",
         start_at: "2026-11-15T10:00:00+05:30",
         end_at: "2026-11-15T10:50:00+05:30",
@@ -68,7 +74,7 @@ export default async function AdminBookingsPage() {
         email: "sneha.k@example.com",
         phone: "+91 98930 54321",
         professional_id: professionalsList[1]?.id || null,
-        service: "Clinical Hypnotherapy",
+        service: "Hypnotherapy",
         mode: "In-Person (Indore Clinic)",
         start_at: "2026-11-16T11:00:00+05:30",
         end_at: "2026-11-16T11:50:00+05:30",
@@ -81,10 +87,15 @@ export default async function AdminBookingsPage() {
     ];
   }
 
+  const initialStatus = resolvedParams?.status || "All";
+
   return (
     <AdminBookingsClient
+      key={`${initialStatus}-${bookings.length}`}
       initialBookings={bookings}
       professionalsList={professionalsList}
+      initialStatus={initialStatus}
+      isPreviewMode={!isConnected}
     />
   );
 }

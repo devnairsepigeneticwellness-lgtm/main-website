@@ -1,4 +1,5 @@
 import { createServerSupabaseClient } from "../supabase/server";
+import { createAdminClient } from "../supabase/admin";
 import { isSupabaseConfigured } from "../supabase/client";
 import { TimeSlot } from "../supabase/types";
 import { SEED_PROFESSIONALS } from "../events/seedData";
@@ -47,11 +48,6 @@ export async function getAvailableTimeSlots(
   // Weekday index (0 = Sun, 1 = Mon, ..., 6 = Sat)
   const weekday = targetDate.getDay();
 
-  // If Sunday (0), clinic is closed for regular routine consultations
-  if (weekday === 0) {
-    return [];
-  }
-
   const now = new Date();
   const selectedDate = new Date(`${dateStr}T23:59:59`);
   if (selectedDate < now) {
@@ -59,28 +55,36 @@ export async function getAvailableTimeSlots(
     return [];
   }
 
+  let isWorkingDay = weekday !== 0; // Default Mon–Sat open, Sunday closed unless enabled in DB
   let scheduleStart = "09:00:00";
   let scheduleEnd = "18:00:00";
   let durationMinutes = 50;
-  let blockedRanges: { start: Date; end: Date }[] = [];
+  const blockedRanges: { start: Date; end: Date }[] = [];
 
   if (isSupabaseConfigured() && professionalId) {
     try {
       const supabase = await createServerSupabaseClient();
+      const adminSupabase = createAdminClient();
 
-      // 1. Fetch weekly availability rule
-      const { data: avail } = await supabase
+      // 1. Fetch weekly availability rules (admin client sees inactive days too so closed weekdays stay closed)
+      const { data: availRows } = await adminSupabase
         .from("consultation_availability")
         .select("*")
         .eq("professional_id", professionalId)
         .eq("weekday", weekday)
-        .eq("is_active", true)
-        .maybeSingle();
+        .limit(1);
 
+      const avail = availRows?.[0];
       if (avail) {
+        if (!avail.is_active) {
+          return [];
+        }
+        isWorkingDay = true;
         scheduleStart = avail.start_time;
         scheduleEnd = avail.end_time;
         durationMinutes = avail.consultation_duration_minutes || 50;
+      } else if (!isWorkingDay) {
+        return [];
       }
 
       // 2. Fetch exceptions (holidays/leaves)
@@ -98,18 +102,18 @@ export async function getAvailableTimeSlots(
           }
           if (exc.start_time && exc.end_time) {
             blockedRanges.push({
-              start: new Date(`${dateStr}T${exc.start_time}`),
-              end: new Date(`${dateStr}T${exc.end_time}`),
+              start: new Date(`${dateStr}T${exc.start_time}+05:30`),
+              end: new Date(`${dateStr}T${exc.end_time}+05:30`),
             });
           }
         }
       }
 
-      // 3. Fetch existing confirmed or pending bookings
-      const dayStart = `${dateStr}T00:00:00Z`;
-      const dayEnd = `${dateStr}T23:59:59Z`;
+      // 3. Fetch existing confirmed or pending bookings (server-side admin client bypasses anon SELECT restriction while only reading time ranges)
+      const dayStart = `${dateStr}T00:00:00+05:30`;
+      const dayEnd = `${dateStr}T23:59:59+05:30`;
 
-      const { data: bookings } = await supabase
+      const { data: bookings } = await adminSupabase
         .from("consultation_bookings")
         .select("start_at, end_at, status")
         .eq("professional_id", professionalId)

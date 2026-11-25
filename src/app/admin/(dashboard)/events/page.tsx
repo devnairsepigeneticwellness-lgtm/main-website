@@ -1,33 +1,26 @@
 import React from "react";
 import AdminEventsClient from "@/components/admin/AdminEventsClient";
-import { createServerSupabaseClient } from "@/lib/supabase/server";
-import { isSupabaseConfigured } from "@/lib/supabase/client";
-import { SEED_EVENTS } from "@/lib/events/seedData";
-import { Event } from "@/lib/supabase/types";
+import { getAllAdminEvents } from "@/lib/events/queries";
 import { connection } from "next/server";
 
-export default async function AdminEventsPage() {
+interface AdminEventsPageProps {
+  searchParams: Promise<{ filter?: string }>;
+}
+
+export default async function AdminEventsPage({ searchParams }: AdminEventsPageProps) {
   await connection();
-  let events: Event[] = SEED_EVENTS;
+  const [events, resolvedParams] = await Promise.all([
+    getAllAdminEvents(),
+    searchParams,
+  ]);
+  const initialFilter = resolvedParams?.filter || "all";
 
-  if (isSupabaseConfigured()) {
-    try {
-      const supabase = await createServerSupabaseClient();
-      const { data, error } = await supabase
-        .from("events")
-        .select("*, gallery_images(id)")
-        .order("start_at", { ascending: false });
-
-      if (!error && data) {
-        events = data.map((item: any) => ({
-          ...item,
-          gallery_count: item.gallery_images?.length || 0,
-        })) as Event[];
-      }
-    } catch (err) {
-      console.error("Error loading admin events from Supabase:", err);
-    }
-  }
-
-  return <AdminEventsClient initialEvents={events} />;
+  return (
+    <AdminEventsClient
+      key={`${initialFilter}-${events.length}`}
+      initialEvents={events}
+      initialFilter={initialFilter}
+      serverNowIso={new Date().toISOString()}
+    />
+  );
 }

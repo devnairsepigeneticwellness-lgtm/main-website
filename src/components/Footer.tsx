@@ -26,9 +26,9 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
           {/* Brand Info (4 cols) */}
           <div className="lg:col-span-4 space-y-5">
             <div className="flex items-center gap-3">
-              <div className="w-10 h-10 rounded-full bg-[#274B3E] text-[#DFBD83] flex items-center justify-center font-serif text-sm font-semibold border border-[#C8D6C6]/30">
+              {/* <div className="w-10 h-10 rounded-full bg-[#274B3E] text-[#DFBD83] flex items-center justify-center font-serif text-sm font-semibold border border-[#C8D6C6]/30">
                 N.E.W.
-              </div>
+              </div> */}
               <div>
                 <span className="font-serif text-lg font-medium text-white block">
                   Nair&apos;s Epigenetic Wellness
@@ -116,7 +116,7 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
                 className="flex items-center gap-2.5 hover:text-[#DFBD83] transition-colors"
               >
                 <MessageCircle className="w-4 h-4 text-[#DFBD83] shrink-0" />
-                <span>WhatsApp: {CONTACT_INFO.phoneDisplay}</span>
+                <span>WhatsApp: {CONTACT_INFO.whatsappDisplay}</span>
               </a>
               <a
                 href={CONTACT_INFO.googleMapsUrl}

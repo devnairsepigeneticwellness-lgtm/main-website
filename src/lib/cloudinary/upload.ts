@@ -26,10 +26,10 @@ export async function uploadImageToCloudinary(
   options?: { folder?: string }
 ): Promise<CloudinaryUploadResult> {
   if (!file.type.startsWith("image/")) {
-    throw new Error(`"${file.name}" is not a supported image file.`);
+    throw new Error(`"${file.name}" is not a supported photo file. Please choose a JPG, PNG, or WebP image.`);
   }
   if (file.size > MAX_FILE_SIZE_BYTES) {
-    throw new Error(`"${file.name}" exceeds the 10MB upload limit.`);
+    throw new Error(`"${file.name}" is larger than 10 MB. Please choose a smaller photo.`);
   }
 
   const signRes = await fetch("/api/admin/cloudinary/sign", {
@@ -41,7 +41,7 @@ export async function uploadImageToCloudinary(
   const signData = (await signRes.json()) as SignedUploadPayload;
   if (!signRes.ok) {
     throw new Error(
-      signData?.error || "Failed to obtain Cloudinary upload signature."
+      signData?.error || "Could not start photo upload. Please refresh and try again."
     );
   }
 
@@ -63,7 +63,7 @@ export async function uploadImageToCloudinary(
   const uploadJson = await uploadRes.json();
   if (!uploadRes.ok || !uploadJson?.secure_url) {
     const cloudinaryMsg =
-      uploadJson?.error?.message || "Cloudinary image upload failed.";
+      uploadJson?.error?.message || "Photo upload failed. Please check your connection and try again.";
     throw new Error(cloudinaryMsg);
   }
 

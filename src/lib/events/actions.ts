@@ -6,6 +6,13 @@ import { isSupabaseConfigured } from "../supabase/client";
 import { createAdminClient } from "../supabase/admin";
 import { destroyCloudinaryImage } from "../cloudinary/server";
 
+function formatEventDbError(error: { code?: string; message: string }): string {
+  if (error.code === "23505" && error.message.includes("slug")) {
+    return "Another event already uses this website link name. Please change the title or customize the page link.";
+  }
+  return error.message;
+}
+
 export async function createEvent(input: EventInput) {
   const parsed = eventSchema.safeParse(input);
   if (!parsed.success) {
@@ -43,15 +50,15 @@ export async function createEvent(input: EventInput) {
         .single();
 
       if (error) {
-        return { success: false, error: error.message };
+        return { success: false, error: formatEventDbError(error) };
       }
 
       revalidatePath("/events");
       revalidatePath(`/events/${data.slug}`);
       revalidatePath("/admin/events");
       return { success: true, event };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to create event." };
     }
   }
 
@@ -112,7 +119,7 @@ export async function createHistoricalEvent(
         .single();
 
       if (error) {
-        return { success: false, error: error.message };
+        return { success: false, error: formatEventDbError(error) };
       }
 
       // If photographs provided, insert them into gallery_images
@@ -134,8 +141,8 @@ export async function createHistoricalEvent(
       revalidatePath(`/events/${slug}`);
       revalidatePath("/admin/events");
       return { success: true, event };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to save past event." };
     }
   }
 
@@ -157,14 +164,16 @@ export async function updateEvent(id: string, updates: Partial<EventInput>) {
         .select()
         .single();
 
-      if (error) return { success: false, error: error.message };
+      if (error) {
+        return { success: false, error: formatEventDbError(error) };
+      }
 
       revalidatePath("/events");
       if (data?.slug) revalidatePath(`/events/${data.slug}`);
       revalidatePath("/admin/events");
       return { success: true, event: data };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to update event." };
     }
   }
 
@@ -181,8 +190,8 @@ export async function deleteEvent(id: string) {
       revalidatePath("/events");
       revalidatePath("/admin/events");
       return { success: true };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to delete event." };
     }
   }
 
@@ -190,15 +199,15 @@ export async function deleteEvent(id: string) {
 }
 
 export async function togglePublishEvent(id: string, is_published: boolean) {
-  return updateEvent(id, { is_published } as any);
+  return updateEvent(id, { is_published });
 }
 
 export async function toggleArchiveEvent(id: string, is_archived: boolean) {
-  return updateEvent(id, { is_archived } as any);
+  return updateEvent(id, { is_archived });
 }
 
 export async function toggleCancelEvent(id: string, is_cancelled: boolean) {
-  return updateEvent(id, { is_cancelled } as any);
+  return updateEvent(id, { is_cancelled });
 }
 
 // ============================================================================
@@ -229,8 +238,8 @@ export async function addGalleryImages(
       revalidatePath(`/admin/events/${eventId}/gallery`);
       revalidatePath("/admin/gallery");
       return { success: true, images: data };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to save gallery photos." };
     }
   }
 
@@ -262,8 +271,8 @@ export async function deleteGalleryImage(id: string, eventId?: string) {
       if (eventId) revalidatePath(`/admin/events/${eventId}/gallery`);
       revalidatePath("/admin/gallery");
       return { success: true };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to delete photo." };
     }
   }
 
@@ -273,7 +282,8 @@ export async function deleteGalleryImage(id: string, eventId?: string) {
 export async function updateGalleryImage(
   id: string,
   updates: {
-    caption?: string;
+    caption?: string | null;
+    category?: string | null;
     sort_order?: number;
     is_cover?: boolean;
     is_published?: boolean;
@@ -292,9 +302,10 @@ export async function updateGalleryImage(
           .eq("event_id", updates.event_id);
       }
 
+      const { event_id: eventIdForRevalidate, ...dbUpdates } = updates;
       const { data, error } = await supabase
         .from("gallery_images")
-        .update(updates)
+        .update(dbUpdates)
         .eq("id", id)
         .select()
         .single();
@@ -302,11 +313,11 @@ export async function updateGalleryImage(
       if (error) return { success: false, error: error.message };
 
       revalidatePath("/events");
-      if (updates.event_id) revalidatePath(`/admin/events/${updates.event_id}/gallery`);
+      if (eventIdForRevalidate) revalidatePath(`/admin/events/${eventIdForRevalidate}/gallery`);
       revalidatePath("/admin/gallery");
       return { success: true, image: data };
-    } catch (err: any) {
-      return { success: false, error: err.message };
+    } catch (err: unknown) {
+      return { success: false, error: err instanceof Error ? err.message : "Failed to update photo." };
     }
   }
 

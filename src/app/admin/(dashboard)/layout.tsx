@@ -11,7 +11,7 @@ function AdminLoading() {
   return (
     <div className="py-20 flex flex-col items-center justify-center text-[#59675F] space-y-3">
       <Loader2 className="w-8 h-8 animate-spin text-[#B58B50]" />
-      <span className="text-xs font-medium">Loading console view...</span>
+      <span className="text-xs font-medium">Loading page...</span>
     </div>
   );
 }
@@ -48,8 +48,8 @@ export default async function AdminDashboardLayout({
       <Suspense fallback={<aside className="w-64 bg-[#102E27] min-h-screen hidden lg:block" />}>
         <AdminSidebar userEmail={userEmail} />
       </Suspense>
-      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen">
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 max-w-7xl w-full mx-auto">
+      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen min-w-0">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">
           <Suspense fallback={<AdminLoading />}>{children}</Suspense>
         </main>
       </div>

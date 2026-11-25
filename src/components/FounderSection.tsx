@@ -41,7 +41,7 @@ export default function FounderSection({ onOpenBooking }: { onOpenBooking: () =>
               <div className="absolute -inset-8 rounded-t-[220px] rounded-b-[40px] border border-[#B8C8B6]/40 pointer-events-none hidden sm:block" />
 
               {/* Arched Portrait Frame */}
-              <div className="relative h-[500px] sm:h-[560px] w-full rounded-t-[180px] rounded-b-3xl overflow-hidden bg-[#244337] border-2 border-[#A8BBA2] shadow-xl flex flex-col justify-between p-6 group">
+              <div className="relative h-[500px] sm:h-[560px] w-full rounded-t-[180px] rounded-b-3xl overflow-hidden bg-[#244337] border-2 border-[#A8BBA2] shadow-xl flex flex-col justify-end p-6 group">
                 
                 {/* Real Founder Photo */}
                 <div className="absolute inset-0">
@@ -54,14 +54,13 @@ export default function FounderSection({ onOpenBooking }: { onOpenBooking: () =>
                     sizes="(max-width: 768px) 100vw, 400px"
                     className="object-cover object-top filter contrast-[1.03] brightness-[0.98] transition-transform duration-700 group-hover:scale-105"
                   />
-                  {/* Subtle gradient vignette to protect top and bottom text */}
+                  {/* Subtle gradient vignette to protect bottom text */}
                   <div className="absolute inset-0 bg-gradient-to-t from-[#1E3F35] via-[#1E3F35]/40 via-45% to-transparent" />
-                  <div className="absolute top-0 inset-x-0 h-24 bg-gradient-to-b from-black/35 to-transparent" />
                   <div className="absolute inset-0 rounded-t-[180px] rounded-b-3xl border border-[#DFBD83]/20 pointer-events-none" />
                 </div>
 
                 {/* Bottom Signature Card */}
-                <div className="relative z-10 bg-[#1E3F35]/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-[#DFBD83]/40 text-left shadow-lg">
+                <div className="relative z-10 mt-auto bg-[#1E3F35]/95 backdrop-blur-md rounded-2xl p-4 sm:p-5 border border-[#DFBD83]/40 text-left shadow-lg">
                   <div className="flex items-center justify-between mb-1">
                     <h3 className="font-serif text-xl sm:text-2xl font-medium text-[#F7F5EF]">
                       Ajit Kumar Nair

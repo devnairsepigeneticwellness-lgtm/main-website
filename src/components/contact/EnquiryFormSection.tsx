@@ -226,7 +226,7 @@ export default function EnquiryFormSection({
     } catch (err) {
       console.error("Submission failed:", err);
       setSubmitError(
-        `A network error prevented submission. Please verify your connection or contact us via WhatsApp (${CONTACT_INFO.phoneDisplay}).`
+        `A network error prevented submission. Please verify your connection or contact us via WhatsApp (${CONTACT_INFO.whatsappDisplay}).`
       );
       setIsSubmitting(false);
     }

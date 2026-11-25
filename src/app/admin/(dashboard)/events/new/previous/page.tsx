@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useId, useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
@@ -9,12 +9,15 @@ import {
   Trash2,
   ArrowLeft,
   CheckCircle2,
-  AlertCircle,
   Loader2,
   Upload,
+  Link2,
 } from "lucide-react";
 import { createHistoricalEvent } from "@/lib/events/actions";
+import { EVENT_CATEGORIES } from "@/lib/admin/helpers";
 import CloudinaryImageField from "@/components/admin/CloudinaryImageField";
+import AdminNotice from "@/components/admin/AdminNotice";
+import AdminStickyHeader from "@/components/admin/AdminStickyHeader";
 import { uploadMultipleImagesToCloudinary } from "@/lib/cloudinary/upload";
 
 interface GalleryPhotoInput {
@@ -24,9 +27,10 @@ interface GalleryPhotoInput {
 
 export default function AddPreviousEventPage() {
   const router = useRouter();
+  const baseId = useId();
 
   const [title, setTitle] = useState("");
-  const [originalDate, setOriginalDate] = useState("2024-10-15");
+  const [originalDate, setOriginalDate] = useState("");
   const [category, setCategory] = useState("Historical Workshop");
   const [description, setDescription] = useState("");
   const [venue, setVenue] = useState("Indore, Madhya Pradesh");
@@ -34,63 +38,63 @@ export default function AddPreviousEventPage() {
   const [coverPhoto, setCoverPhoto] = useState("");
   const [isPublished, setIsPublished] = useState(true);
 
-  // Gallery photos
-  const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhotoInput[]>([
-    { url: "", caption: "" },
-  ]);
+  const [galleryPhotos, setGalleryPhotos] = useState<GalleryPhotoInput[]>([]);
+  const [showLinkInput, setShowLinkInput] = useState(false);
+  const [manualUrl, setManualUrl] = useState("");
+  const [manualCaption, setManualCaption] = useState("");
 
   const [isUploadingGallery, setIsUploadingGallery] = useState(false);
   const [galleryUploadProgress, setGalleryUploadProgress] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
-  const handleAddPhotoRow = () => {
-    setGalleryPhotos((prev) => [...prev, { url: "", caption: "" }]);
-  };
-
   const handleRemovePhotoRow = (index: number) => {
     setGalleryPhotos((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handlePhotoChange = (
-    index: number,
-    field: "url" | "caption",
-    value: string
-  ) => {
+  const handlePhotoCaptionChange = (index: number, caption: string) => {
     setGalleryPhotos((prev) =>
-      prev.map((photo, i) => (i === index ? { ...photo, [field]: value } : photo))
+      prev.map((photo, i) => (i === index ? { ...photo, caption } : photo))
     );
+  };
+
+  const handleAddManualLink = () => {
+    if (!manualUrl.trim()) return;
+    setGalleryPhotos((prev) => [
+      ...prev,
+      { url: manualUrl.trim(), caption: manualCaption.trim() },
+    ]);
+    if (!coverPhoto) setCoverPhoto(manualUrl.trim());
+    setManualUrl("");
+    setManualCaption("");
+    setShowLinkInput(false);
   };
 
   const handleBulkGalleryUpload = async (
     e: React.ChangeEvent<HTMLInputElement>
   ) => {
     const files = e.target.files;
+    e.target.value = "";
     if (!files || files.length === 0) return;
 
     setIsUploadingGallery(true);
-    setGalleryUploadProgress(`Preparing ${files.length} photo(s) for Cloudinary...`);
+    setGalleryUploadProgress(`Preparing ${files.length} photo(s) for upload...`);
     setErrorMessage(null);
 
     const { uploaded, errors } = await uploadMultipleImagesToCloudinary(files, {
       folder: "events/historical/gallery",
       onProgress: (current, total, fileName) => {
-        setGalleryUploadProgress(
-          `Uploading ${current} of ${total} to Cloudinary: ${fileName}...`
-        );
+        setGalleryUploadProgress(`Uploading photo ${current} of ${total}: ${fileName}...`);
       },
     });
 
     if (uploaded.length > 0) {
       const newRows: GalleryPhotoInput[] = uploaded.map((item) => ({
         url: item.url,
-        caption: item.originalFilename.replace(/\.[^/.]+$/, ""),
+        caption: item.originalFilename.replace(/\.[^/.]+$/, "").replace(/[-_]+/g, " "),
       }));
 
-      setGalleryPhotos((prev) => {
-        const nonEmpty = prev.filter((p) => p.url.trim() || p.caption.trim());
-        return [...nonEmpty, ...newRows];
-      });
+      setGalleryPhotos((prev) => [...prev, ...newRows]);
 
       if (!coverPhoto) {
         setCoverPhoto(uploaded[0].url);
@@ -98,34 +102,38 @@ export default function AddPreviousEventPage() {
     }
 
     if (errors.length > 0) {
-      setErrorMessage(errors.join(" | "));
+      setErrorMessage(errors.join(" • "));
     }
 
-    e.target.value = "";
     setIsUploadingGallery(false);
     setGalleryUploadProgress(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
+    setErrorMessage(null);
+
+    if (!title.trim() || title.trim().length < 3) {
+      setErrorMessage("Please enter a workshop title (at least 3 characters).");
+      return;
+    }
     if (!originalDate) {
-      setErrorMessage("Please enter the historical date on which the event took place.");
+      setErrorMessage("Please choose the date when this workshop was held.");
       return;
     }
 
     setIsSubmitting(true);
-    setErrorMessage(null);
 
     const validGallery = galleryPhotos.filter((p) => p.url.trim().length > 0);
 
     const result = await createHistoricalEvent(
       {
-        title,
+        title: title.trim(),
         original_date: originalDate,
         category,
-        description,
-        venue,
-        speaker_name: speakerName,
+        description: description.trim(),
+        venue: venue.trim(),
+        speaker_name: speakerName.trim(),
         poster_path: coverPhoto || (validGallery[0]?.url ?? null),
         is_published: isPublished,
       },
@@ -138,295 +146,336 @@ export default function AddPreviousEventPage() {
       router.push("/admin/events");
       router.refresh();
     } else {
-      setErrorMessage(result.error || "Failed to record historical event.");
+      setErrorMessage(result.error || "Could not save this past event. Please try again.");
     }
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 pb-16">
+    <div className="w-full space-y-6 pb-16">
       {/* Header */}
-      <div className="flex items-center justify-between pb-6 border-b border-[#E8EDE4]">
+      <AdminStickyHeader>
         <div>
           <Link
             href="/admin/events"
-            className="inline-flex items-center gap-1.5 text-xs text-[#B58B50] hover:text-[#173D34] transition-colors mb-2"
+            className="inline-flex items-center gap-1.5 text-xs text-[#9E783E] hover:text-[#173D34] transition-colors mb-2 font-medium"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
-            <span>Back to Events Table</span>
+            <span>Back to All Events</span>
           </Link>
           <div className="flex items-center gap-2">
             <History className="w-6 h-6 text-[#B58B50]" />
             <h1 className="font-serif text-2xl sm:text-3xl font-medium text-[#173D34]">
-              Add Previous Event &amp; Workshop
+              Add Past Workshop or Event
             </h1>
           </div>
           <p className="text-xs text-[#59675F] font-light mt-1">
-            Record workshops and conferences conducted before this website was built. These are automatically classified as Completed and displayed in the public archive.
+            Add workshops held previously along with their photos so visitors can see them under Past Workshops.
           </p>
         </div>
-      </div>
+      </AdminStickyHeader>
 
-      {errorMessage && (
-        <div className="p-4 rounded-2xl bg-red-50 border border-red-200 text-xs text-red-700 flex items-center gap-2">
-          <AlertCircle className="w-4 h-4 text-red-600 shrink-0" />
-          <span>{errorMessage}</span>
-        </div>
-      )}
+      <AdminNotice type="error" message={errorMessage} onDismiss={() => setErrorMessage(null)} />
 
       {/* Main Form */}
       <form
         onSubmit={handleSubmit}
         className="bg-white rounded-3xl p-6 sm:p-10 border border-[#B58B50]/20 shadow-xs space-y-8"
       >
-        {/* Section 1: Historical Meta */}
-        <div className="space-y-4">
+        {/* Section 1: Workshop Details */}
+        <section className="space-y-4">
           <h2 className="font-serif text-lg font-medium text-[#173D34] border-b border-[#E8EDE4] pb-2">
-            1. Historical Workshop Details
+            1. Past Workshop Details
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
             <div className="sm:col-span-2">
-              <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-                Previous Workshop Title *
+              <label
+                htmlFor={`${baseId}-title`}
+                className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5"
+              >
+                Workshop Title <span className="text-red-600">*</span>
               </label>
               <input
+                id={`${baseId}-title`}
                 type="text"
                 required
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
                 placeholder="e.g. Cognitive Reframing & Rational Emotive Mastery"
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-sm text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-                Original Date Conducted (Past Date) *
+              <label
+                htmlFor={`${baseId}-date`}
+                className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5"
+              >
+                Date Conducted <span className="text-red-600">*</span>
               </label>
               <input
+                id={`${baseId}-date`}
                 type="date"
                 required
                 value={originalDate}
                 onChange={(e) => setOriginalDate(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-sm text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
               />
-              <span className="text-[10px] text-[#59675F] mt-1 block">
-                Preserves exact historical conducting date.
+              <span className="text-[11px] text-[#59675F] mt-1 block">
+                Shows visitors when the workshop took place.
               </span>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-                Category *
+              <label
+                htmlFor={`${baseId}-category`}
+                className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5"
+              >
+                Category <span className="text-red-600">*</span>
               </label>
               <select
+                id={`${baseId}-category`}
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-sm text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
               >
-                <option value="Historical Workshop">Historical Workshop</option>
-                <option value="Clinical Training">Clinical Training</option>
-                <option value="Relational Skills">Relational Skills</option>
-                <option value="Crisis Intervention">Crisis Intervention</option>
-                <option value="Educational Mental Health">
-                  Educational Mental Health
-                </option>
-                <option value="Institutional Symposium">
-                  Institutional Symposium
-                </option>
+                {EVENT_CATEGORIES.map((cat) => (
+                  <option key={cat} value={cat}>
+                    {cat}
+                  </option>
+                ))}
               </select>
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-                Venue / Host Institution
+              <label
+                htmlFor={`${baseId}-venue`}
+                className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5"
+              >
+                Venue or City
               </label>
               <input
+                id={`${baseId}-venue`}
                 type="text"
                 value={venue}
                 onChange={(e) => setVenue(e.target.value)}
-                placeholder="e.g. Sayaji Hotel Auditorium, Indore"
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
+                placeholder="e.g. Sayaji Hotel, Indore"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-sm text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
+              <label
+                htmlFor={`${baseId}-speaker`}
+                className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5"
+              >
                 Facilitator / Speaker
               </label>
               <input
+                id={`${baseId}-speaker`}
                 type="text"
                 value={speakerName}
                 onChange={(e) => setSpeakerName(e.target.value)}
                 placeholder="e.g. Ajit Kumar Nair & Team"
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
+                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-sm text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-              Historical Overview &amp; Key Highlights
+            <label
+              htmlFor={`${baseId}-desc`}
+              className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5"
+            >
+              Workshop Summary &amp; Highlights
             </label>
             <textarea
+              id={`${baseId}-desc`}
               rows={4}
               value={description}
               onChange={(e) => setDescription(e.target.value)}
-              placeholder="Summary of the workshop, attendance, key takeaways, and participant feedback..."
-              className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none resize-none"
+              placeholder="Summary of the session, topics covered, and key highlights..."
+              className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-sm text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
             />
           </div>
-        </div>
+        </section>
 
         {/* Section 2: Cover Photo */}
-        <div className="space-y-4">
+        <section className="space-y-4">
           <h2 className="font-serif text-lg font-medium text-[#173D34] border-b border-[#E8EDE4] pb-2">
-            2. Event Cover Photograph
+            2. Main Cover Photo (Optional)
           </h2>
+          <p className="text-xs text-[#59675F] font-light">
+            If left empty, the first gallery photo you upload below will automatically become the cover photo.
+          </p>
 
           <CloudinaryImageField
-            label="Cover Photograph"
+            label="Cover Photo"
             value={coverPhoto}
             onChange={setCoverPhoto}
             folder="events/historical/covers"
           />
-        </div>
+        </section>
 
-        {/* Section 3: Multiple Gallery Photographs */}
-        <div className="space-y-4">
-          <div className="flex items-center justify-between border-b border-[#E8EDE4] pb-2">
+        {/* Section 3: Multiple Gallery Photos */}
+        <section className="space-y-4">
+          <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-[#E8EDE4] pb-2">
             <div>
               <h2 className="font-serif text-lg font-medium text-[#173D34]">
-                3. Workshop Photo Gallery
+                3. Event Photo Gallery ({galleryPhotos.length})
               </h2>
               <p className="text-xs text-[#59675F] font-light">
-                Upload multiple workshop photographs directly to Cloudinary or add image URLs below.
+                Select one or many photos from your computer or phone to upload together.
               </p>
             </div>
             <button
               type="button"
-              onClick={handleAddPhotoRow}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E8EDE4] hover:bg-[#173D34] hover:text-[#DFBD83] text-[#173D34] text-xs font-semibold transition-all cursor-pointer"
+              onClick={() => setShowLinkInput((prev) => !prev)}
+              className="inline-flex items-center gap-1.5 text-xs font-medium text-[#9E783E] hover:text-[#173D34] cursor-pointer self-start sm:self-auto"
             >
-              <Plus className="w-3.5 h-3.5" />
-              <span>Add Photo Row</span>
+              <Link2 className="w-3.5 h-3.5" />
+              <span>{showLinkInput ? "Hide link option" : "Add photo via web link"}</span>
             </button>
           </div>
 
-          {/* Multi-file Cloudinary Upload Box */}
+          {/* Multi-file Upload Box */}
           <div className="border-2 border-dashed border-[#B58B50]/40 rounded-2xl p-6 text-center bg-[#F7F5EF]/60 hover:bg-[#F7F5EF] transition-colors relative">
             <input
               type="file"
               multiple
-              accept="image/*"
+              accept="image/jpeg,image/png,image/webp,image/gif"
               disabled={isUploadingGallery}
               onChange={handleBulkGalleryUpload}
+              aria-label="Upload multiple workshop photos"
               className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
             />
             <div className="space-y-2">
-              <div className="w-10 h-10 rounded-full bg-[#173D34] text-[#DFBD83] flex items-center justify-center mx-auto">
+              <div className="w-11 h-11 rounded-full bg-[#173D34] text-[#DFBD83] flex items-center justify-center mx-auto">
                 {isUploadingGallery ? (
                   <Loader2 className="w-5 h-5 animate-spin" />
                 ) : (
                   <Upload className="w-5 h-5" />
                 )}
               </div>
-              <p className="text-xs font-semibold text-[#173D34]">
-                {galleryUploadProgress ||
-                  "Click or drag & drop multiple gallery photos to upload to Cloudinary"}
+              <p className="text-xs sm:text-sm font-semibold text-[#173D34]">
+                {galleryUploadProgress || "Click to choose photos or drag multiple images here"}
               </p>
               <p className="text-[11px] text-[#59675F]">
-                Supports JPG, PNG, WEBP up to 10MB each.
+                You can select multiple JPG, PNG, or WebP photos at once (up to 10 MB each).
               </p>
             </div>
           </div>
 
-          <div className="space-y-3">
-            {galleryPhotos.map((photo, index) => (
-              <div
-                key={index}
-                className="p-4 rounded-2xl bg-[#F7F5EF] border border-[#B58B50]/20 flex flex-col sm:flex-row items-start sm:items-center gap-3"
-              >
-                {photo.url ? (
-                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#102E27] shrink-0 border border-[#B58B50]/30">
+          {showLinkInput && (
+            <div className="p-4 rounded-2xl bg-[#F7F5EF] border border-[#B58B50]/20 grid grid-cols-1 sm:grid-cols-12 gap-3 items-end">
+              <div className="sm:col-span-6">
+                <label className="block text-[11px] font-medium text-[#173D34] mb-1">
+                  Photo Web Link
+                </label>
+                <input
+                  type="url"
+                  value={manualUrl}
+                  onChange={(e) => setManualUrl(e.target.value)}
+                  placeholder="https://example.com/photo.jpg"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#B58B50]/25 text-xs focus:outline-none focus:border-[#B58B50]"
+                />
+              </div>
+              <div className="sm:col-span-4">
+                <label className="block text-[11px] font-medium text-[#173D34] mb-1">
+                  Caption (Optional)
+                </label>
+                <input
+                  type="text"
+                  value={manualCaption}
+                  onChange={(e) => setManualCaption(e.target.value)}
+                  placeholder="e.g. Group discussion session"
+                  className="w-full px-3 py-2 rounded-xl bg-white border border-[#B58B50]/25 text-xs focus:outline-none focus:border-[#B58B50]"
+                />
+              </div>
+              <div className="sm:col-span-2">
+                <button
+                  type="button"
+                  onClick={handleAddManualLink}
+                  className="w-full py-2 px-3 rounded-xl bg-[#173D34] text-white text-xs font-semibold flex items-center justify-center gap-1 cursor-pointer"
+                >
+                  <Plus className="w-3.5 h-3.5" />
+                  <span>Add</span>
+                </button>
+              </div>
+            </div>
+          )}
+
+          {galleryPhotos.length > 0 && (
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+              {galleryPhotos.map((photo, index) => (
+                <div
+                  key={`${photo.url}-${index}`}
+                  className="p-3 rounded-2xl bg-[#F7F5EF] border border-[#B58B50]/25 flex items-center gap-3"
+                >
+                  <div className="w-16 h-16 rounded-xl overflow-hidden bg-[#102E27] shrink-0 border border-[#B58B50]/30">
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img
                       src={photo.url}
-                      alt={photo.caption || `Gallery photo ${index + 1}`}
+                      alt={photo.caption || `Uploaded photo ${index + 1}`}
                       className="w-full h-full object-cover"
                     />
                   </div>
-                ) : (
-                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-xs text-[#B58B50] shrink-0 border border-[#B58B50]/30">
-                    {index + 1}
+
+                  <div className="flex-1 min-w-0 space-y-1">
+                    <label className="block text-[10px] font-semibold uppercase tracking-wider text-[#59675F]">
+                      Photo Caption
+                    </label>
+                    <input
+                      type="text"
+                      value={photo.caption}
+                      onChange={(e) => handlePhotoCaptionChange(index, e.target.value)}
+                      placeholder="Add a short caption..."
+                      className="w-full px-3 py-1.5 rounded-lg bg-white border border-[#B58B50]/20 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
+                    />
                   </div>
-                )}
 
-                <div className="flex-1 w-full sm:w-auto">
-                  <input
-                    type="url"
-                    value={photo.url}
-                    onChange={(e) =>
-                      handlePhotoChange(index, "url", e.target.value)
-                    }
-                    placeholder="Image URL: https://res.cloudinary.com/..."
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#B58B50]/20 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
-                  />
-                </div>
-
-                <div className="flex-1 w-full sm:w-auto">
-                  <input
-                    type="text"
-                    value={photo.caption}
-                    onChange={(e) =>
-                      handlePhotoChange(index, "caption", e.target.value)
-                    }
-                    placeholder="Image Caption (e.g. Breakout discussion groups)"
-                    className="w-full px-3 py-2 rounded-xl bg-white border border-[#B58B50]/20 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
-                  />
-                </div>
-
-                {galleryPhotos.length > 1 && (
                   <button
                     type="button"
                     onClick={() => handleRemovePhotoRow(index)}
-                    className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
+                    aria-label="Remove photo"
+                    title="Remove photo"
+                    className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors cursor-pointer shrink-0"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
-                )}
-              </div>
-            ))}
-          </div>
-        </div>
+                </div>
+              ))}
+            </div>
+          )}
+        </section>
 
-        {/* Section 4: Actions */}
-        <div className="pt-4 border-t border-[#E8EDE4] flex items-center justify-between">
+        {/* Submit Actions */}
+        <div className="pt-5 border-t border-[#E8EDE4] flex flex-col sm:flex-row sm:items-center justify-between gap-4">
           <label className="flex items-center gap-2.5 cursor-pointer">
             <input
               type="checkbox"
               checked={isPublished}
               onChange={(e) => setIsPublished(e.target.checked)}
-              className="w-4 h-4 rounded text-[#173D34] focus:ring-[#B58B50]"
+              className="w-4 h-4 rounded accent-[#173D34]"
             />
             <span className="text-xs font-semibold text-[#173D34]">
-              Publish Immediately to Public Past Workshops Archive
+              Show immediately on the public Past Workshops page
             </span>
           </label>
 
           <button
             type="submit"
             disabled={isSubmitting || isUploadingGallery}
-            className="px-7 py-3 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#DFBD83] hover:text-white text-xs font-semibold tracking-wide transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-50"
+            className="px-7 py-3 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#DFBD83] hover:text-white text-xs font-semibold tracking-wide transition-all shadow-md flex items-center justify-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {isSubmitting ? (
               <>
-                <Loader2 className="w-4 h-4 animate-spin text-[#DFBD83]" />
-                <span>Recording Historical Workshop...</span>
+                <Loader2 className="w-4 h-4 animate-spin" />
+                <span>Saving Past Event...</span>
               </>
             ) : (
               <>
-                <span>Save Previous Event</span>
+                <span>{isPublished ? "Save & Publish Past Event" : "Save Past Event as Draft"}</span>
                 <CheckCircle2 className="w-4 h-4" />
               </>
             )}

@@ -71,7 +71,6 @@ export default function AboutPageClient() {
         <AboutApproachTimeline />
 
         {/* Section 10 — Closing Statement & 3 CTAs */}
-        <AboutCtaSection onOpenBooking={() => handleOpenBooking("About Page CTA")} />
       </main>
 
       {/* Section 11 — Footer */}
