@@ -4,18 +4,18 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  Calendar,
   History,
-  Camera,
   Plus,
   Trash2,
   ArrowLeft,
   CheckCircle2,
   AlertCircle,
   Loader2,
-  Image as ImageIcon,
+  Upload,
 } from "lucide-react";
 import { createHistoricalEvent } from "@/lib/events/actions";
+import CloudinaryImageField from "@/components/admin/CloudinaryImageField";
+import { uploadMultipleImagesToCloudinary } from "@/lib/cloudinary/upload";
 
 interface GalleryPhotoInput {
   url: string;
@@ -39,6 +39,8 @@ export default function AddPreviousEventPage() {
     { url: "", caption: "" },
   ]);
 
+  const [isUploadingGallery, setIsUploadingGallery] = useState(false);
+  const [galleryUploadProgress, setGalleryUploadProgress] = useState<string | null>(null);
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [errorMessage, setErrorMessage] = useState<string | null>(null);
 
@@ -50,10 +52,58 @@ export default function AddPreviousEventPage() {
     setGalleryPhotos((prev) => prev.filter((_, i) => i !== index));
   };
 
-  const handlePhotoChange = (index: number, field: "url" | "caption", value: string) => {
+  const handlePhotoChange = (
+    index: number,
+    field: "url" | "caption",
+    value: string
+  ) => {
     setGalleryPhotos((prev) =>
       prev.map((photo, i) => (i === index ? { ...photo, [field]: value } : photo))
     );
+  };
+
+  const handleBulkGalleryUpload = async (
+    e: React.ChangeEvent<HTMLInputElement>
+  ) => {
+    const files = e.target.files;
+    if (!files || files.length === 0) return;
+
+    setIsUploadingGallery(true);
+    setGalleryUploadProgress(`Preparing ${files.length} photo(s) for Cloudinary...`);
+    setErrorMessage(null);
+
+    const { uploaded, errors } = await uploadMultipleImagesToCloudinary(files, {
+      folder: "events/historical/gallery",
+      onProgress: (current, total, fileName) => {
+        setGalleryUploadProgress(
+          `Uploading ${current} of ${total} to Cloudinary: ${fileName}...`
+        );
+      },
+    });
+
+    if (uploaded.length > 0) {
+      const newRows: GalleryPhotoInput[] = uploaded.map((item) => ({
+        url: item.url,
+        caption: item.originalFilename.replace(/\.[^/.]+$/, ""),
+      }));
+
+      setGalleryPhotos((prev) => {
+        const nonEmpty = prev.filter((p) => p.url.trim() || p.caption.trim());
+        return [...nonEmpty, ...newRows];
+      });
+
+      if (!coverPhoto) {
+        setCoverPhoto(uploaded[0].url);
+      }
+    }
+
+    if (errors.length > 0) {
+      setErrorMessage(errors.join(" | "));
+    }
+
+    e.target.value = "";
+    setIsUploadingGallery(false);
+    setGalleryUploadProgress(null);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -124,8 +174,10 @@ export default function AddPreviousEventPage() {
       )}
 
       {/* Main Form */}
-      <form onSubmit={handleSubmit} className="bg-white rounded-3xl p-6 sm:p-10 border border-[#B58B50]/20 shadow-xs space-y-8">
-        
+      <form
+        onSubmit={handleSubmit}
+        className="bg-white rounded-3xl p-6 sm:p-10 border border-[#B58B50]/20 shadow-xs space-y-8"
+      >
         {/* Section 1: Historical Meta */}
         <div className="space-y-4">
           <h2 className="font-serif text-lg font-medium text-[#173D34] border-b border-[#E8EDE4] pb-2">
@@ -176,8 +228,12 @@ export default function AddPreviousEventPage() {
                 <option value="Clinical Training">Clinical Training</option>
                 <option value="Relational Skills">Relational Skills</option>
                 <option value="Crisis Intervention">Crisis Intervention</option>
-                <option value="Educational Mental Health">Educational Mental Health</option>
-                <option value="Institutional Symposium">Institutional Symposium</option>
+                <option value="Educational Mental Health">
+                  Educational Mental Health
+                </option>
+                <option value="Institutional Symposium">
+                  Institutional Symposium
+                </option>
               </select>
             </div>
 
@@ -228,18 +284,12 @@ export default function AddPreviousEventPage() {
             2. Event Cover Photograph
           </h2>
 
-          <div>
-            <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-              Cover Photograph URL
-            </label>
-            <input
-              type="url"
-              value={coverPhoto}
-              onChange={(e) => setCoverPhoto(e.target.value)}
-              placeholder="https://images.unsplash.com/... or Supabase storage URL"
-              className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
-            />
-          </div>
+          <CloudinaryImageField
+            label="Cover Photograph"
+            value={coverPhoto}
+            onChange={setCoverPhoto}
+            folder="events/historical/covers"
+          />
         </div>
 
         {/* Section 3: Multiple Gallery Photographs */}
@@ -250,17 +300,45 @@ export default function AddPreviousEventPage() {
                 3. Workshop Photo Gallery
               </h2>
               <p className="text-xs text-[#59675F] font-light">
-                Add photographs taken during this event to display in the highlights gallery.
+                Upload multiple workshop photographs directly to Cloudinary or add image URLs below.
               </p>
             </div>
             <button
               type="button"
               onClick={handleAddPhotoRow}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E8EDE4] hover:bg-[#173D34] hover:text-[#DFBD83] text-[#173D34] text-xs font-semibold transition-all"
+              className="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-[#E8EDE4] hover:bg-[#173D34] hover:text-[#DFBD83] text-[#173D34] text-xs font-semibold transition-all cursor-pointer"
             >
               <Plus className="w-3.5 h-3.5" />
-              <span>Add Another Photo</span>
+              <span>Add Photo Row</span>
             </button>
+          </div>
+
+          {/* Multi-file Cloudinary Upload Box */}
+          <div className="border-2 border-dashed border-[#B58B50]/40 rounded-2xl p-6 text-center bg-[#F7F5EF]/60 hover:bg-[#F7F5EF] transition-colors relative">
+            <input
+              type="file"
+              multiple
+              accept="image/*"
+              disabled={isUploadingGallery}
+              onChange={handleBulkGalleryUpload}
+              className="absolute inset-0 w-full h-full opacity-0 cursor-pointer disabled:cursor-not-allowed"
+            />
+            <div className="space-y-2">
+              <div className="w-10 h-10 rounded-full bg-[#173D34] text-[#DFBD83] flex items-center justify-center mx-auto">
+                {isUploadingGallery ? (
+                  <Loader2 className="w-5 h-5 animate-spin" />
+                ) : (
+                  <Upload className="w-5 h-5" />
+                )}
+              </div>
+              <p className="text-xs font-semibold text-[#173D34]">
+                {galleryUploadProgress ||
+                  "Click or drag & drop multiple gallery photos to upload to Cloudinary"}
+              </p>
+              <p className="text-[11px] text-[#59675F]">
+                Supports JPG, PNG, WEBP up to 10MB each.
+              </p>
+            </div>
           </div>
 
           <div className="space-y-3">
@@ -269,16 +347,29 @@ export default function AddPreviousEventPage() {
                 key={index}
                 className="p-4 rounded-2xl bg-[#F7F5EF] border border-[#B58B50]/20 flex flex-col sm:flex-row items-start sm:items-center gap-3"
               >
-                <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-xs text-[#B58B50] shrink-0 border border-[#B58B50]/30">
-                  {index + 1}
-                </div>
+                {photo.url ? (
+                  <div className="w-12 h-12 rounded-xl overflow-hidden bg-[#102E27] shrink-0 border border-[#B58B50]/30">
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={photo.url}
+                      alt={photo.caption || `Gallery photo ${index + 1}`}
+                      className="w-full h-full object-cover"
+                    />
+                  </div>
+                ) : (
+                  <div className="w-8 h-8 rounded-full bg-white flex items-center justify-center font-bold text-xs text-[#B58B50] shrink-0 border border-[#B58B50]/30">
+                    {index + 1}
+                  </div>
+                )}
 
                 <div className="flex-1 w-full sm:w-auto">
                   <input
                     type="url"
                     value={photo.url}
-                    onChange={(e) => handlePhotoChange(index, "url", e.target.value)}
-                    placeholder="Image URL: https://images.unsplash.com/..."
+                    onChange={(e) =>
+                      handlePhotoChange(index, "url", e.target.value)
+                    }
+                    placeholder="Image URL: https://res.cloudinary.com/..."
                     className="w-full px-3 py-2 rounded-xl bg-white border border-[#B58B50]/20 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
                   />
                 </div>
@@ -287,7 +378,9 @@ export default function AddPreviousEventPage() {
                   <input
                     type="text"
                     value={photo.caption}
-                    onChange={(e) => handlePhotoChange(index, "caption", e.target.value)}
+                    onChange={(e) =>
+                      handlePhotoChange(index, "caption", e.target.value)
+                    }
                     placeholder="Image Caption (e.g. Breakout discussion groups)"
                     className="w-full px-3 py-2 rounded-xl bg-white border border-[#B58B50]/20 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
                   />
@@ -297,7 +390,7 @@ export default function AddPreviousEventPage() {
                   <button
                     type="button"
                     onClick={() => handleRemovePhotoRow(index)}
-                    className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors"
+                    className="p-2 rounded-lg text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-4 h-4" />
                   </button>
@@ -323,7 +416,7 @@ export default function AddPreviousEventPage() {
 
           <button
             type="submit"
-            disabled={isSubmitting}
+            disabled={isSubmitting || isUploadingGallery}
             className="px-7 py-3 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#DFBD83] hover:text-white text-xs font-semibold tracking-wide transition-all shadow-md flex items-center gap-2 cursor-pointer disabled:opacity-50"
           >
             {isSubmitting ? (
@@ -339,7 +432,6 @@ export default function AddPreviousEventPage() {
             )}
           </button>
         </div>
-
       </form>
     </div>
   );

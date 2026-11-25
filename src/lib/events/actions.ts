@@ -4,6 +4,7 @@ import { revalidatePath } from "next/cache";
 import { eventSchema, EventInput, historicalEventSchema, HistoricalEventInput } from "../validation/events";
 import { isSupabaseConfigured } from "../supabase/client";
 import { createAdminClient } from "../supabase/admin";
+import { destroyCloudinaryImage } from "../cloudinary/server";
 
 export async function createEvent(input: EventInput) {
   const parsed = eventSchema.safeParse(input);
@@ -240,8 +241,22 @@ export async function deleteGalleryImage(id: string, eventId?: string) {
   if (isSupabaseConfigured()) {
     try {
       const supabase = createAdminClient();
+
+      // Look up image URL first for best-effort Cloudinary cleanup
+      const { data: existing } = await supabase
+        .from("gallery_images")
+        .select("image_path")
+        .eq("id", id)
+        .single();
+
       const { error } = await supabase.from("gallery_images").delete().eq("id", id);
       if (error) return { success: false, error: error.message };
+
+      if (existing?.image_path) {
+        await destroyCloudinaryImage(existing.image_path).catch((err) => {
+          console.warn("Cloudinary cleanup warning:", err);
+        });
+      }
 
       revalidatePath("/events");
       if (eventId) revalidatePath(`/admin/events/${eventId}/gallery`);

@@ -2,10 +2,12 @@ import React from "react";
 import Link from "next/link";
 import { Camera, Plus, ArrowUpRight, Calendar } from "lucide-react";
 import { getPublishedEvents, getPublishedGalleryImages } from "@/lib/events/queries";
+import { isCloudinaryConfigured } from "@/lib/cloudinary/server";
 import { connection } from "next/server";
 
 export default async function AdminGalleryOverviewPage() {
   await connection();
+  const cloudinaryReady = isCloudinaryConfigured();
   const [events, allPhotos] = await Promise.all([
     getPublishedEvents(),
     getPublishedGalleryImages(),
@@ -79,7 +81,9 @@ export default async function AdminGalleryOverviewPage() {
           <h2 className="font-serif text-lg font-medium text-[#173D34]">
             Recent Photographs Feed ({allPhotos.length})
           </h2>
-          <span className="text-xs text-[#59675F]">Connected to Supabase Storage</span>
+          <span className="text-xs text-[#59675F]">
+            {cloudinaryReady ? "Cloudinary Media Connected" : "Cloudinary Setup Pending (.env.local)"}
+          </span>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-3">

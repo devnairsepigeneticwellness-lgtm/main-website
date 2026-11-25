@@ -4,20 +4,13 @@ import React, { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import {
-  Calendar,
-  Clock,
-  MapPin,
-  User,
-  Globe,
-  Upload,
   ArrowLeft,
   CheckCircle2,
   AlertCircle,
   Loader2,
-  Layers,
-  Link as LinkIcon,
 } from "lucide-react";
 import { createEvent } from "@/lib/events/actions";
+import CloudinaryImageField from "@/components/admin/CloudinaryImageField";
 
 export default function CreateUpcomingEventPage() {
   const router = useRouter();
@@ -318,20 +311,13 @@ export default function CreateUpcomingEventPage() {
           </h2>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-            <div>
-              <label className="block text-xs font-semibold text-[#173D34] uppercase tracking-wider mb-1.5">
-                Poster Image URL
-              </label>
-              <input
-                type="url"
+            <div className="sm:col-span-2">
+              <CloudinaryImageField
+                label="Poster / Flyer Image"
                 value={posterPath}
-                onChange={(e) => setPosterPath(e.target.value)}
-                placeholder="https://images.unsplash.com/... or Supabase Storage URL"
-                className="w-full px-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
+                onChange={setPosterPath}
+                folder="events/posters"
               />
-              <span className="text-[10px] text-[#59675F] mt-1 block">
-                Enter an image URL or upload directly to Supabase storage.
-              </span>
             </div>
 
             <div>

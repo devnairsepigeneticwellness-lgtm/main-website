@@ -14,9 +14,6 @@ import {
   Star,
   Eye,
   EyeOff,
-  MoveUp,
-  MoveDown,
-  Image as ImageIcon,
 } from "lucide-react";
 import { Event, GalleryImage } from "@/lib/supabase/types";
 import {
@@ -24,7 +21,7 @@ import {
   deleteGalleryImage,
   updateGalleryImage,
 } from "@/lib/events/actions";
-import { createClient, isSupabaseConfigured } from "@/lib/supabase/client";
+import { uploadMultipleImagesToCloudinary } from "@/lib/cloudinary/upload";
 
 interface EventGalleryClientProps {
   event: Event;
@@ -50,7 +47,7 @@ export default function EventGalleryClient({
     setTimeout(() => setActionNotice(null), 3500);
   };
 
-  // Add via image URL
+  // Add via direct image URL
   const handleAddUrlImage = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newImageUrl.trim()) return;
@@ -58,30 +55,38 @@ export default function EventGalleryClient({
     setIsUploading(true);
     setErrorMessage(null);
 
-    const result = await addGalleryImages(event.id, [
+    const payload = [
       {
         image_path: newImageUrl.trim(),
         caption: newCaption.trim() || undefined,
         category: newCategory,
         is_cover: gallery.length === 0,
       },
-    ]);
+    ];
+    const result = await addGalleryImages(event.id, payload);
 
     setIsUploading(false);
 
     if (result.success) {
-      const addedItem: GalleryImage = {
-        id: "img-" + Date.now(),
-        event_id: event.id,
-        image_path: newImageUrl.trim(),
-        caption: newCaption.trim() || null,
-        category: newCategory,
-        sort_order: gallery.length + 1,
-        is_cover: gallery.length === 0,
-        is_published: true,
-        created_at: new Date().toISOString(),
-      };
-      setGallery((prev) => [...prev, addedItem]);
+      const inserted = result.images as GalleryImage[] | undefined;
+      if (inserted && inserted.length > 0) {
+        setGallery((prev) => [...prev, ...inserted]);
+      } else {
+        setGallery((prev) => [
+          ...prev,
+          {
+            id: "img-" + Date.now(),
+            event_id: event.id,
+            image_path: newImageUrl.trim(),
+            caption: newCaption.trim() || null,
+            category: newCategory,
+            sort_order: gallery.length + 1,
+            is_cover: gallery.length === 0,
+            is_published: true,
+            created_at: new Date().toISOString(),
+          },
+        ]);
+      }
       setNewImageUrl("");
       setNewCaption("");
       showNotice("Photograph added to event gallery.");
@@ -90,98 +95,80 @@ export default function EventGalleryClient({
     }
   };
 
-  // Multiple file upload to Supabase Storage
+  // Multiple file upload directly to Cloudinary
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const files = e.target.files;
     if (!files || files.length === 0) return;
 
     setIsUploading(true);
-    setUploadProgress(`Uploading 1 of ${files.length} photographs...`);
+    setUploadProgress(`Preparing ${files.length} photograph(s) for Cloudinary...`);
     setErrorMessage(null);
 
-    const uploadedUrls: { image_path: string; caption?: string }[] = [];
+    const { uploaded, errors } = await uploadMultipleImagesToCloudinary(files, {
+      folder: `events/${event.id}/gallery`,
+      onProgress: (current, total, fileName) => {
+        setUploadProgress(`Uploading ${current} of ${total} to Cloudinary: ${fileName}...`);
+      },
+    });
 
-    if (isSupabaseConfigured()) {
-      try {
-        const supabase = createClient();
-
-        for (let i = 0; i < files.length; i++) {
-          const file = files[i];
-          setUploadProgress(`Uploading ${i + 1} of ${files.length}: ${file.name}...`);
-
-          // Validate file size (< 10MB) & type
-          if (!file.type.startsWith("image/")) {
-            continue;
-          }
-
-          const fileExt = file.name.split(".").pop();
-          const fileName = `${Date.now()}-${Math.random().toString(36).substring(2, 9)}.${fileExt}`;
-          const filePath = `${event.id}/gallery/${fileName}`;
-
-          const { error: uploadErr } = await supabase.storage
-            .from("events")
-            .upload(filePath, file, {
-              cacheControl: "3600",
-              upsert: true,
-            });
-
-          if (uploadErr) {
-            console.error("Storage upload error:", uploadErr);
-            continue;
-          }
-
-          const { data: publicUrlData } = supabase.storage
-            .from("events")
-            .getPublicUrl(filePath);
-
-          if (publicUrlData?.publicUrl) {
-            uploadedUrls.push({
-              image_path: publicUrlData.publicUrl,
-              caption: file.name.replace(/\.[^/.]+$/, ""),
-            });
-          }
-        }
-      } catch (err: any) {
-        console.error("Upload exception:", err);
-      }
-    } else {
-      // Local preview fallback
-      for (let i = 0; i < files.length; i++) {
-        const file = files[i];
-        const previewUrl = URL.createObjectURL(file);
-        uploadedUrls.push({
-          image_path: previewUrl,
-          caption: file.name.replace(/\.[^/.]+$/, ""),
-        });
-      }
-    }
-
-    if (uploadedUrls.length > 0) {
-      await addGalleryImages(event.id, uploadedUrls);
-      const newItems: GalleryImage[] = uploadedUrls.map((u, idx) => ({
-        id: "upload-" + Date.now() + "-" + idx,
-        event_id: event.id,
-        image_path: u.image_path,
-        caption: u.caption || null,
-        category: "Workshop Highlights",
-        sort_order: gallery.length + idx + 1,
+    if (uploaded.length > 0) {
+      const imagesToSave = uploaded.map((item, idx) => ({
+        image_path: item.url,
+        caption: item.originalFilename.replace(/\.[^/.]+$/, ""),
+        category: newCategory,
         is_cover: gallery.length === 0 && idx === 0,
-        is_published: true,
-        created_at: new Date().toISOString(),
       }));
-      setGallery((prev) => [...prev, ...newItems]);
-      showNotice(`${uploadedUrls.length} photograph(s) uploaded successfully.`);
-    } else {
-      setErrorMessage("Could not complete upload. Please check image files.");
+
+      const saveResult = await addGalleryImages(event.id, imagesToSave);
+
+      if (saveResult.success) {
+        const inserted = saveResult.images as GalleryImage[] | undefined;
+        if (inserted && inserted.length > 0) {
+          setGallery((prev) => [...prev, ...inserted]);
+        } else {
+          const fallbackItems: GalleryImage[] = imagesToSave.map((u, idx) => ({
+            id: "upload-" + Date.now() + "-" + idx,
+            event_id: event.id,
+            image_path: u.image_path,
+            caption: u.caption || null,
+            category: u.category,
+            sort_order: gallery.length + idx + 1,
+            is_cover: u.is_cover,
+            is_published: true,
+            created_at: new Date().toISOString(),
+          }));
+          setGallery((prev) => [...prev, ...fallbackItems]);
+        }
+        showNotice(
+          `${uploaded.length} photograph(s) uploaded to Cloudinary and saved.`
+        );
+      } else {
+        setErrorMessage(
+          saveResult.error ||
+            "Images uploaded to Cloudinary, but saving to gallery failed."
+        );
+      }
     }
 
+    if (errors.length > 0) {
+      setErrorMessage(errors.join(" | "));
+    }
+
+    e.target.value = "";
     setIsUploading(false);
     setUploadProgress(null);
   };
 
   // Toggle Cover
   const handleSetCover = async (img: GalleryImage) => {
-    await updateGalleryImage(img.id, { is_cover: true, event_id: event.id });
+    const res = await updateGalleryImage(img.id, {
+      is_cover: true,
+      event_id: event.id,
+    });
+    if (!res.success) {
+      setErrorMessage(res.error || "Failed to update cover photo.");
+      return;
+    }
     setGallery((prev) =>
       prev.map((item) => ({
         ...item,
@@ -194,17 +181,32 @@ export default function EventGalleryClient({
   // Toggle Published
   const handleTogglePublished = async (img: GalleryImage) => {
     const newPub = !img.is_published;
-    await updateGalleryImage(img.id, { is_published: newPub, event_id: event.id });
+    const res = await updateGalleryImage(img.id, {
+      is_published: newPub,
+      event_id: event.id,
+    });
+    if (!res.success) {
+      setErrorMessage(res.error || "Failed to update visibility.");
+      return;
+    }
     setGallery((prev) =>
-      prev.map((item) => (item.id === img.id ? { ...item, is_published: newPub } : item))
+      prev.map((item) =>
+        item.id === img.id ? { ...item, is_published: newPub } : item
+      )
     );
-    showNotice(newPub ? "Photograph published." : "Photograph hidden from public gallery.");
+    showNotice(
+      newPub ? "Photograph published." : "Photograph hidden from public gallery."
+    );
   };
 
   // Delete
   const handleDelete = async (id: string) => {
     if (!confirm("Are you sure you want to delete this photograph?")) return;
-    await deleteGalleryImage(id, event.id);
+    const res = await deleteGalleryImage(id, event.id);
+    if (!res.success) {
+      setErrorMessage(res.error || "Failed to delete photograph.");
+      return;
+    }
     setGallery((prev) => prev.filter((item) => item.id !== id));
     showNotice("Photograph deleted.");
   };
@@ -228,7 +230,10 @@ export default function EventGalleryClient({
             </h1>
           </div>
           <p className="text-xs text-[#59675F] font-light mt-1">
-            Managing photographs for: <strong className="text-[#173D34] font-medium">{event.title}</strong>
+            Managing photographs for:{" "}
+            <strong className="text-[#173D34] font-medium">
+              {event.title}
+            </strong>
           </p>
         </div>
 
@@ -258,13 +263,28 @@ export default function EventGalleryClient({
 
       {/* Upload Zone */}
       <div className="bg-white rounded-3xl p-6 sm:p-8 border border-[#B58B50]/20 shadow-xs space-y-6">
-        <div>
-          <h2 className="font-serif text-lg font-medium text-[#173D34] mb-1">
-            Upload Photographs
-          </h2>
-          <p className="text-xs text-[#59675F] font-light">
-            Upload multiple photos from your device to Supabase Storage, or paste an image URL.
-          </p>
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+          <div>
+            <h2 className="font-serif text-lg font-medium text-[#173D34] mb-1">
+              Upload Photographs via Cloudinary
+            </h2>
+            <p className="text-xs text-[#59675F] font-light">
+              Upload multiple photos directly from your device to Cloudinary CDN, or paste an image URL.
+            </p>
+          </div>
+
+          <div className="sm:w-56">
+            <label className="block text-[10px] font-semibold text-[#173D34] uppercase tracking-wider mb-1">
+              Gallery Category Tag
+            </label>
+            <input
+              type="text"
+              value={newCategory}
+              onChange={(e) => setNewCategory(e.target.value)}
+              placeholder="Workshop Highlights"
+              className="w-full px-3 py-1.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
+            />
+          </div>
         </div>
 
         {/* Drag & Drop / File Input Box */}
@@ -290,7 +310,7 @@ export default function EventGalleryClient({
                 {uploadProgress || "Click or drag & drop event photographs here"}
               </p>
               <p className="text-[11px] text-[#59675F] mt-1">
-                Supports JPG, PNG, WEBP up to 10MB. Multiple files supported.
+                Uploads directly to Cloudinary &bull; Supports JPG, PNG, WEBP up to 10MB. Multiple files supported.
               </p>
             </div>
           </div>
@@ -308,7 +328,7 @@ export default function EventGalleryClient({
                 required
                 value={newImageUrl}
                 onChange={(e) => setNewImageUrl(e.target.value)}
-                placeholder="Image URL: https://..."
+                placeholder="Image URL: https://res.cloudinary.com/..."
                 className="w-full px-3 py-2 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:outline-none focus:border-[#B58B50]"
               />
             </div>
@@ -393,17 +413,21 @@ export default function EventGalleryClient({
                   <div className="flex items-center gap-1">
                     {!img.is_cover && (
                       <button
+                        type="button"
                         onClick={() => handleSetCover(img)}
                         title="Set as Cover"
-                        className="px-2 py-1 rounded-md text-[11px] font-medium text-[#B58B50] hover:bg-[#F7F5EF]"
+                        className="px-2 py-1 rounded-md text-[11px] font-medium text-[#B58B50] hover:bg-[#F7F5EF] cursor-pointer"
                       >
                         Set Cover
                       </button>
                     )}
                     <button
+                      type="button"
                       onClick={() => handleTogglePublished(img)}
-                      title={img.is_published ? "Hide from public" : "Publish image"}
-                      className="p-1.5 rounded-md hover:bg-[#F7F5EF] text-[#59675F]"
+                      title={
+                        img.is_published ? "Hide from public" : "Publish image"
+                      }
+                      className="p-1.5 rounded-md hover:bg-[#F7F5EF] text-[#59675F] cursor-pointer"
                     >
                       {img.is_published ? (
                         <Eye className="w-3.5 h-3.5 text-emerald-600" />
@@ -414,9 +438,10 @@ export default function EventGalleryClient({
                   </div>
 
                   <button
+                    type="button"
                     onClick={() => handleDelete(img.id)}
                     title="Delete photograph"
-                    className="p-1.5 rounded-md text-red-600 hover:bg-red-50 transition-colors"
+                    className="p-1.5 rounded-md text-red-600 hover:bg-red-50 transition-colors cursor-pointer"
                   >
                     <Trash2 className="w-3.5 h-3.5" />
                   </button>
@@ -427,8 +452,12 @@ export default function EventGalleryClient({
         ) : (
           <div className="py-12 text-center text-xs text-[#59675F] space-y-2">
             <Camera className="w-8 h-8 text-[#B58B50] mx-auto opacity-60" />
-            <p className="font-medium text-[#173D34]">No photographs uploaded for this event yet.</p>
-            <p className="font-light">Use the upload box above to upload event photographs.</p>
+            <p className="font-medium text-[#173D34]">
+              No photographs uploaded for this event yet.
+            </p>
+            <p className="font-light">
+              Use the upload box above to upload event photographs.
+            </p>
           </div>
         )}
       </div>
