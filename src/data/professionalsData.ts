@@ -76,6 +76,7 @@ export const PROFESSIONALS: Professional[] = [
       "Counselling Psychologist | Rehabilitation Counselor (RCI) | Clinical Hypnotherapist | Certified ACT Therapist | Art Therapy Practitioner",
     badge: "PhD & Certified ACT Therapist",
     isFounder: false,
+    image: "/drDeepaJain.jpeg",
     initials: "DJ",
     shortBio:
       "Dr. Deepa Jain is a PhD holder in Clinical Hypnotherapy and skilled Counselling Psychologist committed to promoting emotional wellbeing, resilience, and personal growth. She is a Certified ACT (Acceptance and Commitment Therapy), Clinical Hypnotherapist Therapist and Art Therapy Practitioner.",
@@ -121,6 +122,7 @@ export const PROFESSIONALS: Professional[] = [
       "Couple & Marriage Counsellor | Counselling Psychologist | Psychological Assessor",
     badge: "Couple & Relationship Specialist",
     isFounder: false,
+    image: "/zainabAarsiwala.jpeg",
     initials: "ZA",
     shortBio:
       "Zainab Aarsiwala brings extensive experience across pre-marital counselling, conflict resolution, couple and marriage counselling, psychological assessment, and structured group sessions.",
@@ -165,6 +167,7 @@ export const PROFESSIONALS: Professional[] = [
       "Counselling Psychologist | Rehabilitation Counsellor (RCI Registered) | Child & Adolescent Psychologist",
     badge: "Child & Adolescent Specialist",
     isFounder: false,
+    image: "/bhavyaSingh.jpeg",
     initials: "BS",
     shortBio:
       "Bhavya Singh is an RCI-registered Rehabilitation Counsellor and Child & Adolescent Psychologist specialising in evidence-based therapy, psychological rehabilitation, and supporting young individuals navigating developmental and high-stress environments.",

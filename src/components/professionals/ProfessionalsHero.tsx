@@ -200,8 +200,15 @@ export default function ProfessionalsHero({
                       href="#dr-deepa-jain"
                       className="p-2 rounded-xl bg-[#173D34]/80 hover:bg-[#1E4D42] border border-[#DFBD83]/20 hover:border-[#DFBD83]/50 text-center transition-colors"
                     >
-                      <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
-                        DJ
+                      <div className="relative w-8 h-8 mx-auto rounded-full overflow-hidden border border-[#DFBD83]/50 mb-1.5 bg-[#102E27]">
+                        <Image
+                          src="/drDeepaJain.jpeg"
+                          alt="Dr. Deepa Jain"
+                          fill
+                          unoptimized
+                          sizes="32px"
+                          className="object-cover object-top"
+                        />
                       </div>
                       <span className="text-[10px] text-white font-medium block truncate">
                         Dr. Deepa Jain
@@ -216,8 +223,15 @@ export default function ProfessionalsHero({
                       href="#zainab-aarsiwala"
                       className="p-2 rounded-xl bg-[#173D34]/80 hover:bg-[#1E4D42] border border-[#DFBD83]/20 hover:border-[#DFBD83]/50 text-center transition-colors"
                     >
-                      <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
-                        ZA
+                      <div className="relative w-8 h-8 mx-auto rounded-full overflow-hidden border border-[#DFBD83]/50 mb-1.5 bg-[#102E27]">
+                        <Image
+                          src="/zainabAarsiwala.jpeg"
+                          alt="Zainab Aarsiwala"
+                          fill
+                          unoptimized
+                          sizes="32px"
+                          className="object-cover object-top"
+                        />
                       </div>
                       <span className="text-[10px] text-white font-medium block truncate">
                         Zainab Aarsiwala
@@ -232,8 +246,15 @@ export default function ProfessionalsHero({
                       href="#bhavya-singh"
                       className="p-2 rounded-xl bg-[#173D34]/80 hover:bg-[#1E4D42] border border-[#DFBD83]/20 hover:border-[#DFBD83]/50 text-center transition-colors"
                     >
-                      <div className="w-7 h-7 mx-auto rounded-full bg-[#DFBD83]/20 text-[#DFBD83] flex items-center justify-center font-serif text-xs font-semibold mb-1">
-                        BS
+                      <div className="relative w-8 h-8 mx-auto rounded-full overflow-hidden border border-[#DFBD83]/50 mb-1.5 bg-[#102E27]">
+                        <Image
+                          src="/bhavyaSingh.jpeg"
+                          alt="Bhavya Singh"
+                          fill
+                          unoptimized
+                          sizes="32px"
+                          className="object-cover object-top"
+                        />
                       </div>
                       <span className="text-[10px] text-white font-medium block truncate">
                         Bhavya Singh
