@@ -21,13 +21,7 @@ import {
   Briefcase,
   School,
 } from "lucide-react";
-import {
-  SOCIAL_LINKS,
-  InstagramIcon,
-  LinkedInIcon,
-  FacebookIcon,
-  WhatsAppIcon,
-} from "@/components/SocialIcons";
+import { HEADER_SOCIAL_LINKS } from "@/components/SocialIcons";
 
 interface NavbarProps {
   onOpenBooking?: (serviceOrProgramme?: string) => void;
@@ -521,12 +515,7 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
               className="flex items-center gap-0.5 xl:gap-1 pr-1.5 xl:pr-2 border-r border-[#C8D6C6]"
               aria-label="Social Media Handles"
             >
-              {[
-                { name: "Instagram", url: SOCIAL_LINKS.instagram.url, icon: InstagramIcon },
-                { name: "LinkedIn", url: SOCIAL_LINKS.linkedin.url, icon: LinkedInIcon },
-                { name: "Facebook", url: SOCIAL_LINKS.facebook.url, icon: FacebookIcon },
-                { name: "WhatsApp", url: SOCIAL_LINKS.whatsapp.url, icon: WhatsAppIcon },
-              ].map((social) => {
+              {HEADER_SOCIAL_LINKS.map((social) => {
                 const Icon = social.icon;
                 return (
                   <a
@@ -737,12 +726,7 @@ export default function Navbar({ onOpenBooking, currentPage }: NavbarProps) {
               className="flex items-center justify-center gap-3 pt-2"
               aria-label="Social Media Handles"
             >
-              {[
-                { name: "Instagram", url: SOCIAL_LINKS.instagram.url, icon: InstagramIcon },
-                { name: "LinkedIn", url: SOCIAL_LINKS.linkedin.url, icon: LinkedInIcon },
-                { name: "Facebook", url: SOCIAL_LINKS.facebook.url, icon: FacebookIcon },
-                { name: "WhatsApp", url: SOCIAL_LINKS.whatsapp.url, icon: WhatsAppIcon },
-              ].map((social) => {
+              {HEADER_SOCIAL_LINKS.map((social) => {
                 const Icon = social.icon;
                 return (
                   <a

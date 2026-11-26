@@ -5,8 +5,6 @@ import Link from "next/link";
 import { Phone, Mail, MapPin, ArrowUpRight, ShieldCheck, Heart, MessageCircle } from "lucide-react";
 import {
   CONTACT_INFO,
-  FacebookIcon,
-  InstagramIcon,
   LinkedInIcon,
   SOCIAL_LINKS,
   getWhatsAppUrl,
@@ -142,16 +140,6 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
               </span>
               <div className="flex flex-wrap items-center gap-2">
                 <a
-                  href={SOCIAL_LINKS.instagram.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#274B3E] hover:bg-[#345F50] text-[#E8EDE4] hover:text-[#DFBD83] text-xs font-medium border border-[#C8D6C6]/20 transition-all group"
-                  aria-label="Instagram Profile"
-                >
-                  <InstagramIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
-                  <span>Instagram</span>
-                </a>
-                <a
                   href={SOCIAL_LINKS.linkedin.url}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -160,16 +148,6 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
                 >
                   <LinkedInIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
                   <span>LinkedIn</span>
-                </a>
-                <a
-                  href={SOCIAL_LINKS.facebook.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-[#274B3E] hover:bg-[#345F50] text-[#E8EDE4] hover:text-[#DFBD83] text-xs font-medium border border-[#C8D6C6]/20 transition-all group"
-                  aria-label="Facebook Profile"
-                >
-                  <FacebookIcon className="w-3.5 h-3.5 text-[#DFBD83] group-hover:scale-110 transition-transform" />
-                  <span>Facebook</span>
                 </a>
               </div>
             </div>
@@ -195,15 +173,6 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
           </p>
           <div className="flex flex-wrap items-center gap-5 sm:gap-6">
             <a
-              href={SOCIAL_LINKS.instagram.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#DFBD83] transition-colors flex items-center gap-1.5"
-            >
-              <InstagramIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
-              <span>Instagram</span>
-            </a>
-            <a
               href={SOCIAL_LINKS.linkedin.url}
               target="_blank"
               rel="noopener noreferrer"
@@ -211,15 +180,6 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
             >
               <LinkedInIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
               <span>LinkedIn</span>
-            </a>
-            <a
-              href={SOCIAL_LINKS.facebook.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hover:text-[#DFBD83] transition-colors flex items-center gap-1.5"
-            >
-              <FacebookIcon className="w-3.5 h-3.5 text-[#DFBD83]" />
-              <span>Facebook</span>
             </a>
             <span className="text-[#C8D6C6]/30 hidden sm:inline">&bull;</span>
             <Link href="/about" className="hover:text-[#DFBD83] transition-colors">Privacy &amp; Confidentiality</Link>

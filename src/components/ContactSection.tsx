@@ -4,7 +4,6 @@ import React, { useState } from "react";
 import { Mail, Phone, MapPin, Send, MessageSquare, Clock, ShieldAlert, CheckCircle2, ArrowUpRight } from "lucide-react";
 import {
   CONTACT_INFO,
-  InstagramIcon,
   LinkedInIcon,
   SOCIAL_LINKS,
   getWhatsAppUrl,
@@ -154,29 +153,7 @@ export default function ContactSection() {
               <p className="text-xs text-[#556A5E] mb-4 font-light">
                 Follow our clinical perspectives, psychoeducational updates, and professional milestones.
               </p>
-              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
-                <a
-                  href={SOCIAL_LINKS.instagram.url}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="group flex items-center justify-between gap-3 p-3.5 rounded-xl bg-[#E6EEE3] border border-[#C8D6C6] hover:border-[#9E783E] hover:bg-[#EEF4EC] transition-all"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-[#D7E3D3] text-[#1E3F35] flex items-center justify-center group-hover:bg-[#1E3F35] group-hover:text-[#DFBD83] transition-all">
-                      <InstagramIcon className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <span className="text-xs font-semibold text-[#173D34] block group-hover:text-[#7D6335] transition-colors">
-                        Instagram
-                      </span>
-                      <span className="text-[11px] text-[#556A5E] block">
-                        {SOCIAL_LINKS.instagram.handle}
-                      </span>
-                    </div>
-                  </div>
-                  <ArrowUpRight className="w-4 h-4 text-[#7D6335] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-                </a>
-
+              <div>
                 <a
                   href={SOCIAL_LINKS.linkedin.url}
                   target="_blank"

@@ -5,6 +5,7 @@ import Link from "next/link";
 import Image from "next/image";
 import { ShieldCheck, ArrowUpRight, Anchor, Brain, Sparkles, GraduationCap } from "lucide-react";
 import { aboutCopy } from "@/data/aboutData";
+import { FounderLinkedInLink } from "@/components/SocialIcons";
 
 interface AboutFounderProps {
   onOpenBooking: () => void;
@@ -156,6 +157,8 @@ export default function AboutFounder({ onOpenBooking }: AboutFounderProps) {
               >
                 <span>View All Practitioners</span>
               </Link>
+
+              <FounderLinkedInLink />
             </div>
 
           </div>

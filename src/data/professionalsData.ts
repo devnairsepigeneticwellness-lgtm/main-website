@@ -1,3 +1,5 @@
+import { FOUNDER_LINKS } from "@/components/SocialIcons";
+
 export interface Professional {
   id: string;
   name: string;
@@ -6,6 +8,7 @@ export interface Professional {
   isFounder?: boolean;
   image?: string;
   initials: string;
+  linkedinUrl?: string;
   shortBio: string;
   fullBio: string[];
   qualifications: string[];
@@ -24,6 +27,7 @@ export const PROFESSIONALS: Professional[] = [
     isFounder: true,
     image: "/founder.jpeg",
     initials: "AN",
+    linkedinUrl: FOUNDER_LINKS.linkedin.url,
     shortBio:
       "Ajit Kumar Nair is the founder of Nair's Epigenetic Wellness. His professional background includes counselling, psychology, rehabilitation, clinical hypnotherapy, training and wellbeing.",
     fullBio: [

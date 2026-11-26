@@ -1,5 +1,6 @@
 import React, { Suspense } from "react";
-import { redirect } from "next/navigation";
+import { redirect, unstable_rethrow } from "next/navigation";
+import { connection } from "next/server";
 import AdminSidebar from "@/components/admin/AdminSidebar";
 import { createServerSupabaseClient } from "@/lib/supabase/server";
 import { isSupabaseConfigured } from "@/lib/supabase/client";
@@ -16,11 +17,35 @@ function AdminLoading() {
   );
 }
 
-export default async function AdminDashboardLayout({
+function AdminShellFrame({
+  sidebar,
+  children,
+}: {
+  sidebar: React.ReactNode;
+  children: React.ReactNode;
+}) {
+  return (
+    <div className="min-h-screen bg-[#F7F5EF] text-[#24352D] font-sans flex flex-col lg:flex-row">
+      {sidebar}
+      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen min-w-0">
+        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">{children}</main>
+      </div>
+    </div>
+  );
+}
+
+function AdminSidebarFallback() {
+  return <aside className="w-64 bg-[#102E27] min-h-screen hidden lg:block" />;
+}
+
+async function AdminAuthenticatedShell({
   children,
 }: {
   children: React.ReactNode;
 }) {
+  // Defer auth cookie verification and Supabase token checks (Date.now) to request time.
+  await connection();
+
   let userEmail: string | undefined;
 
   if (isSupabaseConfigured()) {
@@ -35,24 +60,38 @@ export default async function AdminDashboardLayout({
       }
       userEmail = user.email;
     } catch (err: unknown) {
-      // If redirect was called, re-throw it so Next.js handles the redirect
-      if (err instanceof Error && "digest" in err && typeof (err as { digest: unknown }).digest === "string" && (err as { digest: string }).digest.startsWith("NEXT_REDIRECT")) {
-        throw err;
-      }
+      unstable_rethrow(err);
       redirect("/admin/login");
     }
   }
 
   return (
-    <div className="min-h-screen bg-[#F7F5EF] text-[#24352D] font-sans flex flex-col lg:flex-row">
-      <Suspense fallback={<aside className="w-64 bg-[#102E27] min-h-screen hidden lg:block" />}>
-        <AdminSidebar userEmail={userEmail} />
-      </Suspense>
-      <div className="flex-1 lg:pl-64 flex flex-col min-h-screen min-w-0">
-        <main className="flex-1 p-4 sm:p-6 lg:p-8 w-full">
-          <Suspense fallback={<AdminLoading />}>{children}</Suspense>
-        </main>
-      </div>
-    </div>
+    <AdminShellFrame
+      sidebar={
+        <Suspense fallback={<AdminSidebarFallback />}>
+          <AdminSidebar userEmail={userEmail} />
+        </Suspense>
+      }
+    >
+      <Suspense fallback={<AdminLoading />}>{children}</Suspense>
+    </AdminShellFrame>
+  );
+}
+
+export default function AdminDashboardLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
+  return (
+    <Suspense
+      fallback={
+        <AdminShellFrame sidebar={<AdminSidebarFallback />}>
+          <AdminLoading />
+        </AdminShellFrame>
+      }
+    >
+      <AdminAuthenticatedShell>{children}</AdminAuthenticatedShell>
+    </Suspense>
   );
 }

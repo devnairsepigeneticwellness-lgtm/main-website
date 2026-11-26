@@ -4,7 +4,6 @@ import React from "react";
 import { Phone, Mail, MessageCircle, ArrowUpRight, Clock, ShieldCheck } from "lucide-react";
 import {
   CONTACT_INFO,
-  InstagramIcon,
   LinkedInIcon,
   SOCIAL_LINKS,
   getWhatsAppUrl,
@@ -129,44 +128,8 @@ export default function ContactInfoCards() {
           })}
         </div>
 
-        {/* Social & Professional Connect Cards */}
-        <div className="mt-8 sm:mt-10 grid grid-cols-1 md:grid-cols-2 gap-6">
-          <div className="group rounded-3xl bg-[#FCFAF6] border border-[#E8EDE4] p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#B58B50]/50 transition-all duration-300 flex flex-col justify-between">
-            <div>
-              <div className="flex items-center justify-between mb-4">
-                <div className="w-12 h-12 rounded-2xl bg-[#173D34] text-[#DFBD83] flex items-center justify-center group-hover:scale-105 group-hover:bg-[#B58B50] group-hover:text-white transition-all shadow-md">
-                  <InstagramIcon className="w-6 h-6" />
-                </div>
-                <span className="text-[11px] font-sans uppercase tracking-[0.16em] font-medium text-[#B58B50] bg-[#B58B50]/10 px-3 py-1 rounded-full border border-[#B58B50]/20">
-                  Visual &amp; Reflections
-                </span>
-              </div>
-              <span className="text-xs uppercase tracking-wider text-[#59675F] font-medium block">
-                Official Instagram
-              </span>
-              <h3 className="font-serif text-2xl text-[#173D34] font-medium mt-1 mb-1 group-hover:text-[#B58B50] transition-colors">
-                Instagram Profile
-              </h3>
-              <div className="font-sans text-base font-semibold text-[#173D34] tracking-tight mb-2">
-                {SOCIAL_LINKS.instagram.handle}
-              </div>
-              <p className="text-xs sm:text-sm text-[#59675F] font-light leading-relaxed">
-                Follow psychoeducational reflections, clinic updates, and mindful epigenetic wellness posts.
-              </p>
-            </div>
-            <div className="mt-6 pt-5 border-t border-[#E8EDE4]">
-              <a
-                href={SOCIAL_LINKS.instagram.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-full bg-[#173D34] text-[#F7F5EF] group-hover:bg-[#B58B50] group-hover:text-white text-xs sm:text-sm font-medium tracking-wide transition-colors shadow-sm"
-              >
-                <span>Visit Instagram Profile</span>
-                <ArrowUpRight className="w-4 h-4 text-[#DFBD83] group-hover:text-white group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </a>
-            </div>
-          </div>
-
+        {/* Professional Connect Card */}
+        <div className="mt-8 sm:mt-10 max-w-xl mx-auto">
           <div className="group rounded-3xl bg-[#FCFAF6] border border-[#E8EDE4] p-7 sm:p-8 shadow-sm hover:shadow-xl hover:border-[#B58B50]/50 transition-all duration-300 flex flex-col justify-between">
             <div>
               <div className="flex items-center justify-between mb-4">
@@ -178,7 +141,7 @@ export default function ContactInfoCards() {
                 </span>
               </div>
               <span className="text-xs uppercase tracking-wider text-[#59675F] font-medium block">
-                Professional Profile
+                Official LinkedIn
               </span>
               <h3 className="font-serif text-2xl text-[#173D34] font-medium mt-1 mb-1 group-hover:text-[#B58B50] transition-colors">
                 LinkedIn Profile

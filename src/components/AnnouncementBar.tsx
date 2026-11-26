@@ -4,11 +4,7 @@ import React from "react";
 import { Mail, ArrowUpRight } from "lucide-react";
 import {
   CONTACT_INFO,
-  SOCIAL_LINKS,
-  InstagramIcon,
-  LinkedInIcon,
-  FacebookIcon,
-  WhatsAppIcon,
+  HEADER_SOCIAL_LINKS,
 } from "@/components/SocialIcons";
 
 export default function AnnouncementBar({
@@ -16,29 +12,6 @@ export default function AnnouncementBar({
 }: {
   onOpenBooking?: () => void;
 }) {
-  const socialHandles = [
-    {
-      name: "Instagram",
-      url: SOCIAL_LINKS.instagram.url,
-      icon: InstagramIcon,
-    },
-    {
-      name: "LinkedIn",
-      url: SOCIAL_LINKS.linkedin.url,
-      icon: LinkedInIcon,
-    },
-    {
-      name: "Facebook",
-      url: SOCIAL_LINKS.facebook.url,
-      icon: FacebookIcon,
-    },
-    {
-      name: "WhatsApp",
-      url: SOCIAL_LINKS.whatsapp.url,
-      icon: WhatsAppIcon,
-    },
-  ];
-
   return (
     <aside
       aria-label="Announcement"
@@ -57,7 +30,7 @@ export default function AnnouncementBar({
         {/* Quick Social & Email Links */}
         <div className="flex flex-wrap justify-center items-center gap-3 sm:gap-4 text-xs tracking-wider uppercase text-[#E8EDE4]/80">
           <div className="flex items-center gap-2" aria-label="Social Media Links">
-            {socialHandles.map((item) => {
+            {HEADER_SOCIAL_LINKS.map((item) => {
               const Icon = item.icon;
               return (
                 <a

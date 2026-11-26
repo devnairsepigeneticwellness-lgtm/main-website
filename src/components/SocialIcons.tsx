@@ -1,4 +1,5 @@
 import React from "react";
+import { ArrowUpRight } from "lucide-react";
 
 // TODO(client-input): Confirm official voice phone number (Task 4.2) and Google Maps Place URL below (Task 5.1).
 export const CONTACT_INFO = {
@@ -17,25 +18,13 @@ export function getWhatsAppUrl(
   return `https://wa.me/${CONTACT_INFO.whatsappDigits}?text=${encodeURIComponent(message)}`;
 }
 
-// TODO(client-input): Confirm official Instagram, LinkedIn, Facebook, and WhatsApp links (Task 4.1).
+// TODO(client-input): Confirm official WhatsApp link (Task 4.1); LinkedIn URLs confirmed.
 export const SOCIAL_LINKS = {
-  instagram: {
-    url: "https://www.instagram.com/nairsepigeneticwellness/",
-    handle: "@nairsepigeneticwellness",
-    name: "Instagram",
-    description: "Follow updates, reflections & mental wellbeing insights",
-  },
   linkedin: {
-    url: "https://www.linkedin.com/in/ajit-kumar-nair/",
-    handle: "Ajit Kumar Nair",
-    name: "LinkedIn",
-    description: "Connect for professional & clinical psychology network",
-  },
-  facebook: {
-    url: "https://www.facebook.com/",
+    url: "https://www.linkedin.com/in/nairsepigeneticwellness/",
     handle: "Nair's Epigenetic Wellness",
-    name: "Facebook",
-    description: "Follow community updates and mental wellness initiatives",
+    name: "LinkedIn",
+    description: "Connect for psychological wellness updates & institutional collaborations",
   },
   whatsapp: {
     url: getWhatsAppUrl(),
@@ -45,24 +34,14 @@ export const SOCIAL_LINKS = {
   },
 };
 
-export function InstagramIcon({ className = "w-5 h-5" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <rect x="2" y="2" width="20" height="20" rx="5" ry="5" />
-      <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z" />
-      <line x1="17.5" y1="6.5" x2="17.51" y2="6.5" />
-    </svg>
-  );
-}
+export const FOUNDER_LINKS = {
+  linkedin: {
+    url: "https://www.linkedin.com/in/ajit-kumar-04b51323/",
+    handle: "Ajit Kumar Nair",
+    name: "LinkedIn",
+    description: "Connect with Ajit Kumar Nair on LinkedIn",
+  },
+} as const;
 
 export function LinkedInIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
@@ -83,23 +62,6 @@ export function LinkedInIcon({ className = "w-5 h-5" }: { className?: string }) 
   );
 }
 
-export function FacebookIcon({ className = "w-5 h-5" }: { className?: string }) {
-  return (
-    <svg
-      className={className}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="currentColor"
-      strokeWidth="1.75"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-      aria-hidden="true"
-    >
-      <path d="M18 2h-3a5 5 0 0 0-5 5v3H7v4h3v8h4v-8h3l1-4h-4V7a1 1 0 0 1 1-1h3z" />
-    </svg>
-  );
-}
-
 export function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) {
   return (
     <svg
@@ -114,5 +76,38 @@ export function WhatsAppIcon({ className = "w-5 h-5" }: { className?: string }) 
     >
       <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z" />
     </svg>
+  );
+}
+
+/** Shared header and announcement bar social links. */
+export const HEADER_SOCIAL_LINKS = [
+  { name: "LinkedIn", url: SOCIAL_LINKS.linkedin.url, icon: LinkedInIcon },
+  { name: "WhatsApp", url: SOCIAL_LINKS.whatsapp.url, icon: WhatsAppIcon },
+] as const;
+
+/** External LinkedIn pill button linking to the founder's personal profile. */
+export function FounderLinkedInLink({
+  href = FOUNDER_LINKS.linkedin.url,
+  personName = FOUNDER_LINKS.linkedin.handle,
+  label = "LinkedIn",
+  className = "inline-flex items-center gap-2 px-6 py-3.5 rounded-full border border-[#7D6335]/40 text-[#173D34] hover:bg-white text-xs sm:text-sm font-medium tracking-wide transition-all group",
+}: {
+  href?: string;
+  personName?: string;
+  label?: string;
+  className?: string;
+}) {
+  return (
+    <a
+      href={href}
+      target="_blank"
+      rel="noopener noreferrer"
+      aria-label={`Connect with ${personName} on LinkedIn`}
+      className={className}
+    >
+      <LinkedInIcon className="w-4 h-4 text-[#7D6335] group-hover:text-[#173D34] transition-colors shrink-0" />
+      <span>{label}</span>
+      <ArrowUpRight className="w-3.5 h-3.5 text-[#7D6335] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform shrink-0" />
+    </a>
   );
 }

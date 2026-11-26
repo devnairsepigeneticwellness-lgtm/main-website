@@ -1,13 +1,15 @@
 import { createServerClient, type CookieOptions } from "@supabase/ssr";
 import { cookies } from "next/headers";
+import { unstable_rethrow } from "next/navigation";
 
 export async function createServerSupabaseClient() {
   let cookieStore: Awaited<ReturnType<typeof cookies>> | null = null;
   try {
     cookieStore = await cookies();
-  } catch {
-    // When running during static generation / generateStaticParams, cookies() throws.
-    // In that context, we proceed without request cookies for public queries.
+  } catch (err) {
+    // Re-throw Next.js prerender / dynamic-usage control flow signals.
+    unstable_rethrow(err);
+    // When running outside a request scope (e.g., generateStaticParams), proceed without cookies.
   }
 
   const url = process.env.NEXT_PUBLIC_SUPABASE_URL || "https://placeholder.supabase.co";

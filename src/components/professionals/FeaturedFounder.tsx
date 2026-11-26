@@ -10,6 +10,7 @@ import {
   Anchor,
 } from "lucide-react";
 import { Professional } from "@/data/professionalsData";
+import { FounderLinkedInLink } from "@/components/SocialIcons";
 
 interface FeaturedFounderProps {
   founder: Professional;
@@ -223,14 +224,24 @@ export default function FeaturedFounder({
 
             {/* Action Buttons */}
             <div className="pt-6 border-t border-[#B58B50]/20 flex flex-wrap items-center justify-between gap-4">
-              <button
-                type="button"
-                onClick={() => onOpenBooking("Consultation — Ajit Kumar Nair")}
-                className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#F7F5EF] text-sm font-medium tracking-wide shadow-md hover:shadow-lg transition-all cursor-pointer"
-              >
-                <span>Enquire About a Consultation</span>
-                <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
-              </button>
+              <div className="flex flex-wrap items-center gap-3">
+                <button
+                  type="button"
+                  onClick={() => onOpenBooking("Consultation — Ajit Kumar Nair")}
+                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-[#173D34] hover:bg-[#102E27] text-[#F7F5EF] text-sm font-medium tracking-wide shadow-md hover:shadow-lg transition-all cursor-pointer"
+                >
+                  <span>Enquire About a Consultation</span>
+                  <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
+                </button>
+
+                {founder.linkedinUrl && (
+                  <FounderLinkedInLink
+                    href={founder.linkedinUrl}
+                    personName={founder.name}
+                    className="inline-flex items-center gap-2 px-6 py-3.5 rounded-full bg-white hover:bg-[#E8EDE4] text-[#173D34] text-sm font-medium tracking-wide border border-[#B58B50]/40 shadow-2xs transition-all group"
+                  />
+                )}
+              </div>
 
               <div className="flex flex-wrap items-center gap-3 text-xs font-semibold">
                 <Link

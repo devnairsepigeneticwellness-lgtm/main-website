@@ -3,6 +3,7 @@
 import React from "react";
 import Image from "next/image";
 import { Award, Compass, GraduationCap, ShieldCheck, ArrowUpRight, Anchor, HeartHandshake } from "lucide-react";
+import { FounderLinkedInLink } from "@/components/SocialIcons";
 
 export default function FounderSection({ onOpenBooking }: { onOpenBooking: () => void }) {
   const credentials = [
@@ -167,7 +168,7 @@ export default function FounderSection({ onOpenBooking }: { onOpenBooking: () =>
             </div>
 
             {/* Action Button */}
-            <div className="mt-8 flex items-center gap-4">
+            <div className="mt-8 flex flex-wrap items-center gap-4">
               <button
                 onClick={onOpenBooking}
                 className="inline-flex items-center gap-2 px-6 py-3 rounded-full bg-[#1E3F35] hover:bg-[#285246] text-[#F7F5EF] text-sm font-semibold tracking-wide shadow-sm transition-all cursor-pointer border border-[#1E3F35]"
@@ -175,6 +176,10 @@ export default function FounderSection({ onOpenBooking }: { onOpenBooking: () =>
                 <span>Book a Consultation with Ajit</span>
                 <ArrowUpRight className="w-4 h-4 text-[#DFBD83]" />
               </button>
+
+              <FounderLinkedInLink
+                className="inline-flex items-center gap-2 px-6 py-3 rounded-full border border-[#7D6335]/40 bg-[#DEE7DB]/70 hover:bg-white text-[#1E3F35] text-sm font-medium tracking-wide transition-all shadow-2xs group"
+              />
             </div>
 
           </div>
