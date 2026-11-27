@@ -61,9 +61,8 @@ export default function Footer({ onOpenBooking }: { onOpenBooking?: () => void }
               <li><Link href="/services#counselling" className="hover:text-[#DFBD83] transition-colors">Counselling</Link></li>
               <li><Link href="/services#psychotherapies" className="hover:text-[#DFBD83] transition-colors">Psychotherapy</Link></li>
               <li><Link href="/services#hypnotherapy" className="hover:text-[#DFBD83] transition-colors">Hypnotherapy</Link></li>
-              <li><Link href="/services#rehabilitation" className="hover:text-[#DFBD83] transition-colors">Online Rehabilitation (RCI)</Link></li>
+              <li><Link href="/services#rehabilitation" className="hover:text-[#DFBD83] transition-colors">Online Rehabilitation</Link></li>
               <li><Link href="/services#renewal" className="hover:text-[#DFBD83] transition-colors">Renewal Programme</Link></li>
-              <li><Link href="/services#support-plans" className="hover:text-[#DFBD83] transition-colors">Mindfulness &amp; Somatic Calm</Link></li>
               <li><Link href="/assessment" className="hover:text-[#DFBD83] transition-colors font-medium text-[#DFBD83]">✦ Self-Assessment &amp; Check-In</Link></li>
             </ul>
             <div className="pt-1">

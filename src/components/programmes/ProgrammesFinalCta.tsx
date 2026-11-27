@@ -75,19 +75,7 @@ export default function ProgrammesFinalCta({ onOpenBooking }: ProgrammesFinalCta
         </div>
 
         {/* Direct contact footer note */}
-        <div className="mt-12 pt-8 border-t border-white/10 flex flex-wrap items-center justify-center gap-6 text-xs text-[#E8EDE4]/70 font-sans">
-          <span className="flex items-center gap-2">
-            <Phone className="w-3.5 h-3.5 text-[#DFBD83]" />
-            <span>{CONTACT_INFO.phoneDisplay}</span>
-          </span>
-          <span className="text-white/20">•</span>
-          <span className="flex items-center gap-2">
-            <Mail className="w-3.5 h-3.5 text-[#DFBD83]" />
-            <span>{CONTACT_INFO.email}</span>
-          </span>
-          <span className="text-white/20">•</span>
-          <span>Panampilly Nagar, Kochi, Kerala</span>
-        </div>
+        
 
       </div>
     </section>

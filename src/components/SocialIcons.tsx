@@ -1,10 +1,10 @@
 import React from "react";
 import { ArrowUpRight } from "lucide-react";
 
-// TODO(client-input): Confirm official voice phone number (Task 4.2) and Google Maps Place URL below (Task 5.1).
+// TODO(client-input): Confirm Google Maps Place URL below (Task 5.1).
 export const CONTACT_INFO = {
-  phoneDisplay: "+91 94464 77779",
-  phoneHref: "tel:+919446477779",
+  phoneDisplay: "+91 94464 67779",
+  phoneHref: "tel:+919446467779",
   whatsappDisplay: "+91 94464 67779",
   whatsappDigits: "919446467779",
   email: "ajit.navy@gmail.com",
@@ -18,7 +18,7 @@ export function getWhatsAppUrl(
   return `https://wa.me/${CONTACT_INFO.whatsappDigits}?text=${encodeURIComponent(message)}`;
 }
 
-// TODO(client-input): Confirm official WhatsApp link (Task 4.1); LinkedIn URLs confirmed.
+// Official WhatsApp number and LinkedIn URLs confirmed.
 export const SOCIAL_LINKS = {
   linkedin: {
     url: "https://www.linkedin.com/in/nairsepigeneticwellness/",

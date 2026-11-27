@@ -30,7 +30,10 @@ export default function FaqSection({ onOpenBooking }: { onOpenBooking: () => voi
     },
     {
       q: "How do I take the first step to book?",
-      a: `You can click 'Book a Consultation' on this page, send a message through the contact form, or connect directly via phone (${CONTACT_INFO.phoneDisplay}) or WhatsApp (${CONTACT_INFO.whatsappDisplay}). Our team will guide you through scheduling a convenient time slot and answer any preliminary questions.`,
+      a:
+        CONTACT_INFO.phoneDisplay === CONTACT_INFO.whatsappDisplay
+          ? `You can click 'Book a Consultation' on this page, send a message through the contact form, or connect directly via phone or WhatsApp (${CONTACT_INFO.phoneDisplay}). Our team will guide you through scheduling a convenient time slot and answer any preliminary questions.`
+          : `You can click 'Book a Consultation' on this page, send a message through the contact form, or connect directly via phone (${CONTACT_INFO.phoneDisplay}) or WhatsApp (${CONTACT_INFO.whatsappDisplay}). Our team will guide you through scheduling a convenient time slot and answer any preliminary questions.`,
     },
   ];
 

@@ -721,7 +721,7 @@ export default function ConsultationBookingEngine({
                     required
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
-                    placeholder="+91 94464 77779"
+                    placeholder="+91 98765 43210"
                     className="w-full pl-10 pr-4 py-2.5 rounded-xl bg-[#F7F5EF] border border-[#B58B50]/30 text-xs text-[#24352D] focus:border-[#B58B50] focus:bg-white focus:outline-none"
                   />
                 </div>
